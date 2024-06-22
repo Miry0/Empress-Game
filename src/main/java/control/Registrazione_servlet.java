@@ -2,7 +2,6 @@
 package control;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -21,6 +20,8 @@ public class Registrazione_servlet extends HttpServlet {
     private Utenti_DAODataSource utenti; // DAO per l'interazione con il database degli utenti
     
     public void init() throws ServletException {
+    	//Calling the parent function
+    	super.init();
     	//inizializziamo le risorse che la servlet userà nel suo ciclo di vita; 
     	utenti = new Utenti_DAODataSource(); // Inizializzazione del DAO all'avvio della servlet
     }
@@ -31,7 +32,7 @@ public class Registrazione_servlet extends HttpServlet {
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String password = request.getParameter("password");
-        String tipo = "base"; // Assegna tipo base di default. Questo significa che stiamo registrando ujn utente base. 
+        String tipo = "base"; // Assegna tipo base di default. Questo significa che stiamo registrando un utente base. 
         //se vogliamo inserire un admin, lo andremo a modificare; 
         int giornoNascita = Integer.parseInt(request.getParameter("g_nascita"));
         int meseNascita = Integer.parseInt(request.getParameter("m_nascita"));
@@ -63,11 +64,6 @@ public class Registrazione_servlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Gestione GET, reindirizzamento a pagina di errore o altro se necessario
         response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Metodo non supportato.");
-    }
-
-    public void destroy() {
-        // Chiusura risorse se necessario
-    	//è un metodo generico delle servlet.
     }
 }
 
