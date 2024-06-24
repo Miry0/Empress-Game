@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Utenti_DAODataSource;
 import model.Utenti_bean;
 
-@WebServlet("/Registrazione_servlet/")
+@WebServlet("/Registrazione_servlet")
 public class Registrazione_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;;
     
@@ -65,5 +65,9 @@ public class Registrazione_servlet extends HttpServlet {
         // Gestione GET, reindirizzamento a pagina di errore o altro se necessario
         response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Metodo non supportato.");
     }
+	
+	public void destroy() {
+		//liberiamo le risorse usate; 
+		super.destroy(); 
+	}
 }
-

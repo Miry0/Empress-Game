@@ -9,7 +9,7 @@ public class Utenti_bean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int id_utente;
+	private String nome_utente;
 	private String nome;
 	private String cognome;
 	private String _password;
@@ -20,7 +20,7 @@ public class Utenti_bean implements Serializable {
 
 	//creiamo un bean per ogni tabella del database. Da qui andiamo a creare il nostro DAO che ci servirà per connetterci al DataSource e, poi, al DB;  
 	public Utenti_bean() {
-		id_utente = -1;
+		nome_utente = "";
 		nome = "";
 		cognome = "";
 		_password = "";
@@ -29,12 +29,12 @@ public class Utenti_bean implements Serializable {
 		a_nascita=-1;
 	}
 //get e set per l'id; 
-	public int get_id_utente() {
-		return id_utente;
+	public String get_nome_utente() {
+		return nome_utente;
 	}
 
-	public void set_id_utente(int id_utente) {
-		this.id_utente = id_utente;
+	public void set_nome_utente(String nome_utente) {
+		this.nome_utente = nome_utente;
 	}
 	//get e set per nome; 
 	public String get_nome() {
@@ -103,7 +103,7 @@ public class Utenti_bean implements Serializable {
 
 		@Override //metodo per la stampa di una tupla della tabella "UTENTI" del DB; 
 		public String toString() {
-			return id_utente + " " + nome + " " + cognome + " " + tipo + " " + g_nascita+"/"+m_nascita+"/"+"a_nascita";
+			return nome_utente + " " + nome + " " + cognome + " " + tipo + " " + g_nascita+"/"+m_nascita+"/"+"a_nascita";
 		}
 
 }
