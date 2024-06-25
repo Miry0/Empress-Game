@@ -10,30 +10,54 @@
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
-  <servlet>
-    <servlet-name>ManageProductServlet</servlet-name>
-    <servlet-class>it.unisa.ManageProductServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ManageProductServlet</servlet-name>
-    <url-pattern>/product</url-pattern>
-  </servlet-mapping>
-  <filter>
-   <filter-name>Hash_Filter</filter-name>
-   <filter-class>control.Hash_filter</filter-class>
-  </filter>
-  <filter-mapping>
-   <filter-name>Hash_Filter</filter-name>
-   <url-pattern>/Registrazione_servlet/*</url-pattern>  
-   </filter-mapping>
-   <filter-mapping>
-   <filter-name>Hash_Filter</filter-name>
-   <url-pattern>/Login_servlet/*</url-pattern>  
-   </filter-mapping>
-   <filter-mapping>
-   <filter-name>Hash_Filter</filter-name>
-   <url-pattern>/Logout_servlet/*</url-pattern>  
-   </filter-mapping>
+  
+ <!-- Registrazione_servlet -->
+    <servlet>
+        <servlet-name>RegistrazioneServlet</servlet-name>
+        <servlet-class>src.main.java.control.Registrazione_servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegistrazioneServlet</servlet-name>
+        <url-pattern>/Registrazione_servlet/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Login_servlet -->
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>src.main.java.control.Login_servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/Login_servlet/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Logout_servlet -->
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>src.main.java.control.Logout_servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/Logout_servlet/*</url-pattern>
+    </servlet-mapping>
+    
+    <!-- Hash_filter -->
+    <filter>
+        <filter-name>HashFilter</filter-name>
+        <filter-class>src.main.java.control.Hash_filter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>HashFilter</filter-name>
+        <url-pattern>/Registrazione_servlet/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HashFilter</filter-name>
+        <url-pattern>/Login_servlet/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HashFilter</filter-name>
+        <url-pattern>/Logout_servlet/*</url-pattern>
+    </filter-mapping>
    
   
 </web-app>

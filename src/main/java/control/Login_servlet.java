@@ -29,31 +29,36 @@ public class Login_servlet extends HttpServlet {
         //estraiamo i parametri username e password i parametri dal form di login
         String username = request.getParameter("username"); 
         String password = request.getParameter("password");
-
+        
+        HttpSession session = request.getSession(); 
+        session.setAttribute("loginAttempted", true); ///crea o aggiorna un attributo della sessione dell'itente corrente. Usato per valutare se l'utente ha provato ad effettuare il login
         try {
             // Verifica le credenziali
             Utenti_bean utente = utenti.verificaCredenziali(username, password);
-
+           
+            
             if (utente != null) {
                 // Credenziali corrette, crea una sessione per l'utente
-                HttpSession session = request.getSession(); 
+                
                 session.setAttribute("utente", utente);
                 // Redirige alla pagina di successo
                 response.sendRedirect("login_successo.jsp"); //indirizziamo l'utente su una jsp che lo informi del successo del login
             } else {
                 // Credenziali errate, redirige alla pagina di login con messaggio di errore
-                response.sendRedirect("login.jsp?errore=Credenziali+non+valide");//
+            	session.setAttribute("login-error", "Credenziali non valide");
+                response.sendRedirect("Pagina_login.jsp");//
             }
         } catch (SQLException e) {
             // Gestione dell'eccezione SQL
             e.printStackTrace();
-            response.sendRedirect("login.jsp?errore=Errore+del+server");
+            session.setAttribute("login-error", "Errore del server"); 
+            response.sendRedirect("Pagina_login.jsp"); //ridirezioniamo sulla pagina di login
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Gestione GET, redirige alla pagina di login
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("Pagina_login.jsp"); 
     }
 
     public void destroy() {
