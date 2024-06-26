@@ -28,7 +28,7 @@
 		
 		<label for="email">Email:</label>
         <!-- Precompila il campo cognome con il valore attuale -->
-        <input type="text" id="email" name="email" value="<%= utente.get_email() %>"><br>
+        <input type="text" id="email" name="email" value="<%= utente.getEmail() %>"><br>
         
         <!-- Aggiungi altri campi del profilo come necessari -->
 
