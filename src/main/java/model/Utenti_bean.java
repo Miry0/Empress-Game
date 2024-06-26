@@ -14,6 +14,7 @@ public class Utenti_bean implements Serializable {
 	private String cognome;
 	private String _password;
 	private String tipo; 
+	private String email; 
 	private int g_nascita;
 	private int m_nascita;
 	private int a_nascita;
@@ -23,6 +24,8 @@ public class Utenti_bean implements Serializable {
 		nome_utente = "";
 		nome = "";
 		cognome = "";
+		tipo=""; 
+		email=""; 
 		_password = "";
 		g_nascita=-1; 
 		m_nascita=-1;
@@ -55,14 +58,23 @@ public class Utenti_bean implements Serializable {
 		}
 		
 	//get e set per password; 
+		public String get_email() {
+			return email;
+		}
+	
+		public void set_email(String email) {
+			this.email = email;
+		}
+		
+		//get e set per email; 
 		public String get_password() {
 			return _password;
 		}
-	
+			
 		public void set_password(String _password) {
 			this._password = _password;
 		}
-	
+				
 	//get e set per tipo; 
 		public String get_tipo() {
 			return tipo;
