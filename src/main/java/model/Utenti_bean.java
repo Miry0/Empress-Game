@@ -25,6 +25,7 @@ public class Utenti_bean implements Serializable {
 		nome = null;
 		cognome = null;
 		_password = null;
+		tipo=null; 
 		email = null;
 		g_nascita=-1; 
 		m_nascita=-1;

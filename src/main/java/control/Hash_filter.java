@@ -57,7 +57,7 @@ public class Hash_filter extends HttpFilter implements Filter {
 	  //sovrascriviamo il metodo di distruzione del filtro
 	    public void destroy() {
 	    	super.destroy(); 
-	        // Pulizia risorse se necessario
+	        
 	    }
 	 
 	 // Metodo per eseguire l'hashing di una password in formato stringa utilizzando SHA-256

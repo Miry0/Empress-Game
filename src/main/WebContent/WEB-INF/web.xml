@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>Storage</display-name>
   <welcome-file-list>
-    <welcome-file>ProductView.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
   </welcome-file-list>
   <resource-ref>
     <description>JNDI reference to a data source</description>
@@ -13,49 +13,49 @@
   
  <!-- Registrazione_servlet -->
     <servlet>
-        <servlet-name>RegistrazioneServlet</servlet-name>
-        <servlet-class>src.main.java.control.Registrazione_servlet</servlet-class>
+        <servlet-name>Registrazione_servlet</servlet-name>
+        <servlet-class>com.control.Registrazione_servlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>RegistrazioneServlet</servlet-name>
+        <servlet-name>Registrazione_servlet</servlet-name>
         <url-pattern>/Registrazione_servlet/*</url-pattern>
     </servlet-mapping>
 
     <!-- Login_servlet -->
     <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>src.main.java.control.Login_servlet</servlet-class>
+        <servlet-name>Login_servlet</servlet-name>
+        <servlet-class>scom.control.Login_servlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
+        <servlet-name>Login_servlet</servlet-name>
         <url-pattern>/Login_servlet/*</url-pattern>
     </servlet-mapping>
 
     <!-- Logout_servlet -->
     <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>src.main.java.control.Logout_servlet</servlet-class>
+        <servlet-name>Logout_servlet</servlet-name>
+        <servlet-class>com.control.Logout_servlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-name>Logout_Servlet</servlet-name>
         <url-pattern>/Logout_servlet/*</url-pattern>
     </servlet-mapping>
     
     <!-- Hash_filter -->
     <filter>
-        <filter-name>HashFilter</filter-name>
-        <filter-class>src.main.java.control.Hash_filter</filter-class>
+        <filter-name>Hash_filter</filter-name>
+        <filter-class>com.control.Hash_filter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>HashFilter</filter-name>
+        <filter-name>Hash_filter</filter-name>
         <url-pattern>/Registrazione_servlet/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>HashFilter</filter-name>
+        <filter-name>Hash_filter</filter-name>
         <url-pattern>/Login_servlet/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>HashFilter</filter-name>
+        <filter-name>Hash_filter</filter-name>
         <url-pattern>/Logout_servlet/*</url-pattern>
     </filter-mapping>
    

@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -9,9 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet. RequestDispatcher;
 
-import model.Utenti_DAODataSource;
-import model.Utenti_bean;
+//import model.Utenti_DAODataSource;
+//import model.Utenti_bean;
+import model.*; 
 
 //@WebServlet("/Login_servlet")
 public class Login_servlet extends HttpServlet {
@@ -42,6 +45,7 @@ public class Login_servlet extends HttpServlet {
                 
                 session.setAttribute("utente", utente);
                 // Redirige alla pagina di successo
+                
                 response.sendRedirect("login_successo.jsp"); //indirizziamo l'utente su una jsp che lo informi del successo del login
             } else {
                 // Credenziali errate, redirige alla pagina di login con messaggio di errore
