@@ -13,8 +13,7 @@ public class Utenti_bean implements Serializable {
 	private String nome;
 	private String cognome;
 	private String _password;
-	private String tipo;
-	private String email;
+	private String tipo; 
 	private int g_nascita;
 	private int m_nascita;
 	private int a_nascita;
@@ -103,13 +102,6 @@ public class Utenti_bean implements Serializable {
 			this.a_nascita = a_nascita;
 		}
 		
-		public String getEmail() {
-			return email;
-		}
-		
-		public void setEmail(String email) {
-			this.email = email;
-		}
 
 		@Override //metodo per la stampa di una tupla della tabella "UTENTI" del DB; 
 		public String toString() {
