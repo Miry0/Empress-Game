@@ -21,8 +21,8 @@ CREATE TABLE UTENTI
 	nome_utente varchar(20) , 
     nome varchar(20) NOT NULL, 
 	cognome varchar(20) NOT NULL, 
-    _password_ varchar(8) NOT NULL, 
-    email varchar(20) NOT NULL, 
+    _password varchar(8) NOT NULL, 
+    email varchar(50) NOT NULL, 
     tipo varchar(20) NOT NULL, 
 	g_nascita int NOT NULL, 
 	m_nascita int NOT NULL, 
@@ -35,7 +35,7 @@ CREATE TABLE LISTA_DESIDERI
 (
 
 	id_lista int NOT NULL, 
-    nome_utente int NOT NULL, 
+    nome_utente varchar(20) NOT NULL, 
     
     PRIMARY KEY(id_lista),
     FOREIGN KEY(nome_utente) REFERENCES UTENTI(nome_utente)
@@ -56,7 +56,7 @@ CREATE TABLE sta_nella_lista
 CREATE TABLE CARRELLO
 (
 	n_ordine int AUTO_INCREMENT, 
-    id_utente varchar(20) NOT NULL, 
+    nome_utente varchar(20) NOT NULL, 
     metodo_pagamento varchar(20) NOT NULL, 
     totale float NOT NULL, 
     g_ordine int NOT NULL, 
@@ -96,7 +96,7 @@ CREATE TABLE legge
 ); 
 */
 -- Inserimenti nella tabella UTENTI con nomi utente univoci
-INSERT INTO UTENTI (nome_utente, nome, cognome, password, mail, tipo, g_nascita, m_nascita, a_nascita) 
+INSERT INTO UTENTI (nome_utente, nome, cognome, _password, email, tipo, g_nascita, m_nascita, a_nascita) 
 VALUES 
 ("Alex@123!", "Alessandro", "D'Africa", "password", "alessandro.dafrica@example.com", "admin", 12, 12, 2012),
 ("JKook@789!", "Jungkook", "Jeon", "password", "jungkook.jeon@example.com", "base", 1, 8, 1997),  
