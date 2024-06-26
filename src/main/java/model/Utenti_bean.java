@@ -20,10 +20,11 @@ public class Utenti_bean implements Serializable {
 
 	//creiamo un bean per ogni tabella del database. Da qui andiamo a creare il nostro DAO che ci servirà per connetterci al DataSource e, poi, al DB;  
 	public Utenti_bean() {
-		nome_utente = "";
-		nome = "";
-		cognome = "";
-		_password = "";
+		nome_utente = null;
+		nome = null;
+		cognome = null;
+		_password = null;
+		email = null;
 		g_nascita=-1; 
 		m_nascita=-1;
 		a_nascita=-1;
@@ -103,7 +104,7 @@ public class Utenti_bean implements Serializable {
 
 		@Override //metodo per la stampa di una tupla della tabella "UTENTI" del DB; 
 		public String toString() {
-			return nome_utente + " " + nome + " " + cognome + " " + tipo + " " + g_nascita+"/"+m_nascita+"/"+"a_nascita";
+			return nome_utente + " " + nome + " " + cognome + " " + tipo + " " + email + " " + g_nascita+"/"+m_nascita+"/"+"a_nascita";
 		}
 
 }
