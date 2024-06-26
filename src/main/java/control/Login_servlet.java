@@ -2,7 +2,6 @@ package control;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,22 +12,25 @@ import javax.servlet.http.HttpSession;
 import model.Utenti_DAODataSource;
 import model.Utenti_bean;
 
-//@WebServlet("/Login_servlet")
+@WebServlet("/Login_servlet")
 public class Login_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private Utenti_DAODataSource utenti;
 
     public void init() throws ServletException {
-    	super.init(); 
+        super.init(); 
         // Inizializzazione del DAO per l'interazione con il database
-        utenti = new Utenti_DAODataSource(); //instanziamo un collegamento tra servlet e db attraverdo il DAO, sulla tabella UTENTI
+        utenti = new Utenti_DAODataSource(); // instanziamo un collegamento tra servlet e db attraverso il DAO, sulla tabella UTENTI
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //estraiamo i parametri username e password i parametri dal form di login
+        // estraiamo i parametri username e password dal form di login
         String username = request.getParameter("username"); 
         String password = request.getParameter("password");
+
+        HttpSession session = request.getSession();
+        session.setAttribute("loginAttempted", "true");
 
         try {
             // Verifica le credenziali
@@ -36,18 +38,20 @@ public class Login_servlet extends HttpServlet {
 
             if (utente != null) {
                 // Credenziali corrette, crea una sessione per l'utente
-                HttpSession session = request.getSession(); 
-                session.setAttribute("utente", utente);
+                session.setAttribute("registeredUser", utente);
+                session.removeAttribute("login-error");
                 // Redirige alla pagina di successo
-                response.sendRedirect("login_successo.jsp"); //indirizziamo l'utente su una jsp che lo informi del successo del login
+                response.sendRedirect("index.jsp"); // indirizziamo l'utente alla pagina principale
             } else {
-                // Credenziali errate, redirige alla pagina di login con messaggio di errore
-                response.sendRedirect("login.jsp?errore=Credenziali+non+valide");//
+                // Credenziali errate, imposta l'attributo di errore e redirige alla pagina di login
+                session.setAttribute("login-error", "Credenziali non valide");
+                response.sendRedirect("login.jsp");
             }
         } catch (SQLException e) {
             // Gestione dell'eccezione SQL
             e.printStackTrace();
-            response.sendRedirect("login.jsp?errore=Errore+del+server");
+            session.setAttribute("login-error", "Errore del server");
+            response.sendRedirect("login.jsp");
         }
     }
 
@@ -57,8 +61,7 @@ public class Login_servlet extends HttpServlet {
     }
 
     public void destroy() {
-    	super.destroy(); 
+        super.destroy(); 
         // Chiusura risorse se necessario
     }
-   
 }
