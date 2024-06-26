@@ -13,20 +13,19 @@ public class Utenti_bean implements Serializable {
 	private String nome;
 	private String cognome;
 	private String _password;
-	private String tipo; 
-	private String email; 
+	private String tipo;
+	private String email;
 	private int g_nascita;
 	private int m_nascita;
 	private int a_nascita;
 
 	//creiamo un bean per ogni tabella del database. Da qui andiamo a creare il nostro DAO che ci servirà per connetterci al DataSource e, poi, al DB;  
 	public Utenti_bean() {
-		nome_utente = "";
-		nome = "";
-		cognome = "";
-		tipo=""; 
-		email=""; 
-		_password = "";
+		nome_utente = null;
+		nome = null;
+		cognome = null;
+		_password = null;
+		email = null;
 		g_nascita=-1; 
 		m_nascita=-1;
 		a_nascita=-1;
@@ -58,23 +57,14 @@ public class Utenti_bean implements Serializable {
 		}
 		
 	//get e set per password; 
-		public String get_email() {
-			return email;
-		}
-	
-		public void set_email(String email) {
-			this.email = email;
-		}
-		
-		//get e set per email; 
 		public String get_password() {
 			return _password;
 		}
-			
+	
 		public void set_password(String _password) {
 			this._password = _password;
 		}
-				
+	
 	//get e set per tipo; 
 		public String get_tipo() {
 			return tipo;
@@ -112,10 +102,17 @@ public class Utenti_bean implements Serializable {
 			this.a_nascita = a_nascita;
 		}
 		
+		public String getEmail() {
+			return email;
+		}
+		
+		public void setEmail(String email) {
+			this.email = email;
+		}
 
 		@Override //metodo per la stampa di una tupla della tabella "UTENTI" del DB; 
 		public String toString() {
-			return nome_utente + " " + nome + " " + cognome + " " + tipo + " " + g_nascita+"/"+m_nascita+"/"+"a_nascita";
+			return nome_utente + " " + nome + " " + cognome + " " + tipo + " " + email + " " + g_nascita+"/"+m_nascita+"/"+"a_nascita";
 		}
 
 }

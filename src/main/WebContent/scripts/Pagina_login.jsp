@@ -4,7 +4,7 @@
 
 <%
     // Controlla se l'utente è già loggato
-    if (registeredUser != null && registeredUser.get_email() != null && !registeredUser.get_email().isEmpty()) {
+    if (registeredUser != null && registeredUser.getEmail() != null && !registeredUser.getEmail().isEmpty()) {
         response.sendRedirect("index.jsp");
         return;
     }
@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/loginpage.css">
     <link rel="icon" href="./img/icon.png">
-    <title>Emperess Game - Login</title>
+    <title>Empress Game - Login</title>
 </head>
 <body>
     <div class="container">
