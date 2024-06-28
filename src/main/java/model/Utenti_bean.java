@@ -10,6 +10,7 @@ public class Utenti_bean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String nome_utente;
+	private String email;
 	private String nome;
 	private String cognome;
 	private String _password;
