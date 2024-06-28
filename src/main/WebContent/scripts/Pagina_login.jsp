@@ -4,7 +4,7 @@
 
 <%
     // Controlla se l'utente è già loggato
-    if (registeredUser != null && registeredUser.getEmail() != null && !registeredUser.getEmail().isEmpty()) {
+    if (registeredUser != null && registeredUser.get_email() != null && !registeredUser.get_email().isEmpty()) {
         response.sendRedirect("index.jsp");
         return;
     }
