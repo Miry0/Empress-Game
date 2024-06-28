@@ -1,7 +1,6 @@
 package control;
 
 import java.io.IOException;
-
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -10,64 +9,67 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet. RequestDispatcher;
+import javax.servlet.RequestDispatcher;
 
-//import model.Utenti_DAODataSource;
-//import model.Utenti_bean;
-import model.*; 
+import model.Utenti_DAODataSource;
+import model.Utenti_bean;
 
-//@WebServlet("/Login_servlet")
+@WebServlet("/Login_servlet")
 public class Login_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private Utenti_DAODataSource utenti;
 
     public void init() throws ServletException {
-    	super.init(); 
+        super.init();
         // Inizializzazione del DAO per l'interazione con il database
-        utenti = new Utenti_DAODataSource(); //instanziamo un collegamento tra servlet e db attraverdo il DAO, sulla tabella UTENTI
+        utenti = new Utenti_DAODataSource();
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //estraiamo i parametri username e password i parametri dal form di login
-        String username = request.getParameter("username"); 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
-        
-        HttpSession session = request.getSession(); 
-        session.setAttribute("loginAttempted", true); ///crea o aggiorna un attributo della sessione dell'itente corrente. Usato per valutare se l'utente ha provato ad effettuare il login
+
+        HttpSession session = request.getSession();
+        session.setAttribute("loginAttempted", true);
+
         try {
-            // Verifica le credenziali
             Utenti_bean utente = utenti.verificaCredenziali(username, password);
-           
-            
+
             if (utente != null) {
-                // Credenziali corrette, crea una sessione per l'utente
-                
                 session.setAttribute("utente", utente);
-                // Redirige alla pagina di successo
+                // Utilizzo di RequestDispatcher per inoltrare a login_successo.
+                //in auesto modo, il client non vedrà il cambio di URL
                 
-                response.sendRedirect("login_successo.jsp"); //indirizziamo l'utente su una jsp che lo informi del successo del login
+                RequestDispatcher dispatcher = request.getRequestDispatcher("login_successo.jsp");
+                dispatcher.forward(request, response);
             } else {
-                // Credenziali errate, redirige alla pagina di login con messaggio di errore
-            	session.setAttribute("login-error", "Credenziali non valide");
-                response.sendRedirect("Pagina_login.jsp");//
+                session.setAttribute("login-error", "Credenziali non valide");
+                // Utilizzo di RequestDispatcher per inoltrare a Pagina_login.jsp con messaggio di errore
+                RequestDispatcher dispatcher = request.getRequestDispatcher("Pagina_login.jsp");
+                dispatcher.forward(request, response);
             }
         } catch (SQLException e) {
-            // Gestione dell'eccezione SQL
             e.printStackTrace();
-            session.setAttribute("login-error", "Errore del server"); 
-            response.sendRedirect("Pagina_login.jsp"); //ridirezioniamo sulla pagina di login
+            session.setAttribute("login-error", "Errore del server");
+            // Utilizzo di RequestDispatcher per inoltrare a Pagina_login.jsp con messaggio di errore
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Pagina_login.jsp");
+            dispatcher.forward(request, response);
         }
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Gestione GET, redirige alla pagina di login
-        response.sendRedirect("Pagina_login.jsp"); 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Inoltra alla pagina di login per le richieste GET
+        RequestDispatcher dispatcher = request.getRequestDispatcher("Pagina_login.jsp");
+        dispatcher.forward(request, response);
     }
 
     public void destroy() {
-    	super.destroy(); 
-        // Chiusura risorse se necessario
+        super.destroy();
+        // Eventuale chiusura risorse
     }
-   
+
 }
+
