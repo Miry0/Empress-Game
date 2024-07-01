@@ -14,7 +14,7 @@ import javax.servlet.RequestDispatcher;
 import model.Utenti_DAODataSource;
 import model.Utenti_bean;
 
-@WebServlet("/Login_servlet")
+//@WebServlet("/Login_servlet")
 public class Login_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class Login_servlet extends HttpServlet {
         String password = request.getParameter("password");
 
         HttpSession session = request.getSession();
-        session.setAttribute("loginAttempted", true);
+        session.setAttribute("loginAttempted", true);  //validazione della sessione creata per l'utente
 
         try {
             Utenti_bean utente = utenti.verificaCredenziali(username, password);
@@ -40,9 +40,9 @@ public class Login_servlet extends HttpServlet {
             if (utente != null) {
                 session.setAttribute("utente", utente);
                 // Utilizzo di RequestDispatcher per inoltrare a login_successo.
-                //in auesto modo, il client non vedrà il cambio di URL
+                //in questo modo, il client non vedrà il cambio di URL
                 
-                RequestDispatcher dispatcher = request.getRequestDispatcher("login_successo.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("Login_successo.jsp");
                 dispatcher.forward(request, response);
             } else {
                 session.setAttribute("login-error", "Credenziali non valide");

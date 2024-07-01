@@ -5,7 +5,7 @@
     Utenti_bean utente = (Utenti_bean) session.getAttribute("utente");
     // Se l'utente non è loggato, reindirizza alla pagina di login
     if (utente == null) {
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("Pagina_login.jsp");
         return;
     }
 %>
