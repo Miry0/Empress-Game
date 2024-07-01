@@ -1,4 +1,5 @@
 //servlet che gestisce la registrazione degli utenti; 
+
 package control;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Utenti_DAODataSource;
 import model.Utenti_bean;
 
-@WebServlet("/Registrazione_servlet")
+//@WebServlet("/Registrazione_servlet")
 public class Registrazione_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;;
     
@@ -23,7 +24,7 @@ public class Registrazione_servlet extends HttpServlet {
     	//Calling the parent function
     	super.init();
     	//inizializziamo le risorse che la servlet userà nel suo ciclo di vita; 
-    	utenti = new Utenti_DAODataSource(); // Inizializzazione del DAO all'avvio della servlet
+    	utenti = new Utenti_DAODataSource();; // Inizializzazione del DAO all'avvio della servlet
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

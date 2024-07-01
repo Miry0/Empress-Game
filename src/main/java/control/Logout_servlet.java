@@ -14,6 +14,7 @@ import model.Utenti_DAODataSource;
 import model.Utenti_bean;
 
 //@WebServlet("/Login_servlet")
+
 public class Logout_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
