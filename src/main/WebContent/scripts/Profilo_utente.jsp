@@ -17,7 +17,7 @@
 
     <meta charset="UTF-8">
     <title>Profilo Utente</title>
-    <link rel="stylesheet" type="text/css" href="Style\style.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Style/style.css">
 </head>
 <body>
     <h1>Profilo Utente</h1>

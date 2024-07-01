@@ -116,7 +116,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {//implementiamo 
 
 				bean.set_id_gioco(rs.getInt("code identificativo del gioco"));
 				bean.set_nome(rs.getString("nome"));
-				bean.set_piattaforma(rs.getString("piattaforma su cui è utitlizzabile la key"));
+				bean.set_piattaforma(rs.getString("piattaforma su cui è utilizzabile la key"));
 				bean.set_genere(rs.getString("genere"));
 				bean.set_prezzo(rs.getFloat("prezzo"));
 				bean.set_g_uscita(rs.getInt("gg"));
@@ -152,7 +152,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {//implementiamo 
 			while (rs.next()) {
 				bean.set_id_gioco(rs.getInt("code identificativo del gioco"));
 				bean.set_nome(rs.getString("nome"));
-				bean.set_piattaforma(rs.getString("piattaforma su cui è utitlizzabile la key"));
+				bean.set_piattaforma(rs.getString("piattaforma su cui è utilizzabile la key"));
 				bean.set_genere(rs.getString("genere"));
 				bean.set_prezzo(rs.getFloat("prezzo"));
 				bean.set_g_uscita(rs.getInt("gg"));
@@ -170,6 +170,40 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {//implementiamo 
 		}
 		return bean;
 	}
+	
+	
+	public synchronized void update(Game_bean Giochi) throws SQLException {
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+
+	    String updateSQL = "UPDATE " + Game_DAODataSource.TABLE_NAME + " SET nome = ?, piattaforma = ?, genere = ?, prezzo = ?, g_uscita = ?, m_uscita = ?, a_uscita = ? WHERE id_gioco = ?";
+
+	    try {
+	        connection = ds.getConnection();
+	        preparedStatement = connection.prepareStatement(updateSQL);
+	        
+	        preparedStatement.setString(1, Giochi.get_nome());
+	        preparedStatement.setString(2, Giochi.get_piattaforma());
+	        preparedStatement.setString(3, Giochi.get_genere());
+	        preparedStatement.setFloat(4, Giochi.get_prezzo());
+	        preparedStatement.setInt(5, Giochi.get_g_uscita());
+	        preparedStatement.setInt(6, Giochi.get_m_uscita());
+	        preparedStatement.setInt(7, Giochi.get_a_uscita());
+	        preparedStatement.setInt(8, Giochi.get_id_gioco()); //viene utilizzato per identificare quale record nella tabella deve essere aggiornato.
+
+	        preparedStatement.executeUpdate(); // Esegui l'aggiornamento nel database
+
+	    } finally {
+	        try {
+	            if (preparedStatement != null)
+	                preparedStatement.close();
+	        } finally {
+	            if (connection != null)
+	                connection.close();
+	        }
+	    }
+	}
+
 }
 
 
