@@ -31,7 +31,7 @@
   /* Stile per il bottone */
   .toggle-btn {
     cursor: pointer;
-    background-image: url('C:\Users\HP\eclipse-workspace\Empress Game\src\main\WebContent\images\5498698.png'); /* URL dell'icona */
+    background-image: url('..\images\5498698.png'); /* URL dell'icona */
     width: 40px;
     height: 40px;
     background-size: cover;
