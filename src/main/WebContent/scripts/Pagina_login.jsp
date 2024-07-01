@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="model.Utenti_bean" %>
-<jsp:useBean id="registeredUser" class="model.Utenti_bean" scope="session"/>
+<jsp:useBean id="utente" class="model.Utenti_bean" scope="session"/>
 
 <%
     // Controlla se l'utente è già loggato
-    if (registeredUser != null && registeredUser.get_email() != null && !registeredUser.get_email().isEmpty()) {
-        response.sendRedirect("index.jsp");
+    if (utente != null && utente.get_nome_utente() != null && !utente.get_nome_utente().isEmpty()) { //controlliamo se il nome utente del client è già loggato o meno
+        response.sendRedirect("index.jsp"); //indirizziamo sulla home del sito
         return;
     }
 %>
@@ -16,7 +16,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/loginpage.css">
-    <link rel="icon" href="./img/icon.png">
+    <link rel="icon" href="./images/logo.png">
     <title>Empress Game - Login</title>
 </head>
 <body>
@@ -48,7 +48,7 @@
         <div class="panel left-panel">
             <div class="content">
                 <h3 style="margin-bottom: 20px">Crea il tuo account</h3>
-                <button class="btn transparent" id="sign-up-btn" onclick="location.href = 'register-form.jsp';">
+                <button class="btn transparent" id="sign-up-btn" onclick="location.href = 'Registrazione.jsp';">
                     Registrati
                 </button>
             </div>
