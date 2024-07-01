@@ -14,10 +14,10 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+
     <meta charset="UTF-8">
     <title>Profilo Utente</title>
     <link rel="stylesheet" type="text/css" href="Style\style.css">
-    
 </head>
 <body>
     <h1>Profilo Utente</h1>
