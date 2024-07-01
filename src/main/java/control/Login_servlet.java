@@ -14,7 +14,7 @@ import javax.servlet.RequestDispatcher;
 import model.Utenti_DAODataSource;
 import model.Utenti_bean;
 
-@WebServlet("/Login_servlet")
+//WebServlet("/Login_servlet")
 public class Login_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
