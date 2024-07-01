@@ -1,0 +1,124 @@
+/* Stile per il menu nascosto */
+.menu {
+    position: fixed;
+    top: 0;
+    left: -220px; /* Sposta il menu completamente al di fuori dello schermo a sinistra */
+    background-color: #f4f4f4;
+    width: 200px; /* Larghezza del menu */
+    height: 100%; /* Altezza del menu */
+    padding: 10px;
+    transition: left 0.3s ease; /* Animazione di transizione */
+  }
+  
+  /* Stile per il link del menu */
+  .menu a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 5px 0;
+  }
+  
+  /* Stile per il link del menu al passaggio del mouse */
+  .menu a:hover {
+    background-color: #ddd;
+  }
+  
+  /* Stile per il link del menu attivo */
+  .menu a.active {
+    font-weight: bold;
+  }
+  
+  /* Stile per il bottone */
+  .toggle-btn {
+    cursor: pointer;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/5498/5498698.png'); /* URL dell'icona */
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    position: absolute;
+    top: 10px;
+    left: 10px; /* Posiziona il pulsante a sinistra */
+  }
+  
+  /* Stile per l'icona di chiusura */
+  .close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  
+  /* Stile per l'header */
+  header {
+    text-align: center;
+    padding: 10px;
+  }
+  
+  /* Stile per il logo */
+  header img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Stile per il form di login */
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Allinea gli elementi all'inizio del contenitore */
+    height: 100vh;
+    padding-top: 0; /* Rimuove il padding sopra il form */
+    margin-top: 0; /* Aggiunge margine sopra il form per separarlo dall'header */
+  }
+  
+  .login-container {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Larghezza del contenitore del form */
+  }
+  
+  .login-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .login-form button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .login-form button:hover {
+    background-color: #555;
+  }
+  
+  /* Media query per dispositivi con larghezza massima di 768px */
+  @media screen and (max-width: 768px) {
+    .menu {
+      width: 150px;
+    }
+  
+    .toggle-btn {
+      left: 5px;
+    }
+  
+    .close-icon {
+      right: 5px;
+    }
+  
+    .login-container {
+      width: 90%; /* Riduce la larghezza del contenitore del form sui dispositivi mobili */
+    }
+  }
+  
