@@ -16,7 +16,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Profilo Utente</title>
-    <link rel="stylesheet" type="text/css" href="C:\Users\HP\eclipse-workspace\Empress Game\src\main\WebContent\Style\style.css">
+    <link rel="stylesheet" type="text/css" href="Style\style.css">
     
 </head>
 <body>

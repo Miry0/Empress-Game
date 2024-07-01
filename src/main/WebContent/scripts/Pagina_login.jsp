@@ -15,8 +15,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="C:\Users\HP\eclipse-workspace\Empress Game\src\main\WebContent\Style\style.css">
-    <link rel="icon" href="./images/logo.png">
+	<link rel="stylesheet" type="text/css" href="Style\style.css">
+    <link rel="icon" href="images/logo.png">
     <title>Empress Game - Login</title>
 </head>
 <body>
