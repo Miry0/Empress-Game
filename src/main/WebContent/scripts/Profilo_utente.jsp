@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="model.Utenti_bean" %>
 <%
+
+
     // Recupera l'oggetto utente dalla sessione
     Utenti_bean utente = (Utenti_bean) session.getAttribute("utente");
     // Se l'utente non è loggato, reindirizza alla pagina di login
@@ -14,6 +16,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Profilo Utente</title>
+    <link rel="stylesheet" type="text/css" href="C:\Users\HP\eclipse-workspace\Empress Game\src\main\WebContent\Style\style.css">
+    
 </head>
 <body>
     <h1>Profilo Utente</h1>
