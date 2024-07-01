@@ -1,82 +1,32 @@
-<html>
-   <body>
-        <style>
-                /* Stile per il contenitore del bottone e del menu */
-                .menu-container {
-                  position: fixed;
-                  top: 0;
-                  left: -200px; /* Nascondi il menu a sinistra */
-                  transition: left 0.3s ease; /* Animazione di transizione */
-                  width: 200px; /* Larghezza del menu */
-                  height: 100%; /* Altezza del menu */
-                  background-color: #f4f4f4;
-                }
-              
-                /* Stile per il menu */
-                .menu {
-                  position: relative;
-                  width: 100%; /* Larghezza del menu */
-                  padding: 10px;
-                }
-                
-                /* Stile per il link del menu */
-                .menu a {
-                  display: block;
-                  color: #333;
-                  text-decoration: none;
-                  padding: 5px 0;
-                }
-                
-                /* Stile per il link del menu al passaggio del mouse */
-                .menu a:hover {
-                  background-color: #ddd;
-                }
-                
-                /* Stile per il link del menu attivo */
-                .menu a.active {
-                  font-weight: bold;
-                }
-              
-                /* Stile per il bottone */
-                .toggle-btn {
-                  cursor: pointer;
-                  background-image: url('https://via.placeholder.com/20'); /* URL dell'icona */
-                  width: 20px;
-                  height: 20px;
-                  background-size: cover;
-                  position: absolute;
-                  top: 10px;
-                  left: 10px;
-                }
-              </style>
-      <header><center><img src="C:\Users\HP\eclipse-workspace\Empress Game\src\main\images\logo.jpg"></center></header>
-    
-      <div class="menu-container">
-        <!-- Bottone per attivare il menu -->
-        <div class="toggle-btn" onclick="toggleMenu()"></div>
-      
-        <!-- Menu a comparsa -->
-        <div class="menu" id="menu">
-          <a href="#" class="active">Home</a>
-          <a href="#">Profilo</a>
-          <a href="#">Impostazioni</a>
-          <a href="#">Logout</a>
-          <!-- Aggiungi altre voci del menu qui se necessario -->
-        </div>
-      </div>
-      
-      <script>
-        // Funzione per mostrare/nascondere il menu
-        function toggleMenu() {
-          var menuContainer = document.querySelector(".menu-container");
-          if (menuContainer.style.left === "-200px") {
-            menuContainer.style.left = "0"; // Mostra il menu spostandolo verso destra
-          } else {
-            menuContainer.style.left = "-200px"; // Nascondi il menu spostandolo verso sinistra
-          }
-        }
-      </script>
-            
-    
-   </body>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empress Games</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Header con logo -->
+<header>
+  <img src="logo.png" alt="Logo">
+</header>
+
+<!-- Bottone per attivare il menu -->
+<div class="toggle-btn" onclick="toggleMenu()"></div>
+
+<!-- Menu a comparsa -->
+<div id="menu" class="menu">
+  <span class="close-icon" onclick="toggleMenu()">X</span> <!-- Icona di chiusura -->
+  <a href="profilo.html" id="profile-link">Profilo</a>
+  <a href="#">Impostazioni</a>
+  <a href="#">Logout</a>
+  <!-- Aggiungi altre voci del menu qui se necessario -->
+</div>
+
+<!-- Inclusione del file JavaScript -->
+<script src="script_index.js"></script>
+
+</body>
 </html>
