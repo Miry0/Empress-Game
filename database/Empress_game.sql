@@ -41,18 +41,21 @@ CREATE TABLE LISTA_DESIDERI
     FOREIGN KEY(nome_utente) REFERENCES UTENTI(nome_utente)
 ); 
 
-/*
+
 CREATE TABLE sta_nella_lista
-(
-	id_lista int AUTO_INCREMENT, 
-	id_utente int NOT NULL, 
+(	
+	id int AUTO_INCREMENT,
+	id_lista int NOT NULL, 
+	nome_utente varchar(20) NOT NULL, 
     id_gioco int NOT NULL, 
     
-    PRIMARY KEY(id_lista),
-    FOREIGN KEY(id_utente) REFERENCES LISTA_DESIDERI(id_utente), 
-    FOREIGN KEY(id_gioco) REFERENCES GIOCHI(id_gioco)
+    PRIMARY KEY(id),
+    FOREIGN KEY (id_lista) REFERENCES LISTA_DESIDERI(id_lista),
+    FOREIGN KEY(nome_utente) REFERENCES LISTA_DESIDERI(nome_utente), 
+    FOREIGN KEY(id_gioco) REFERENCES GIOCHI(id_gioco),
+    UNIQUE KEY (id_lista, id_gioco, id_utente) -- Garantisce che un gioco possa apparire solo una volta in una lista dei desideri di un utente specifico
 ); 
-*/
+
 CREATE TABLE CARRELLO
 (
 	n_ordine int AUTO_INCREMENT, 
@@ -146,7 +149,6 @@ VALUES
 (2), 
 (3), 
 (4),
-
 (5),
 (6),
 (7),

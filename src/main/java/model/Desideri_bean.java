@@ -10,7 +10,7 @@ public class Desideri_bean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int id_lista;	//chiave primaria
-	private int id_utente;  //chiave esterna. La poniamo come intera, invece che di tipo Utente_bean, in modo che ci si possa lavorare in maniera meno faticosa; 
+	private String nome_utente;  //chiave esterna. La poniamo come intera, invece che di tipo Utente_bean, in modo che ci si possa lavorare in maniera meno faticosa; 
 	
 	
 
@@ -19,7 +19,7 @@ public class Desideri_bean implements Serializable {
 	    // Costruttore
 	    public Desideri_bean() {
 	        id_lista = -1;
-	        id_utente = -1; // inizializziamo l'attributo id_utente nel costruttore per rvitare che si possa essere uguale a null; 
+	        nome_utente = null; // inizializziamo l'attributo id_utente nel costruttore per rvitare che si possa essere uguale a null; 
 	       ;
 	    }
 
@@ -32,17 +32,17 @@ public class Desideri_bean implements Serializable {
 	        this.id_lista = id_lista;
 	    }
 
-	    public int get_id_utente() {
-	        return id_utente;
-	    }
+	    public String get_nome_utente() {
+			return nome_utente;
+		}
 
-	    public void set_id_utente(int id_utente) {
-	        this.id_utente =id_utente;
-	    }   
-
+		public void set_nome_utente(String nome_utente) {
+			this.nome_utente = nome_utente;
+		}
+		//get e set per nome; 
 		@Override //metodo per la stampa di una tupla della tabella "LISTA_DESIDERI" del DB; 
 		public String toString() {
-			return id_lista+" "+id_utente;
+			return id_lista+" "+nome_utente;
 		}
 
 }
