@@ -141,6 +141,7 @@ public class Sta_nella_lista_DAODataSource implements IBeanDAO<Sta_nella_lista_b
 			} finally {
 				if (connection != null)
 					connection.close();
+				
 			}
 		}
 		return bean;

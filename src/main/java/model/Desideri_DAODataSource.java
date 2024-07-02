@@ -140,6 +140,7 @@ public class Desideri_DAODataSource implements IBeanDAO<Desideri_bean> {
 					connection.close();
 			}
 		}
+		
 		return bean;
 	}
 }

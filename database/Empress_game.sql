@@ -86,6 +86,7 @@ CREATE TABLE STORICO
 	n_ordine int NOT NULL, 
     
     FOREIGN KEY (n_ordine) REFERENCES CARRELLO(n_ordine)
+    
 );
 
 /*

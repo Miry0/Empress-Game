@@ -43,6 +43,7 @@ public class Desideri_bean implements Serializable {
 		@Override //metodo per la stampa di una tupla della tabella "LISTA_DESIDERI" del DB; 
 		public String toString() {
 			return id_lista+" "+nome_utente;
+			
 		}
 
 }
