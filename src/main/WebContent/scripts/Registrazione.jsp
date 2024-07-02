@@ -14,7 +14,7 @@
 <%-- <jsp:include page="header.jsp" /> --%>
 
 <h1 id="error_warning">  </h1>
-<form  onchange="validate()" action="Registrazione" method="post">
+<form id=registrazione_form  onchange="validate()" onsubmit="return validateForm('registrazione_form', ['nome', 'cognome'], ['g_nascita', 'm_nascita', 'a_nascita']) action="Registrazione" method="post">
 	<fieldset>
 		<legend>Dati personali</legend>
 			<input type="text" name="nome" placeholder="nome" class="formInput" required autofocus>

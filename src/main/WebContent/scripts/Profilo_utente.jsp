@@ -21,7 +21,7 @@
 </head>
 <body>
     <h1>Profilo Utente</h1>
-    <form action="AggiornaProfilo_servlet" method="post">
+    <form id=profilo_form action="Login_servlet" method="post" onsubmit="return validateForm('profilo_form', ['nome', 'cognome']);">
         <label for="nome">Nome:</label>
         <!-- Precompila il campo nome con il valore attuale -->
         <input type="text" id="nome" name="nome" value="<%= utente.get_nome() %>"><br>
