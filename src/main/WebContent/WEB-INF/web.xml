@@ -3,7 +3,7 @@
 <web-app>         
     <title>Empress_Game</title>
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     
     <resource-ref>
@@ -14,7 +14,6 @@
     </resource-ref>
 
     <!-- Registrazione_servlet -->
-     <!-- Registrazione_servlet -->
     <servlet>
         <servlet-name>Registrazione_servlet</servlet-name>
         <servlet-class>control.Registrazione_servlet</servlet-class>
