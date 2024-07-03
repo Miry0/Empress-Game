@@ -1,17 +1,20 @@
-package control; 
+package control;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import javax.servlet.RequestDispatcher;
 import model.Game_bean;
 import model.Game_DAODataSource;
 
-//@WebServlet("/GameCatalogServlet")
+@WebServlet("/Gestione_giochi_servlet")
 public class Gestione_giochi_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -52,6 +55,9 @@ public class Gestione_giochi_servlet extends HttpServlet {
         int mUscita = Integer.parseInt(request.getParameter("m_uscita"));
         int aUscita = Integer.parseInt(request.getParameter("a_uscita"));
 
+        // Recupera l'immagine come array di byte
+        byte[] immagine = extractImageBytes(request);
+
         // Crea un oggetto Game_bean con i dati ricevuti dalla richiesta
         Game_bean game = new Game_bean();
         game.set_nome(nome);
@@ -61,6 +67,7 @@ public class Gestione_giochi_servlet extends HttpServlet {
         game.set_g_uscita(gUscita);
         game.set_m_uscita(mUscita);
         game.set_a_uscita(aUscita);
+        game.setImmagine(immagine);
 
         // Salva il gioco nel database utilizzando il DAO
         gameDAO.doSave(game);
@@ -118,11 +125,15 @@ public class Gestione_giochi_servlet extends HttpServlet {
                 game.set_a_uscita(aUscita);
             }
 
+            // Recupera l'immagine come array di byte
+            byte[] immagine = extractImageBytes(request);
+            game.setImmagine(immagine);
+
             // Aggiorna il gioco nel database utilizzando il DAO
             gameDAO.update(game);
         }
 
-        // Utilizza il dispatcher per inoltrare la richiesta alla pagina gameCatalog.jsp
+        // Utilizza il dispatcher per inoltrare la richiesta alla pagina Gestione_catalogo.jsp
         RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_catalogo.jsp");
         dispatcher.forward(request, response);
     }
@@ -137,6 +148,26 @@ public class Gestione_giochi_servlet extends HttpServlet {
         // Utilizza il dispatcher per inoltrare la richiesta alla pagina Gestione_catalogo.jsp
         RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_catalogo.jsp");
         dispatcher.forward(request, response);
+    }
+
+    // Metodo per estrarre l'immagine dalla richiesta HTTP come array di byte
+    private byte[] extractImageBytes(HttpServletRequest request) throws IOException, ServletException {
+        Part filePart = request.getPart("immagine"); // Recupera il Part relativo all'immagine dal form
+        InputStream inputStream = filePart.getInputStream(); // Ottiene lo stream di input dall'immagine
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[4096]; // Buffer per la lettura dell'immagine
+        int bytesRead = -1;
+
+        // Legge l'immagine dallo stream e la scrive nell'outputStream
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+
+        byte[] immagine = outputStream.toByteArray(); // Converte l'outputStream in un array di byte
+        outputStream.close();
+        inputStream.close();
+
+        return immagine;
     }
 
     public void destroy() {

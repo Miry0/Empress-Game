@@ -1,120 +1,122 @@
 package model;
-// classe bean che gestisce i giochi del catalogo; 
 
 import java.io.Serializable;
 
-//import java.java.serializable; 
-
 public class Game_bean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private int id_gioco;
-	private String nome;
-	private String piattaforma;
-	private String genere;
-	private float prezzo; 
-	private int g_uscita;
-	private int m_uscita;
-	private int a_uscita;
-	private int quantita;
+    private int id_gioco;
+    private String nome;
+    private String piattaforma;
+    private String genere;
+    private float prezzo;
+    private int g_uscita;
+    private int m_uscita;
+    private int a_uscita;
+    private int quantita;
+    private byte[] immagine; // Aggiunta variabile per l'immagine del gioco
 
-	//creiamo un bean per ogni tabella del database. Da qui andiamo a creare il nostro DAO che ci servirà per connetterci al DataSource e, poi, al DB;  
-	public Game_bean() {
-		id_gioco = -1;
-		nome = "";
-		piattaforma = "";
-		genere = "";
-		g_uscita=-1; 
-		m_uscita=-1;
-		a_uscita=-1;
-		quantita = 0;
-	}
-//get e set per l'id; 
-	public int get_id_gioco() {
-		return id_gioco;
-	}
+    // Costruttore
+    public Game_bean() {
+        id_gioco = -1;
+        nome = "";
+        piattaforma =null;
+        genere = null;
+        prezzo = 0.0f;
+        g_uscita = -1;
+        m_uscita = -1;
+        a_uscita = -1;
+        quantita = 0;
+        immagine = null; // Inizializzazione dell'immagine
+    }
 
-	public void set_id_gioco(int id_gioco) {
-		this.id_gioco = id_gioco;
-	}
-	//get e set per nome; 
-	public String get_nome() {
-		return nome;
-	}
+    // Getter e setter per l'immagine
+    public byte[] getImmagine() {
+        return immagine;
+    }
 
-	public void set_nome(String nome) {
-		this.nome = nome;
-	}
-	
-//get e set per piattaforma; 
-	public String get_piattaforma() {
-		return piattaforma;
-	}
+    public void setImmagine(byte[] immagine) {
+        this.immagine = immagine;
+    }
 
-	public void set_piattaforma(String piattaforma) {
-		this.piattaforma = piattaforma;
-	}
-	
-//get e set per genere; 
-	public String get_genere() {
-		return genere;
-	}
+    // Altri getter e setter
+    public int get_id_gioco() {
+        return id_gioco;
+    }
 
-	public void set_genere(String genere) {
-		this.genere = genere;
-	}
+    public void set_id_gioco(int id_gioco) {
+        this.id_gioco = id_gioco;
+    }
 
-//get e set per prezzo; 
-	public float get_prezzo() {
-		return prezzo;
-	}
+    public String get_nome() {
+        return nome;
+    }
 
-	public void set_prezzo(float prezzo) {
-		this.prezzo = prezzo;
-	}
+    public void set_nome(String nome) {
+        this.nome = nome;
+    }
 
-//get e set per giorno di uscita del gioco; 
-	public int get_g_uscita() {
-		return g_uscita;
-	}
+    public String get_piattaforma() {
+        return piattaforma;
+    }
 
-	public void set_g_uscita(int g_uscita) {
-		this.g_uscita = g_uscita;
-	}
+    public void set_piattaforma(String piattaforma) {
+        this.piattaforma = piattaforma;
+    }
 
-//get e set per mese di uscita del gioco; 
-	public int get_m_uscita() {
-		return m_uscita;
-	}
+    public String get_genere() {
+        return genere;
+    }
 
-	public void set_m_uscita(int m_uscita) {
-		this.m_uscita = m_uscita;
-	}
+    public void set_genere(String genere) {
+        this.genere = genere;
+    }
 
-//get e set per anno di uscita del gioco; 
+    public float get_prezzo() {
+        return prezzo;
+    }
 
-	public int get_a_uscita() {
-		return a_uscita;
-	}
+    public void set_prezzo(float prezzo) {
+        this.prezzo = prezzo;
+    }
 
-	public void set_a_uscita(int a_uscita) {
-		this.a_uscita = a_uscita;
-	}
-	
-//get e set per quantità ; 
-	
-	public int get_quantita() {
-		return g_uscita;
-	}
+    public int get_g_uscita() {
+        return g_uscita;
+    }
 
-	public void set_quantita(int quantita) {
-		this.quantita = quantita;
-	}
+    public void set_g_uscita(int g_uscita) {
+        this.g_uscita = g_uscita;
+    }
 
-	@Override  //metodo per la stampa di una tupla della tabella "GIOCHI" del DB; 
-	public String toString() {
-		return id_gioco + " " + nome + " " + piattaforma + " " + genere + " " + g_uscita+"/"+m_uscita+"/"+"a_uscita"+" "+quantita;
-	}
+    public int get_m_uscita() {
+        return m_uscita;
+    }
 
+    public void set_m_uscita(int m_uscita) {
+        this.m_uscita = m_uscita;
+    }
+
+    public int get_a_uscita() {
+        return a_uscita;
+    }
+
+    public void set_a_uscita(int a_uscita) {
+        this.a_uscita = a_uscita;
+    }
+
+    public int get_quantita() {
+        return quantita;
+    }
+
+    public void set_quantita(int quantita) {
+        this.quantita = quantita;
+    }
+
+    @Override
+    public String toString() {
+        return "Game_bean [id_gioco=" + id_gioco + ", nome=" + nome + ", piattaforma=" + piattaforma + ", genere="
+                + genere + ", prezzo=" + prezzo + ", g_uscita=" + g_uscita + ", m_uscita=" + m_uscita + ", a_uscita="
+                + a_uscita + ", quantita=" + quantita + "]";
+    }
 }

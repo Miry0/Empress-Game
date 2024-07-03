@@ -1,5 +1,5 @@
 package model;
-//implementazione dell'interfaccia di Dao per la tabella "CARRELLO"; 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,187 +12,157 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class Carrello_DAODataSource implements IBeanDAO<Carrello_bean> {//implementiamo la classe bean degli utenti del catalogo che abbiamo creato
+public class Carrello_DAODataSource implements IBeanDAO<Carrello_bean> {
 
-	private static DataSource ds; 
-/*
-	static {
-		try {
-			Context initCtx = new InitialContext();
-			Context envCtx = (Context) initCtx.lookup("java:comp/env");
+    private static DataSource ds;
 
-			ds = (DataSource) envCtx.lookup("jdbc/storage");
+    private static final String TABLE_NAME = "CARRELLO";
 
-		} catch (NamingException e) {
-			System.out.println("Error:" + e.getMessage());
-		}
-	}
-*/
-	private static final String TABLE_NAME = "CARRELLO"; //passiamo il carrello 
+    @Override
+    public synchronized void doSave(Carrello_bean carrello) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-	@Override
-	//serve per inserire una nuova query nella tabella CARRELLO	; 
-	public synchronized void doSave(Carrello_bean Carrello) throws SQLException {
+        String insertSQL = "INSERT INTO " + Carrello_DAODataSource.TABLE_NAME
+                + " (n_ordine, id_utente, metodo_pagamento, totale, g_ordine, m_ordine, a_ordine, immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-		//creiamo una variabile "connession" che contenga la connessione al DB; 
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(insertSQL);
+            preparedStatement.setInt(1, carrello.get_n_ordine());
+            preparedStatement.setInt(2, carrello.get_id_utente());
+            preparedStatement.setString(3, carrello.get_metodo_pagamento());
+            preparedStatement.setFloat(4, carrello.get_totale());
+            preparedStatement.setInt(5, carrello.get_g_ordine());
+            preparedStatement.setInt(6, carrello.get_m_ordine());
+            preparedStatement.setInt(7, carrello.get_a_ordine());
+            preparedStatement.setBytes(8, carrello.getImmagine()); // Imposta l'immagine come array di byte
 
-		//prepariamo una query sql per l'inserimmento della nuoava riga nella tabella CARRELLO; 
-		String insertSQL = "INSERT INTO " + Carrello_DAODataSource.TABLE_NAME
-				+ " (n_ordine, id_utente, metodo_pagamento, totale, g_ordine, m_ordine, a_ordine) VALUES (?, ?, ?, ?, ?, ?, ?)"; //permettiamo l'inserimento di tuple nella table, attraverso una connessione tramite DAO+DataSource
+            preparedStatement.executeUpdate();
 
-	
-		try {// cerchiamo di recuperare i dati salvati nel BD per i vari campi; 
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(insertSQL);
-			preparedStatement.setInt(1, Carrello.get_n_ordine());
-			preparedStatement.setInt(2, Carrello.get_id_utente());
-			preparedStatement.setString(3, Carrello.get_metodo_pagamento());
-			preparedStatement.setFloat(4, Carrello.get_totale());
-			preparedStatement.setInt(5, Carrello.get_g_ordine());
-			preparedStatement.setInt(6, Carrello.get_m_ordine());
-			preparedStatement.setInt(7, Carrello.get_a_ordine());
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
+        }
+    }
 
-			//eseguiamo l'inserimento della query recuperata; ; 
-			preparedStatement.executeUpdate();
+    @Override
+    public synchronized boolean doDelete(int code) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-		} finally { //dopo l'eliminazione, effettuiamo un controllo e valutiamo se la connessione e la query sonon state chiuse/svuotate; 
-			//se ciò non è stato fatto, lo facciamo manualmente; 
-			try {
-				if (preparedStatement != null)
-					//chiudiamo la connessione con il Preparedstatment; 
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					//chiudimao la connessione con il DB; ; 
-					connection.close();
-			}
-		}
-	}
+        int result = 0;
 
-	@Override
-	//serve per eliminare una query dalla tabella CARRELLO; 
-	public synchronized boolean doDelete(int code) throws SQLException {
-		//stabiliamo una connessione con il DB; 
-		Connection connection = null;
-		//prepariamo una query per l'eliminazione di una tupla della tabella CARRELLO; 
-		PreparedStatement preparedStatement = null;
+        String deleteSQL = "DELETE FROM " + Carrello_DAODataSource.TABLE_NAME + " WHERE n_ordine = ?";
 
-		int result = 0;
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(deleteSQL);
+            preparedStatement.setInt(1, code);
 
-		String deleteSQL = "DELETE FROM " + Carrello_DAODataSource.TABLE_NAME + " WHERE CODE = ?";
+            result = preparedStatement.executeUpdate();
 
-		try {
-			//ottentiamo una connessione con il DB; 
-			connection = ds.getConnection();
-			
-			//salviamo i dati della query nella variabile 
-			preparedStatement = connection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, code);
-			
-			//eseguiamo l'eliminazione della quesry; 
-			result = preparedStatement.executeUpdate();
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
+        }
+        return (result != 0);
+    }
 
-		} finally {//controlliamo se la connessione e la query sono state chiuse/svuotate
-			try {
-				//nel caso contrario, lo facciamo manualmente; 
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		//restituisce true sel aquery è stata eliminata, altrimenti fslse; 
-		return (result != 0);
-	}
+    @Override
+    public synchronized Collection<Carrello_bean> doRetrieveAll(String order) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-	@Override
-	public synchronized Collection<Carrello_bean> doRetrieveAll(String order) throws SQLException {
-		Connection connection = null;
-		//preprata query per la selezione di tutte le righe della tabella CARRELLO; 
-		PreparedStatement preparedStatement = null;
-		
-		Collection<Carrello_bean> carrello = new LinkedList<Carrello_bean>();
+        Collection<Carrello_bean> carrelli = new LinkedList<Carrello_bean>();
 
-		String selectSQL = "SELECT * FROM " + Carrello_DAODataSource.TABLE_NAME;
+        String selectSQL = "SELECT * FROM " + Carrello_DAODataSource.TABLE_NAME;
 
-		if (order != null && !order.equals("")) {
-			selectSQL += " ORDER BY " + order;
-		}
+        if (order != null && !order.equals("")) {
+            selectSQL += " ORDER BY " + order;
+        }
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
-			
-			
-			ResultSet rs = preparedStatement.executeQuery();
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
 
-			while (rs.next()) {
-				//per ogni riga salvata in "rs", crea un oggetto Carrello_bean, imposta i valori con quelli salvati in "rs" e lo aggiunge alla collezione "carrello"; 
-				Carrello_bean bean = new Carrello_bean();
+            ResultSet rs = preparedStatement.executeQuery();
 
-				bean.set_n_ordine(rs.getInt("numero ordine"));
-				bean.set_id_utente(rs.getInt("codice utente"));
-				bean.set_metodo_pagamento(rs.getString("metodo di pagamento"));
-				bean.set_totale(rs.getFloat("importo totale"));
-				bean.set_g_ordine(rs.getInt("gg"));
-				bean.set_m_ordine(rs.getInt("mm"));
-				bean.set_a_ordine(rs.getInt("aaaa"));
-				
-				carrello.add(bean);
-			}
+            while (rs.next()) {
+                Carrello_bean carrello = new Carrello_bean();
 
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return carrello; //restituisce la collezione costruita; 
-	}
-	
-	@Override
-	//serve per selezione una riga della tabella CARRELLO utilizzando la chiave
-	public synchronized Carrello_bean doRetrieveByKey(int code) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		Carrello_bean bean = new Carrello_bean();//creiamo un nuovo bean, della classe Carrello
-		String selectSQL = "SELECT * FROM " + Carrello_DAODataSource.TABLE_NAME + " WHERE CODE = ?";
-		try {
-			connection = ds.getConnection();	
-			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setInt(1, code);
-			ResultSet rs = preparedStatement.executeQuery();
-			
-			while (rs.next()) {
-				//per ogni riga salvata in "rs", crea un oggetto Carrello_bean, imposta i valori con quelli salvati in "rs" e lo restituisce; 
+                carrello.set_n_ordine(rs.getInt("n_ordine"));
+                carrello.set_id_utente(rs.getInt("id_utente"));
+                carrello.set_metodo_pagamento(rs.getString("metodo_pagamento"));
+                carrello.set_totale(rs.getFloat("totale"));
+                carrello.set_g_ordine(rs.getInt("g_ordine"));
+                carrello.set_m_ordine(rs.getInt("m_ordine"));
+                carrello.set_a_ordine(rs.getInt("a_ordine"));
+                carrello.setImmagine(rs.getBytes("immagine")); // Ottiene l'immagine come array di byte
 
-				bean.set_n_ordine(rs.getInt("numero ordine"));
-				//int userId = rs.getInt("codice utente");
-				bean.set_n_ordine(rs.getInt("numero ordine"));
-		        int userId = rs.getInt("codice utente");
-		        bean.set_id_utente(userId);
-				bean.set_metodo_pagamento(rs.getString("metodo di pagamento"));
-				bean.set_totale(rs.getFloat("importo totale"));
-				bean.set_g_ordine(rs.getInt("gg"));
-				bean.set_m_ordine(rs.getInt("mm"));
-				bean.set_a_ordine(rs.getInt("aaaa"));
-			}
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return bean; //restituisce riga trovata; 
-	}
+                carrelli.add(carrello);
+            }
+
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
+        }
+        return carrelli;
+    }
+
+    @Override
+    public synchronized Carrello_bean doRetrieveByKey(int n_ordine) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Carrello_bean carrello = new Carrello_bean();
+
+        String selectSQL = "SELECT * FROM " + Carrello_DAODataSource.TABLE_NAME + " WHERE n_ordine = ?";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, n_ordine);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                carrello.set_n_ordine(rs.getInt("n_ordine"));
+                carrello.set_id_utente(rs.getInt("id_utente"));
+                carrello.set_metodo_pagamento(rs.getString("metodo_pagamento"));
+                carrello.set_totale(rs.getFloat("totale"));
+                carrello.set_g_ordine(rs.getInt("g_ordine"));
+                carrello.set_m_ordine(rs.getInt("m_ordine"));
+                carrello.set_a_ordine(rs.getInt("a_ordine"));
+                carrello.setImmagine(rs.getBytes("immagine"));
+            }
+
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
+        }
+        return carrello;
+    }
+
+    // Aggiungi eventuali altri metodi necessari per gestire l'interazione con il database
+
 }
-

@@ -1,149 +1,251 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.LinkedList;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import java.io.IOException;
+import java.sql.*;
+import java.util.Collection;
+import java.util.LinkedList;
 
+// Implementazione del DAO per la tabella "sta_nella_lista"
 public class Sta_nella_lista_DAODataSource implements IBeanDAO<Sta_nella_lista_bean> {
 
-	private static DataSource ds;
+    private static DataSource ds;
 
-	private static final String TABLE_NAME = "sta_nella_lista";
+    static {
+        try {
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
 
-	@Override
-	public synchronized void doSave(Sta_nella_lista_bean Sta_nella_lista) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+            ds = (DataSource) envCtx.lookup("jdbc/storage");
 
-		String insertSQL = "INSERT INTO " + Sta_nella_lista_DAODataSource.TABLE_NAME
-				+ " (id_lista, nome_utente, id_gioco) VALUES (?, ?, ?)";
+        } catch (NamingException e) {
+            System.out.println("Error:" + e.getMessage());
+        }
+    }
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(insertSQL);
-			preparedStatement.setInt(1, Sta_nella_lista.get_id_lista());
-			preparedStatement.setString(2, Sta_nella_lista.get_nome_utente());
-			preparedStatement.setInt(3, Sta_nella_lista.get_id_gioco());
+    private static final String TABLE_NAME = "sta_nella_lista";
 
-			preparedStatement.executeUpdate();
+    @Override
+    public synchronized void doSave(Sta_nella_lista_bean staNellaLista) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-	}
+        String insertSQL = "INSERT INTO " + TABLE_NAME + " (id_lista, nome_utente, id_gioco, immagine) VALUES (?, ?, ?, ?)";
 
-	@Override
-	public synchronized boolean doDelete(int code) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(insertSQL);
+            preparedStatement.setInt(1, staNellaLista.get_id_lista());
+            preparedStatement.setString(2, staNellaLista.get_nome_utente());
+            preparedStatement.setInt(3, staNellaLista.get_id_gioco());
+            preparedStatement.setBytes(4, staNellaLista.get_immagine()); // Imposta l'immagine come array di byte
 
-		int result = 0;
+            preparedStatement.executeUpdate();
+        } finally {
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
+    }
 
-		String deleteSQL = "DELETE FROM " + Sta_nella_lista_DAODataSource.TABLE_NAME + " WHERE CODE = ?";
+    public synchronized boolean deleteByListIdAndGameId(int idLista, String nomeUtente, int idGioco) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, code);
+        int result = 0;
 
-			result = preparedStatement.executeUpdate();
+        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id_lista = ? AND nome_utente = ? AND id_gioco = ?";
 
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return (result != 0);
-	}
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(deleteSQL);
+            preparedStatement.setInt(1, idLista);
+            preparedStatement.setString(2, nomeUtente);
+            preparedStatement.setInt(3, idGioco);
 
-	@Override
-	public synchronized Collection<Sta_nella_lista_bean> doRetrieveAll(String order) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+            result = preparedStatement.executeUpdate();
+        } finally {
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
 
-		Collection<Sta_nella_lista_bean> Sta_nella_lista = new LinkedList<Sta_nella_lista_bean>();
+        return (result != 0);
+    }
 
-		String selectSQL = "SELECT * FROM " + Sta_nella_lista_DAODataSource.TABLE_NAME;
+    @Override
+    public synchronized Collection<Sta_nella_lista_bean> doRetrieveAll(String order) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Collection<Sta_nella_lista_bean> listaDesideri = new LinkedList<>();
 
-		if (order != null && !order.equals("")) {
-			selectSQL += " ORDER BY " + order;
-		}
+        String selectSQL = "SELECT * FROM " + TABLE_NAME;
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
+        if (order != null && !order.equals("")) {
+            selectSQL += " ORDER BY " + order;
+        }
 
-			ResultSet rs = preparedStatement.executeQuery();
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            ResultSet rs = preparedStatement.executeQuery();
 
-			while (rs.next()) {
-				Sta_nella_lista_bean bean = new Sta_nella_lista_bean();
+            while (rs.next()) {
+                Sta_nella_lista_bean bean = new Sta_nella_lista_bean();
+                bean.set_id_lista(rs.getInt("id_lista"));
+                bean.set_nome_utente(rs.getString("nome_utente"));
+                bean.set_id_gioco(rs.getInt("id_gioco"));
+                bean.set_immagine(rs.getBytes("immagine")); // Recupera l'immagine come array di byte
 
-				bean.set_id_lista(rs.getInt("id_lista"));
-				bean.set_nome_utente(rs.getString("nome_utente"));
-				bean.set_id_gioco(rs.getInt("id_gioco"));
+                listaDesideri.add(bean);
+            }
+        } finally {
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
 
-				Sta_nella_lista.add(bean);
-			}
+        return listaDesideri;
+    }
 
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return Sta_nella_lista;
-	}
+    @Override
+    public synchronized Sta_nella_lista_bean doRetrieveByKey(int code) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Sta_nella_lista_bean bean = new Sta_nella_lista_bean();
 
-	@Override
-	public synchronized Sta_nella_lista_bean doRetrieveByKey(int code) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		Sta_nella_lista_bean bean = new Sta_nella_lista_bean();
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id_lista = ?";
 
-		String selectSQL = "SELECT * FROM " + Sta_nella_lista_DAODataSource.TABLE_NAME + " WHERE CODE = ?";
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, code);
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setInt(1, code);
-			ResultSet rs = preparedStatement.executeQuery();
+            ResultSet rs = preparedStatement.executeQuery();
 
-			while (rs.next()) {
-				bean.set_id_lista(rs.getInt("id_lista"));
-				bean.set_nome_utente(rs.getString("nome_utente"));
-				bean.set_id_gioco(rs.getInt("id_gioco"));
-			}
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-				
-			}
-		}
-		return bean;
-	}
+            if (rs.next()) {
+                bean.set_id_lista(rs.getInt("id_lista"));
+                bean.set_nome_utente(rs.getString("nome_utente"));
+                bean.set_id_gioco(rs.getInt("id_gioco"));
+                bean.set_immagine(rs.getBytes("immagine")); // Recupera l'immagine come array di byte
+            }
+        } finally {
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
+
+        return bean;
+    }
+
+
+    // Metodo per ottenere la lista dei desideri di un utente
+    public synchronized Collection<Sta_nella_lista_bean> getWishlistByUser(String nomeUtente) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Collection<Sta_nella_lista_bean> wishlist = new LinkedList<>();
+
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_utente = ?";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, nomeUtente);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Sta_nella_lista_bean bean = new Sta_nella_lista_bean();
+                bean.set_id_lista(rs.getInt("id_lista"));
+                bean.set_nome_utente(rs.getString("nome_utente"));
+                bean.set_id_gioco(rs.getInt("id_gioco"));
+                bean.set_immagine(rs.getBytes("immagine")); // Recupera l'immagine come array di byte
+
+                wishlist.add(bean);
+            }
+        } finally {
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
+
+        return wishlist;
+    }
+
+    // Metodo per recuperare l'immagine associata al gioco
+    public synchronized byte[] retrieveGameImage(int gameId) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        byte[] immagine = null;
+
+        String selectSQL = "SELECT immagine FROM giochi WHERE id_gioco = ?";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, gameId);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                immagine = rs.getBytes("immagine");
+            }
+        } finally {
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
+
+        return immagine;
+    }
+
+    // Metodo per ottenere l'ID del gioco dal nome
+    public synchronized int getGameIdFromName(String gameName) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        int idGioco = -1;
+
+        String selectSQL = "SELECT id_gioco FROM giochi WHERE nome = ?";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, gameName);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                idGioco = rs.getInt("id_gioco");
+            }
+        } finally {
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
+
+        return idGioco;
+    }
+    
+    public synchronized boolean doDelete(int code) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        int result = 0;
+
+        String deleteSQL = "DELETE FROM " + Sta_nella_lista_DAODataSource.TABLE_NAME + " WHERE id_lista = ?";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(deleteSQL);
+            preparedStatement.setInt(1, code);
+
+            result = preparedStatement.executeUpdate();
+
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
+        }
+        return (result != 0);
+    }
 }

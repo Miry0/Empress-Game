@@ -73,4 +73,14 @@
         <url-pattern>/Gestione_giochi_servlet</url-pattern>
     </servlet-mapping>
     
+     <!-- lista_desideri_servlet-->
+    <servlet>
+        <servlet-name>lista_desideri_servlet</servlet-name>
+        <servlet-class>control.lista_desideri_servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>lista_desideri_servlet</servlet-name>
+        <url-pattern>/lista_desideri_servlet</url-pattern>
+    </servlet-mapping>
+    
 </web-app>

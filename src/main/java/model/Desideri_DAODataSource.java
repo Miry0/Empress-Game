@@ -1,5 +1,7 @@
 package model;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,133 +16,153 @@ import javax.sql.DataSource;
 
 public class Desideri_DAODataSource implements IBeanDAO<Desideri_bean> {
 
-	private static DataSource ds;
+    private static DataSource ds;
 
-	private static final String TABLE_NAME = "LISTA_DESIDERI";
+    private static final String TABLE_NAME = "LISTA_DESIDERI";
 
-	@Override
-	public synchronized void doSave(Desideri_bean Lista_desideri) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+    @Override
+    public synchronized void doSave(Desideri_bean Lista_desideri) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-		String insertSQL = "INSERT INTO " + Desideri_DAODataSource.TABLE_NAME
-				+ " (id_lista, nome_utente) VALUES (?, ?)";
+        String insertSQL = "INSERT INTO " + Desideri_DAODataSource.TABLE_NAME
+                + " (id_lista, nome_utente, immagine) VALUES (?, ?, ?)";
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(insertSQL);
-			preparedStatement.setInt(1, Lista_desideri.get_id_lista());
-			preparedStatement.setString(2, Lista_desideri.get_nome_utente());
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(insertSQL);
+            preparedStatement.setInt(1, Lista_desideri.get_id_lista());
+            preparedStatement.setString(2, Lista_desideri.get_nome_utente());
 
-			preparedStatement.executeUpdate();
+            // Aggiunta dell'immagine
+            if (Lista_desideri.get_immagine() != null) {
+                InputStream inputStream = new ByteArrayInputStream(Lista_desideri.get_immagine());
+                preparedStatement.setBinaryStream(3, inputStream, Lista_desideri.get_immagine().length);
+            } else {
+                preparedStatement.setNull(3, java.sql.Types.BLOB);
+            }
 
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-	}
+            preparedStatement.executeUpdate();
 
-	@Override
-	public synchronized boolean doDelete(int code) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
+        }
+    }
 
-		int result = 0;
+    @Override
+    public synchronized boolean doDelete(int code) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-		String deleteSQL = "DELETE FROM " + Desideri_DAODataSource.TABLE_NAME + " WHERE CODE = ?";
+        int result = 0;
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, code);
+        String deleteSQL = "DELETE FROM " + Desideri_DAODataSource.TABLE_NAME + " WHERE id_lista = ?";
 
-			result = preparedStatement.executeUpdate();
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(deleteSQL);
+            preparedStatement.setInt(1, code);
 
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return (result != 0);
-	}
+            result = preparedStatement.executeUpdate();
 
-	@Override
-	public synchronized Collection<Desideri_bean> doRetrieveAll(String order) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
+        }
+        return (result != 0);
+    }
 
-		Collection<Desideri_bean> Lista_desideri = new LinkedList<Desideri_bean>();
+    @Override
+    public synchronized Collection<Desideri_bean> doRetrieveAll(String order) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-		String selectSQL = "SELECT * FROM " + Desideri_DAODataSource.TABLE_NAME;
+        Collection<Desideri_bean> Lista_desideri = new LinkedList<Desideri_bean>();
 
-		if (order != null && !order.equals("")) {
-			selectSQL += " ORDER BY " + order;
-		}
+        String selectSQL = "SELECT * FROM " + Desideri_DAODataSource.TABLE_NAME;
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
+        if (order != null && !order.equals("")) {
+            selectSQL += " ORDER BY " + order;
+        }
 
-			ResultSet rs = preparedStatement.executeQuery();
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
 
-			while (rs.next()) {
-				Desideri_bean bean = new Desideri_bean();
+            ResultSet rs = preparedStatement.executeQuery();
 
-				bean.set_id_lista(rs.getInt("id_lista"));
-				bean.set_nome_utente(rs.getString("nome_utente"));
+            while (rs.next()) {
+                Desideri_bean bean = new Desideri_bean();
 
-				Lista_desideri.add(bean);
-			}
+                bean.set_id_lista(rs.getInt("id_lista"));
+                bean.set_nome_utente(rs.getString("nome_utente"));
 
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return Lista_desideri;
-	}
+                // Recupero dell'immagine
+                byte[] immagine = rs.getBytes("immagine");
+                if (immagine != null && immagine.length > 0) {
+                    bean.set_immagine(immagine);
+                }
 
-	@Override
-	public synchronized Desideri_bean doRetrieveByKey(int code) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		Desideri_bean bean = new Desideri_bean();
+                Lista_desideri.add(bean);
+            }
 
-		String selectSQL = "SELECT * FROM " + Desideri_DAODataSource.TABLE_NAME + " WHERE CODE = ?";
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
+        }
+        return Lista_desideri;
+    }
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setInt(1, code);
-			ResultSet rs = preparedStatement.executeQuery();
+    @Override
+    public synchronized Desideri_bean doRetrieveByKey(int id_lista) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Desideri_bean bean = new Desideri_bean();
 
-			while (rs.next()) {
-				bean.set_id_lista(rs.getInt("id_lista"));
-				bean.set_nome_utente(rs.getString("nome_utente"));
-			}
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		
-		return bean;
-	}
+        String selectSQL = "SELECT * FROM " + Desideri_DAODataSource.TABLE_NAME + " WHERE id_lista = ?";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, id_lista);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                bean.set_id_lista(rs.getInt("id_lista"));
+                bean.set_nome_utente(rs.getString("nome_utente"));
+
+                // Recupero dell'immagine
+                byte[] immagine = rs.getBytes("immagine");
+                if (immagine != null && immagine.length > 0) {
+                    bean.set_immagine(immagine);
+                }
+            }
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
+        }
+        
+        return bean;
+    }
 }

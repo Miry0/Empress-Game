@@ -12,6 +12,7 @@ CREATE TABLE GIOCHI
 	m_uscita int NOT NULL, 
 	a_uscita int NOT NULL, 
     quantita int,
+    immagine mediumblob,
     
     PRIMARY KEY(id_gioco)
 ); 
@@ -36,6 +37,7 @@ CREATE TABLE LISTA_DESIDERI
 
 	id_lista int AUTO_INCREMENT, 
     nome_utente varchar(20) NOT NULL, 
+    immagine mediumblob, 
     
     PRIMARY KEY(id_lista),
     FOREIGN KEY(nome_utente) REFERENCES UTENTI(nome_utente)
@@ -48,6 +50,7 @@ CREATE TABLE sta_nella_lista
 	id_lista int NOT NULL, 
 	nome_utente varchar(20) NOT NULL, 
     id_gioco int NOT NULL, 
+    immagine mediumblob, 
     
     PRIMARY KEY(id),
     FOREIGN KEY (id_lista) REFERENCES LISTA_DESIDERI(id_lista),
@@ -65,6 +68,7 @@ CREATE TABLE CARRELLO
     g_ordine int NOT NULL, 
 	m_ordine int NOT NULL, 
 	a_ordine int NOT NULL, 
+	immagine mediumblob, 
     
     PRIMARY KEY(n_ordine), 
     foreign key(nome_utente) REFERENCES UTENTI(nome_utente)
@@ -99,6 +103,7 @@ CREATE TABLE legge
     FOREIGN KEY(id_utente) REFERENCES UTENTI(id_utente)
 ); 
 */
+
 -- Inserimenti nella tabella UTENTI con nomi utente univoci
 INSERT INTO UTENTI (nome_utente, nome, cognome, _password, email, tipo, g_nascita, m_nascita, a_nascita) 
 VALUES 

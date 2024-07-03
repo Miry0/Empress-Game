@@ -1,5 +1,5 @@
 package model;
-//implementazione dell'interfaccia di Dao per la tabella "UTENTI"; 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,198 +12,198 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class Game_DAODataSource implements IBeanDAO<Game_bean> {//implementiamo la classe bean degli utenti del catalogo che abbiamo creato
+public class Game_DAODataSource implements IBeanDAO<Game_bean> {
 
-	private static DataSource ds; 
-/*
-	static {
-		try {
-			Context initCtx = new InitialContext();
-			Context envCtx = (Context) initCtx.lookup("java:comp/env");
+    private static DataSource ds;
 
-			ds = (DataSource) envCtx.lookup("jdbc/storage");
+    private static final String TABLE_NAME = "GIOCHI";
 
-		} catch (NamingException e) {
-			System.out.println("Error:" + e.getMessage());
-		}
-	}
-*/
-	private static final String TABLE_NAME = "GIOCHI"; //passiamo il nome della lista degli utenti su Mysql
+    // Query SQL per l'inserimento di un nuovo gioco
+    private static final String INSERT_SQL = "INSERT INTO " + TABLE_NAME
+            + " (id_gioco, nome, piattaforma, genere, prezzo, g_uscita, m_uscita, a_uscita, immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-	@Override
-	public synchronized void doSave(Game_bean Giochi) throws SQLException {
+    // Query SQL per l'aggiornamento di un gioco esistente
+    private static final String UPDATE_SQL = "UPDATE " + TABLE_NAME
+            + " SET nome = ?, piattaforma = ?, genere = ?, prezzo = ?, g_uscita = ?, m_uscita = ?, a_uscita = ?, immagine = ? WHERE id_gioco = ?";
 
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+    // Query SQL per il recupero di tutti i giochi
+    private static final String SELECT_ALL_SQL = "SELECT * FROM " + TABLE_NAME;
 
-		String insertSQL = "INSERT INTO " + Game_DAODataSource.TABLE_NAME
-				+ " (id_gioco, nome, piattaforma, genere, prezzo, g_uscita, m_uscita, a_uscita) VALUES (?, ?, ?, ?, ?, ?, ?)"; //permettiamo l'inserimento di tuple nella table, attraverso una cinnessione tramite DAO+DataSource
+    // Query SQL per il recupero di un gioco tramite id_gioco
+    private static final String SELECT_BY_ID_SQL = "SELECT * FROM " + TABLE_NAME + " WHERE id_gioco = ?";
 
-		try { //cerchiamo una connessione del Db e recuperiiamo i dati salvati al suo interno
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(insertSQL);
-			preparedStatement.setInt(1, Giochi.get_id_gioco());
-			preparedStatement.setString(1, Giochi.get_nome());
-			preparedStatement.setString(2, Giochi.get_piattaforma());
-			preparedStatement.setString(3, Giochi.get_genere());
-			preparedStatement.setFloat(4, Giochi.get_prezzo());
-			preparedStatement.setInt(5, Giochi.get_g_uscita());
-			preparedStatement.setInt(6, Giochi.get_m_uscita());
-			preparedStatement.setInt(7, Giochi.get_a_uscita());
+    // Query SQL per l'eliminazione di un gioco tramite id_gioco
+    private static final String DELETE_SQL = "DELETE FROM " + TABLE_NAME + " WHERE id_gioco = ?";
 
-			preparedStatement.executeUpdate();
+    static {
+        try {
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
 
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-	}
+            ds = (DataSource) envCtx.lookup("jdbc/storage");
 
-	@Override
-	public synchronized boolean doDelete(int code) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+        } catch (NamingException e) {
+            System.out.println("Error:" + e.getMessage());
+        }
+    }
 
-		int result = 0;
+    @Override
+    public synchronized void doSave(Game_bean game) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-		String deleteSQL = "DELETE FROM " + Game_DAODataSource.TABLE_NAME + " WHERE CODE = ?";
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_SQL);
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, code);
+            preparedStatement.setInt(1, game.get_id_gioco());
+            preparedStatement.setString(2, game.get_nome());
+            preparedStatement.setString(3, game.get_piattaforma());
+            preparedStatement.setString(4, game.get_genere());
+            preparedStatement.setFloat(5, game.get_prezzo());
+            preparedStatement.setInt(6, game.get_g_uscita());
+            preparedStatement.setInt(7, game.get_m_uscita());
+            preparedStatement.setInt(8, game.get_a_uscita());
+            preparedStatement.setBytes(9, game.getImmagine());
 
-			result = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return (result != 0);
-	}
+        } finally {
+            closeResources(preparedStatement, connection);
+        }
+    }
 
-	@Override
-	public synchronized Collection<Game_bean> doRetrieveAll(String order) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+    @Override
+    public synchronized boolean doDelete(int id_gioco) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        int result = 0;
 
-		Collection<Game_bean> giochi = new LinkedList<Game_bean>();
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_SQL);
+            preparedStatement.setInt(1, id_gioco);
 
-		String selectSQL = "SELECT * FROM " + Game_DAODataSource.TABLE_NAME;
+            result = preparedStatement.executeUpdate();
 
-		if (order != null && !order.equals("")) {
-			selectSQL += " ORDER BY " + order;
-		}
+        } finally {
+            closeResources(preparedStatement, connection);
+        }
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
+        return (result != 0);
+    }
 
-			ResultSet rs = preparedStatement.executeQuery();
+    @Override
+    public synchronized Collection<Game_bean> doRetrieveAll(String order) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
-			while (rs.next()) {
-				Game_bean bean = new Game_bean();
+        Collection<Game_bean> games = new LinkedList<>();
 
-				bean.set_id_gioco(rs.getInt("code identificativo del gioco"));
-				bean.set_nome(rs.getString("nome"));
-				bean.set_piattaforma(rs.getString("piattaforma su cui è utilizzabile la key"));
-				bean.set_genere(rs.getString("genere"));
-				bean.set_prezzo(rs.getFloat("prezzo"));
-				bean.set_g_uscita(rs.getInt("gg"));
-				bean.set_m_uscita(rs.getInt("mm"));
-				bean.set_a_uscita(rs.getInt("aaaa"));
-				
-				giochi.add(bean);
-			}
+        String selectSQL = SELECT_ALL_SQL;
+        if (order != null && !order.isEmpty()) {
+            selectSQL += " ORDER BY " + order;
+        }
 
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return giochi;
-	}
-	
-	@Override
-	public synchronized Game_bean doRetrieveByKey(int code) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		Game_bean bean = new Game_bean();//creiamo un nuovo bean della classe Utenti
-		String selectSQL = "SELECT * FROM " + Game_DAODataSource.TABLE_NAME + " WHERE CODE = ?";
-		try {
-			connection = ds.getConnection();	
-			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setInt(1, code);
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next()) {
-				bean.set_id_gioco(rs.getInt("code identificativo del gioco"));
-				bean.set_nome(rs.getString("nome"));
-				bean.set_piattaforma(rs.getString("piattaforma su cui è utilizzabile la key"));
-				bean.set_genere(rs.getString("genere"));
-				bean.set_prezzo(rs.getFloat("prezzo"));
-				bean.set_g_uscita(rs.getInt("gg"));
-				bean.set_m_uscita(rs.getInt("mm"));
-				bean.set_a_uscita(rs.getInt("aaaa"));
-			}
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return bean;
-	}
-	
-	
-	public synchronized void update(Game_bean Giochi) throws SQLException {
-	    Connection connection = null;
-	    PreparedStatement preparedStatement = null;
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
 
-	    String updateSQL = "UPDATE " + Game_DAODataSource.TABLE_NAME + " SET nome = ?, piattaforma = ?, genere = ?, prezzo = ?, g_uscita = ?, m_uscita = ?, a_uscita = ? WHERE id_gioco = ?";
+            resultSet = preparedStatement.executeQuery();
 
-	    try {
-	        connection = ds.getConnection();
-	        preparedStatement = connection.prepareStatement(updateSQL);
-	        
-	        preparedStatement.setString(1, Giochi.get_nome());
-	        preparedStatement.setString(2, Giochi.get_piattaforma());
-	        preparedStatement.setString(3, Giochi.get_genere());
-	        preparedStatement.setFloat(4, Giochi.get_prezzo());
-	        preparedStatement.setInt(5, Giochi.get_g_uscita());
-	        preparedStatement.setInt(6, Giochi.get_m_uscita());
-	        preparedStatement.setInt(7, Giochi.get_a_uscita());
-	        preparedStatement.setInt(8, Giochi.get_id_gioco()); //viene utilizzato per identificare quale record nella tabella deve essere aggiornato.
+            while (resultSet.next()) {
+                Game_bean game = new Game_bean();
+                game.set_id_gioco(resultSet.getInt("id_gioco"));
+                game.set_nome(resultSet.getString("nome"));
+                game.set_piattaforma(resultSet.getString("piattaforma"));
+                game.set_genere(resultSet.getString("genere"));
+                game.set_prezzo(resultSet.getFloat("prezzo"));
+                game.set_g_uscita(resultSet.getInt("g_uscita"));
+                game.set_m_uscita(resultSet.getInt("m_uscita"));
+                game.set_a_uscita(resultSet.getInt("a_uscita"));
+                game.setImmagine(resultSet.getBytes("immagine"));
 
-	        preparedStatement.executeUpdate(); // Esegui l'aggiornamento nel database
+                games.add(game);
+            }
 
-	    } finally {
-	        try {
-	            if (preparedStatement != null)
-	                preparedStatement.close();
-	        } finally {
-	            if (connection != null)
-	                connection.close();
-	        }
-	    }
-	}
+        } finally {
+            closeResources(resultSet, preparedStatement, connection);
+        }
 
+        return games;
+    }
+
+    @Override
+    public synchronized Game_bean doRetrieveByKey(int id_gioco) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        Game_bean game = null;
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_BY_ID_SQL);
+            preparedStatement.setInt(1, id_gioco);
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                game = new Game_bean();
+                game.set_id_gioco(resultSet.getInt("id_gioco"));
+                game.set_nome(resultSet.getString("nome"));
+                game.set_piattaforma(resultSet.getString("piattaforma"));
+                game.set_genere(resultSet.getString("genere"));
+                game.set_prezzo(resultSet.getFloat("prezzo"));
+                game.set_g_uscita(resultSet.getInt("g_uscita"));
+                game.set_m_uscita(resultSet.getInt("m_uscita"));
+                game.set_a_uscita(resultSet.getInt("a_uscita"));
+                game.setImmagine(resultSet.getBytes("immagine"));
+            }
+
+        } finally {
+            closeResources(resultSet, preparedStatement, connection);
+        }
+
+        return game;
+    }
+
+    public synchronized void update(Game_bean game) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_SQL);
+
+            preparedStatement.setString(1, game.get_nome());
+            preparedStatement.setString(2, game.get_piattaforma());
+            preparedStatement.setString(3, game.get_genere());
+            preparedStatement.setFloat(4, game.get_prezzo());
+            preparedStatement.setInt(5, game.get_g_uscita());
+            preparedStatement.setInt(6, game.get_m_uscita());
+            preparedStatement.setInt(7, game.get_a_uscita());
+            preparedStatement.setBytes(8, game.getImmagine());
+            preparedStatement.setInt(9, game.get_id_gioco());
+
+            preparedStatement.executeUpdate();
+
+        } finally {
+            closeResources(preparedStatement, connection);
+        }
+    }
+
+    // Metodo per chiudere le risorse del database in modo sicuro
+    private void closeResources(AutoCloseable... resources) {
+        for (AutoCloseable resource : resources) {
+            if (resource != null) {
+                try {
+                    resource.close();
+                } catch (Exception e) {
+                    // Gestione dell'eccezione o log dell'errore
+                }
+            }
+        }
+    }
 }
-
-
