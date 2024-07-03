@@ -41,6 +41,7 @@ public class Sta_nella_lista_DAODataSource implements IBeanDAO<Sta_nella_lista_b
             preparedStatement.setInt(1, staNellaLista.get_id_lista());
             preparedStatement.setString(2, staNellaLista.get_nome_utente());
             preparedStatement.setInt(3, staNellaLista.get_id_gioco());
+            preparedStatement.setString(3, staNellaLista.get_nome_gioco());
             preparedStatement.setBytes(4, staNellaLista.get_immagine()); // Imposta l'immagine come array di byte
 
             preparedStatement.executeUpdate();
