@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
 
-@WebServlet("/wishlist")
+//@WebServlet("/wishlist")
 public class lista_desideri_servlet extends HttpServlet {
 
     private static DataSource ds;

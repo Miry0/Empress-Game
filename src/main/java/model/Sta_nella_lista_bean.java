@@ -1,25 +1,13 @@
 package model;
 
-import java.io.Serializable;
+public class Sta_nella_lista_bean {
+    private int id_lista;
+    private String nome_utente;
+    private int id_gioco;
+    private String nome_gioco;
+    private byte[] immagine;
 
-public class Sta_nella_lista_bean implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    private int id_lista; // chiave primaria
-    private String nome_utente; // chiave esterna. La poniamo come intera, invece che di tipo Utente_bean, in modo che ci si possa lavorare in maniera meno faticosa;
-    private int id_gioco; // chiave esterna;
-    private byte[] immagine; // immagine del prodotto
-
-    // Costruttore
-    public Sta_nella_lista_bean() {
-        id_lista = -1;
-        nome_utente = null;
-        id_gioco = -1;
-        immagine = null;
-    }
-
-    // Getter e setter
+    // Getters e setters
     public int get_id_lista() {
         return id_lista;
     }
@@ -44,16 +32,19 @@ public class Sta_nella_lista_bean implements Serializable {
         this.id_gioco = id_gioco;
     }
 
+    public String get_nome_gioco() {
+        return nome_gioco;
+    }
+
+    public void set_nome_gioco(String nome_gioco) {
+        this.nome_gioco = nome_gioco;
+    }
+
     public byte[] get_immagine() {
         return immagine;
     }
 
     public void set_immagine(byte[] immagine) {
         this.immagine = immagine;
-    }
-
-    @Override
-    public String toString() {
-        return id_lista + " " + nome_utente + " " + id_gioco;
     }
 }
