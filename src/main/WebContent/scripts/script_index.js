@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded", function() {
+	var contextPath = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2));
+    document.getElementById("style-css").href = contextPath + "/Style/style.css";
+    document.getElementById("logo-img").src = contextPath + "/images/logo.png";
+    document.querySelector('script[src=""]').src = contextPath + "/scripts/script_index.js";
+});
+
 // Funzione per mostrare/nascondere il menu
 function toggleMenu() {
   var menu = document.getElementById("menu");

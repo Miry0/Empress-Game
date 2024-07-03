@@ -14,7 +14,7 @@ import javax.servlet.RequestDispatcher;
 import model.Game_bean;
 import model.Game_DAODataSource;
 
-@WebServlet("/Gestione_giochi_servlet")
+//@WebServlet("/Gestione_giochi_servlet")
 public class Gestione_giochi_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
