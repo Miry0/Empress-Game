@@ -1,18 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Empress Games</title>
-  <link rel="stylesheet" href="Style\style.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css">
 </head>
 <body>
 
+<!-- Verifica del contesto dell'applicazione -->
+<%
+    String contextPath = request.getContextPath();
+%>
+
+
 <!-- Header con logo -->
 <header>
-  <img src="${pageContext.request.contextPath}/images/logo.jpg" alt="Logo">
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Style/style.css">
-  
+  <img src="<%= contextPath %>/images/logo.jpg" alt="Logo">
 </header>
 
 <!-- Bottone per attivare il menu -->
@@ -21,14 +28,14 @@
 <!-- Menu a comparsa -->
 <div id="menu" class="menu">
   <span class="close-icon" onclick="toggleMenu()">X</span> <!-- Icona di chiusura -->
-  <script src="profilo.html" id="profile-link">Profilo</script>
+  <a href="<%= contextPath %>scripts/Profilo_utente.jsp" id="profile-link">Profilo</a>
   <a href="#">Impostazioni</a>
   <a href="#">Logout</a>
   <!-- Aggiungi altre voci del menu qui se necessario -->
 </div>
 
 <!-- Inclusione del file JavaScript -->
-<script src="scripts/script_index.js"></script>
+<script src="<%= contextPath %>/scripts/script_index.js"></script>
 
 </body>
 </html>
