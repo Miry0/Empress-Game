@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <Context path="/WebContent">
     <Resource name="jdbc/MyDataSource"
               auth="Container"
@@ -12,3 +13,19 @@
                    serverTimezone=UTC&amp;useSSL=false&amp;
                    allowPublicKeyRetrieval=true"/>
 </Context>
+=======
+
+<Context path="/WebContent">
+	<Resource name="jdbc/MyDataSource"
+	auth="Container"
+	driverClassName="com.mysql.cj.jdbc.Driver"
+	type="javax.sql.DataSource"
+	username="root"
+	password="#basidat124!"
+	url="jdbc:mysql://localhost:3306/Empress_DB?useUnicode=true&amp;
+		useJDBCCompliantTimezoneShift=true&amp;
+		useLegacyDatetimeCode=false&amp;autoReconnect=true&amp;
+		serverTimezone=UTC&amp;useSSL=false&amp;
+		allowPublicKeyRetrieval=true"/>
+</Context>
+>>>>>>> refs/remotes/origin/master
