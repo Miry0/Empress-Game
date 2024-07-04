@@ -44,9 +44,11 @@
 <!-- Form di login -->
 <div class="login-form">
   <div class="login-container">
-    <form action="<%= contextPath %>/Login_servlet" method="POST">
-      <input type="text" name="username" placeholder="Username" required>
-      <input type="password" name="password" placeholder="Password" required>
+    <form id="loginForm" action="<%= contextPath %>/Login_servlet" method="POST" onsubmit="return validateForm()">
+      <input type="text" name="username" id="username" placeholder="Username">
+      <span id="usernameError" class="error-message"></span>
+      <input type="password" name="password" id="password" placeholder="Password">
+      <span id="passwordError" class="error-message"></span>
       <button type="submit">Login</button>
     </form>
   </div>

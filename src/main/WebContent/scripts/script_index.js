@@ -46,3 +46,28 @@ function toggleMenu() {
 function isUserAuthenticated() {
     return document.cookie.split(';').some((item) => item.trim().startsWith('session='));
 }
+
+function validateForm() {
+    var isValid = true;
+
+    var username = document.getElementById('username').value.trim();
+    var password = document.getElementById('password').value.trim();
+
+    var usernameError = document.getElementById('usernameError');
+    var passwordError = document.getElementById('passwordError');
+
+    usernameError.textContent = '';
+    passwordError.textContent = '';
+
+    if (username === '') {
+        usernameError.textContent = 'Compilare il campo';
+        isValid = false;
+    }
+
+    if (password === '') {
+        passwordError.textContent = 'Compilare il campo';
+        isValid = false;
+    }
+
+    return isValid;
+}
