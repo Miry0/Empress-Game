@@ -28,7 +28,7 @@
 <!-- Menu a comparsa -->
 <div id="menu" class="menu">
   <span class="close-icon" onclick="toggleMenu()">X</span> <!-- Icona di chiusura -->
-  <a href="<%= contextPath %>/profilo.html" id="profile-link">Profilo</a>
+  <a href="<%= contextPath %>/scripts/Profilo_utente.jsp" id="profile-link">Profilo</a>
   <a href="#">Impostazioni</a>
   <a href="#">Logout</a>
   <!-- Aggiungi altre voci del menu qui se necessario -->
