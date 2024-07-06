@@ -15,13 +15,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Empress Games - Login</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css">
-  <style>
-    /* Stile per il link di registrazione */
-    .register-link {
-      color: black;
-    }
-  </style>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css"> 
 </head>
 <body>
 
@@ -59,10 +53,11 @@
     </form>
     
     <!-- Link per la registrazione -->
-    <p>Non hai un account? <a class="register-link" href="<%= contextPath %>/scripts/Registrazione.jsp">Registrati qui </a></p>
+    <p>Non hai un account? <a class="link1" href="<%= contextPath %>/scripts/Registrazione.jsp">Registrati qui </a></p>
 
   </div>
 </div>
+
 
 <script src="<%= contextPath %>/scripts/script_index.js"></script>
 

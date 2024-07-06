@@ -1,39 +1,64 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="model.Utenti_bean" %>
+<jsp:useBean id="utente" class="model.Utenti_bean" scope="session"/>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Style/style.css">
 <title>Empress Game- Registrazione</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Style/style.css">
+
 
 </head>
 
 <body>
-<%-- <jsp:include page="header.jsp" /> --%>
+<!-- Verifica del contesto dell'applicazione -->
+<%
+    String contextPath = request.getContextPath();
+%>
 
-<h1 id="error_warning">  </h1>
-<form id=registrazione_form  onchange="validate()" onsubmit="return validateForm('registrazione_form', ['nome', 'cognome'], ['g_nascita', 'm_nascita', 'a_nascita']) action="Registrazione" method="post">
-	<fieldset>
-		<legend>Dati personali</legend>
+<!-- Header con logo -->
+<header>
+  <img src="<%= contextPath %>/images/logo.jpg" alt="Logo">
+</header>
+
+<!-- Bottone per attivare il menu -->
+<div class="toggle-btn" onclick="toggleMenu()"></div>
+
+<!-- Menu a comparsa -->
+<div id="menu" class="menu">
+  <span class="close-icon" onclick="toggleMenu()">X</span> <!-- Icona di chiusura -->
+  <a href="<%= contextPath %>/index.jsp">Home</a>
+  <a href="#">Impostazioni</a>
+  <a href="#">Logout</a>
+  <!-- Aggiungi altre voci del menu qui se necessario -->
+</div>
+
+<div class="login-form">
+ <div class="login-container">
+<form id=registrazione_form onsubmit="return validateForm('registrazione_form', ['nome', 'cognome'], ['g_nascita', 'm_nascita', 'a_nascita'])" action="<%= contextPath %>/Registrazione_servlet"  method="post">
+	
+		<h5>Dati personali</h5>
 			<input type="text" name="nome" placeholder="nome" class="formInput" required autofocus>
 			<input type="text" name="cognome" placeholder="cognome" class="formInput" required>
 			<input type="text" name="g_nascita" placeholder="giorno nascita 30" class="formInput" required>
 			<input type="text" name="m_nascita" placeholder="mese nascita 07" class="formInput" required>
 			<input type="text" name="a_nascita" placeholder="annno nascita 1987" class="formInput" required>
 			
-	</fieldset>
-	<fieldset>
-	<legend>Dati di login</legend>
+	
+	<h5>Dati di login</h5>
 	<input type="text" name="nome utente" placeholder="nome utente" class="formInput" required>
 	<input type="text" name="email" placeholder="email" class="formInput" required>
 	<input type="password" name="pass" placeholder="password" class="formInput" required>
 	<input type="password" name="repass" placeholder="reinserisci password" class="formInput" required>
-	</fieldset>
+	
+	 <span id="passwordError" class="error-message"></span>
 	
 	<input type="submit" name="invio" value="Invia" class="button1"  onclick="location.href='index.html';">
 	<input type="reset" name="reset" value="Reset" class="button1" >
 </form>
+</div>
+</div>
 
 </body>

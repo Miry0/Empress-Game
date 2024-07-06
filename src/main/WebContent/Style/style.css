@@ -104,6 +104,11 @@
     background-color: #555;
   }
   
+  /* Stile per il link di registrazione */
+    .login-form link {
+      color: black;
+    }
+  
   /* Media query per dispositivi con larghezza massima di 768px */
   @media screen and (max-width: 768px) {
     .menu {
@@ -125,5 +130,7 @@
     .error-message {
     color: red;
     font-size: 0.9em;
-}
+	}
+
+ 
   }
