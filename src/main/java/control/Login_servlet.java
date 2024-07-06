@@ -36,7 +36,7 @@ public class Login_servlet extends HttpServlet {
         session.setAttribute("loginAttempted", true);  //validazione della sessione creata per l'utente
 
         try {
-            Utenti_bean utente = utenti.verificaCredenziali(username, password);
+            Utenti_bean utente = utenti.verificaCredenziali(username, password); //verifica delle credenziali passate dall'utente
 
             if (utente != null) {
                 session.setAttribute("utente", utente);
@@ -66,6 +66,51 @@ public class Login_servlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("Pagina_login.jsp");
         dispatcher.forward(request, response);
     }
+    
+    private void updateProfile(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        // Recupera l'utente dal database tramite il suo identificativo
+        String nome_utente = request.getParameter("username"); // Supponiamo che "username" sia il parametro per identificare l'utente
+        Utenti_bean utente = utenti.doRetrieveByKey(nome_utente); // Sostituisci con il metodo corretto per recuperare l'utente dal DAO
+
+        if (utente != null) {
+            // Se l'utente esiste nel database, aggiorna i suoi dati se presenti nei parametri della richiesta
+            String nome = request.getParameter("nome");
+            if (nome != null && !nome.trim().isEmpty()) {
+                utente.set_nome(nome);
+            }
+
+            String cognome = request.getParameter("cognome");
+            if (cognome != null && !cognome.trim().isEmpty()) {
+                utente.set_cognome(cognome);
+            }
+
+            String email = request.getParameter("email");
+            if (email != null && !email.trim().isEmpty()) {
+                utente.set_email(email);
+            }
+
+            String password = request.getParameter("password");
+            if (password != null && !password.trim().isEmpty()) {
+                utente.set_password(password);
+            }
+
+            // E altri campi dell'utente che desideri aggiornare...
+
+            // Aggiorna l'utente nel database utilizzando il DAO
+            utenti.update(utente);
+
+            // Aggiornamento completato con successo
+            request.setAttribute("updateSuccess", true);
+        } else {
+            // Utente non trovato nel database, gestire l'errore o l'eccezione
+            request.setAttribute("updateError", "Utente non trovato nel database");
+        }
+
+        // Utilizza il dispatcher per inoltrare la richiesta alla pagina desiderata
+        RequestDispatcher dispatcher = request.getRequestDispatcher("Pagina_di_conferma.jsp");
+        dispatcher.forward(request, response);
+    }
+
 
     public void destroy() {
         super.destroy();
@@ -73,4 +118,3 @@ public class Login_servlet extends HttpServlet {
     }
 
 }
-

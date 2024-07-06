@@ -12,9 +12,15 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class Utenti_DAODataSource {//non implementiamo l'interfaccia dei DAo, perchè abbiamo dei metodi che prendono in ingresso dei parametri diversi
-    
+public class Utenti_DAODataSource {
+
     private static DataSource ds;
+
+    private static final String TABLE_NAME = "UTENTI";
+
+    // Query SQL per l'aggiornamento di un utente esistente
+    private static final String UPDATE_SQL = "UPDATE " + TABLE_NAME
+            + " SET nome = ?, cognome=?, _password = ?, tipo = ?, g_nascita = ?, m_nascita = ?, a_nascita = ? WHERE nome_utente = ?";
 
     static {
         try {
@@ -28,41 +34,33 @@ public class Utenti_DAODataSource {//non implementiamo l'interfaccia dei DAo, pe
         }
     }
 
-    private static final String TABLE_NAME = "UTENTI";
-
-   // @Override
     public synchronized void doSave(Utenti_bean utente) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         String insertSQL = "INSERT INTO " + TABLE_NAME
-                + " (nome_utente, nome, cognome, _password, tipo, g_nascita, m_nascita, a_nascita) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                + " (nome_utente, email, nome, cognome, _password, tipo, g_nascita, m_nascita, a_nascita) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
             preparedStatement.setString(1, utente.get_nome_utente());
-            preparedStatement.setString(2, utente.get_nome());
-            preparedStatement.setString(3, utente.get_cognome());
-            preparedStatement.setString(4, utente.get_password());
-            preparedStatement.setString(5, utente.get_tipo());
-            preparedStatement.setInt(6, utente.get_g_nascita());
-            preparedStatement.setInt(7, utente.get_m_nascita());
-            preparedStatement.setInt(8, utente.get_a_nascita());
+            preparedStatement.setString(2, utente.get_email());
+            preparedStatement.setString(3, utente.get_nome());
+            preparedStatement.setString(4, utente.get_cognome());
+            preparedStatement.setString(5, utente.get_password());
+            preparedStatement.setString(6, utente.get_tipo());
+            preparedStatement.setInt(7, utente.get_g_nascita());
+            preparedStatement.setInt(8, utente.get_m_nascita());
+            preparedStatement.setInt(9, utente.get_a_nascita());
 
             preparedStatement.executeUpdate();
 
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
+            closeResources(preparedStatement, connection);
         }
     }
 
-    //@Override
     public synchronized boolean doDelete(String nomeUtente) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -79,17 +77,11 @@ public class Utenti_DAODataSource {//non implementiamo l'interfaccia dei DAo, pe
             result = preparedStatement.executeUpdate();
 
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
+            closeResources(preparedStatement, connection);
         }
         return (result != 0);
     }
 
-   // @Override
     public synchronized Collection<Utenti_bean> doRetrieveAll(String order) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -113,6 +105,7 @@ public class Utenti_DAODataSource {//non implementiamo l'interfaccia dei DAo, pe
 
                 bean.set_nome_utente(rs.getString("nome_utente"));
                 bean.set_nome(rs.getString("nome"));
+                bean.set_email(rs.getString("email"));
                 bean.set_cognome(rs.getString("cognome"));
                 bean.set_password(rs.getString("_password"));
                 bean.set_tipo(rs.getString("tipo"));
@@ -125,17 +118,11 @@ public class Utenti_DAODataSource {//non implementiamo l'interfaccia dei DAo, pe
             rs.close();
 
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
+            closeResources(preparedStatement, connection);
         }
         return utenti;
     }
 
-   // @Override
     public synchronized Utenti_bean doRetrieveByKey(String nomeUtente) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -152,6 +139,7 @@ public class Utenti_DAODataSource {//non implementiamo l'interfaccia dei DAo, pe
             while (rs.next()) {
                 bean.set_nome_utente(rs.getString("nome_utente"));
                 bean.set_nome(rs.getString("nome"));
+                bean.set_email(rs.getString("email"));
                 bean.set_cognome(rs.getString("cognome"));
                 bean.set_password(rs.getString("_password"));
                 bean.set_tipo(rs.getString("tipo"));
@@ -162,23 +150,16 @@ public class Utenti_DAODataSource {//non implementiamo l'interfaccia dei DAo, pe
             rs.close();
 
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
+            closeResources(preparedStatement, connection);
         }
         return bean;
     }
-    /*Recupera l'utente dal database utilizzando il nome utente.
-    Se l'utente esiste, calcola l'hash della password inserita e confronta con quella memorizzata nel database.
-    Restituisce l'utente se le credenziali sono corrette, altrimenti restituisce null.*/
+
     public synchronized Utenti_bean verificaCredenziali(String username, String password) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         Utenti_bean bean = null;
-        String selectSQL = "SELECT * FROM " + Utenti_DAODataSource.TABLE_NAME + " WHERE nome_utente = ? AND _password = ?";
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_utente = ? AND _password = ?";
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
@@ -189,6 +170,7 @@ public class Utenti_DAODataSource {//non implementiamo l'interfaccia dei DAo, pe
                 bean = new Utenti_bean();
                 bean.set_nome_utente(rs.getString("nome_utente"));
                 bean.set_nome(rs.getString("nome"));
+                bean.set_email(rs.getString("email"));
                 bean.set_cognome(rs.getString("cognome"));
                 bean.set_password(rs.getString("password"));
                 bean.set_tipo(rs.getString("tipo"));
@@ -206,5 +188,41 @@ public class Utenti_DAODataSource {//non implementiamo l'interfaccia dei DAo, pe
             }
         }
         return bean;
+    }
+
+    public synchronized void update(Utenti_bean utente) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_SQL);
+
+            preparedStatement.setString(1, utente.get_nome_utente());
+            preparedStatement.setString(2, utente.get_email());
+            preparedStatement.setString(3, utente.get_nome());
+            preparedStatement.setString(4, utente.get_cognome());
+            preparedStatement.setString(5, utente.get_password());
+            preparedStatement.setString(6, utente.get_tipo());
+            preparedStatement.setInt(7, utente.get_g_nascita());
+            preparedStatement.setInt(8, utente.get_m_nascita());
+            preparedStatement.setInt(9, utente.get_a_nascita());
+            preparedStatement.executeUpdate();
+
+        } finally {
+            closeResources(preparedStatement, connection);
+        }
+    }
+
+    private void closeResources(AutoCloseable... resources) {
+        for (AutoCloseable resource : resources) {
+            if (resource != null) {
+                try {
+                    resource.close();
+                } catch (Exception e) {
+                    // Gestione dell'eccezione o log dell'errore
+                }
+            }
+        }
     }
 }

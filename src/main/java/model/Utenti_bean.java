@@ -76,13 +76,13 @@ public class Utenti_bean implements Serializable {
 		}
 		
 		//get e set per email; 
-				public String get_email() {
-					return email;
-				}
+		public String get_email() {
+			return email;
+		}
 			
-				public void set_email(String email) {
-					this.email =email;
-				}
+		public void set_email(String email) {
+			this.email =email;
+		}
 				
 	//get e set della data di nascita dell'utenteo; 
 		public int get_g_nascita() {
