@@ -134,7 +134,7 @@ public class Gestione_giochi_servlet extends HttpServlet {
         }
 
         // Utilizza il dispatcher per inoltrare la richiesta alla pagina Gestione_catalogo.jsp
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_catalogo.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_catalogo.jsp"); 
         dispatcher.forward(request, response);
     }
 
