@@ -14,8 +14,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Empress Games</title>
+  <title>Empress Games - Login</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css">
+  <style>
+    /* Stile per il link di registrazione */
+    .register-link {
+      color: black;
+    }
+  </style>
 </head>
 <body>
 
@@ -51,6 +57,10 @@
       <span id="passwordError" class="error-message"></span>
       <button type="submit">Login</button>
     </form>
+    
+    <!-- Link per la registrazione -->
+    <p>Non hai un account? <a class="register-link" href="<%= contextPath %>/scripts/Registrazione.jsp">Registrati qui </a></p>
+
   </div>
 </div>
 
