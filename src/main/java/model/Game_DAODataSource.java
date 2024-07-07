@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -207,4 +208,41 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
             }
         }
     }
+    
+    public List<Game_bean> searchGamesByName(String nome) throws SQLException { //utile per la ricerca di un gioco tramite il nome
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        List<Game_bean> games = new LinkedList<>();
+        String searchSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome LIKE ?";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(searchSQL);
+            preparedStatement.setString(1, "%" + nome + "%"); // Per cercare il nome parziale in ogni parte della stringa nome
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) { 
+                Game_bean game = new Game_bean();
+                game.set_id_gioco(resultSet.getInt("id_gioco"));
+                game.set_nome(resultSet.getString("nome"));
+                game.set_piattaforma(resultSet.getString("piattaforma"));
+                game.set_genere(resultSet.getString("genere"));
+                game.set_prezzo(resultSet.getFloat("prezzo"));
+                game.set_g_uscita(resultSet.getInt("g_uscita"));
+                game.set_m_uscita(resultSet.getInt("m_uscita"));
+                game.set_a_uscita(resultSet.getInt("a_uscita"));
+                game.setImmagine(resultSet.getBytes("immagine"));
+
+                games.add(game); //aggiunge i giochi che rispettano il parametro di ricerca ad una lista da mostrare al client
+            }
+        } finally {
+            closeResources(resultSet, preparedStatement, connection); //chiude le risorse
+        }
+
+        return games; //restituisce la lista
+    }
+
 }

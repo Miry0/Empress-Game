@@ -49,7 +49,7 @@
       <span id="usernameError" class="error-message"></span>
       <input type="password" name="password" id="password" placeholder="Password">
       <span id="passwordError" class="error-message"></span>
-      <button type="submit">Login</button>
+      <button type="submit" >Login</button> <!-- gestito dalla Login_servlet -->
     </form>
     
     <!-- Link per la registrazione -->

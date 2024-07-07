@@ -82,4 +82,13 @@
         <url-pattern>/lista_desideri_servlet</url-pattern>
     </servlet-mapping>
     
+     <!-- Ricerca_servlet-->
+    <servlet>
+        <servlet-name>Ricerca_servlet</servlet-name>
+        <servlet-class>control.Ricerca_servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Ricerca_servlet</servlet-name>
+        <url-pattern>/Ricerca_servlet</url-pattern>
+    </servlet-mapping>
 </web-app>

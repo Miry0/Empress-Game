@@ -33,12 +33,12 @@ public class Logout_servlet extends HttpServlet {
         }
         
         // Redirige alla pagina di login
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("Pagina_login.jsp");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Gestione GET, redirige alla pagina di login
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("Pagina_login.jsp");
     }
 
     public void destroy() {
