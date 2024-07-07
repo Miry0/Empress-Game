@@ -55,7 +55,7 @@ public class Ricerca_servlet extends HttpServlet {
     private List<Game_bean> ricercaGioco(String query) {
         try {
             // Esegui la ricerca dei giochi nel DAO
-            return gameDAO.searchGamesByName(query); 
+            return gameDAO.searchGamesByName(query);
         } catch (Exception e) {
             e.printStackTrace(); // Gestione dell'errore in base alle tue esigenze
             return null;

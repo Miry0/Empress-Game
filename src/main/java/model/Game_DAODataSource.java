@@ -227,7 +227,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
             while (resultSet.next()) { 
                 Game_bean game = new Game_bean();
                 game.set_id_gioco(resultSet.getInt("id_gioco"));
-                game.set_nome(resultSet.getString("nome"));
+                game.set_nome(resultSet.getString("nome"));;
                 game.set_piattaforma(resultSet.getString("piattaforma"));
                 game.set_genere(resultSet.getString("genere"));
                 game.set_prezzo(resultSet.getFloat("prezzo"));

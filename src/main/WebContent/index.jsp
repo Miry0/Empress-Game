@@ -14,7 +14,7 @@
 
 <!-- Verifica del contesto dell'applicazione -->
 <%
-    String contextPath = request.getContextPath();
+    String contextPath = request.getContextPath();;
 %>
 
 
