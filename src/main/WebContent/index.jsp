@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="model.Game_bean" %>
+<%@ page import="java.util.Collection" %>
+
 
 <!DOCTYPE html>
 <html lang="it">
@@ -14,7 +17,7 @@
 
 <!-- Verifica del contesto dell'applicazione -->
 <%
-    String contextPath = request.getContextPath();
+    String contextPath = request.getContextPath();;
 %>
 
 
@@ -39,7 +42,7 @@
 
 <!-- Barra di ricerca -->
 <div class="search-container">
-  <form action="<%= contextPath %>/RicercaServlet" method="post">
+  <form action="<%= contextPath %>/scripts/Risultati_ricerca.jsp" method="post">
     <div class="search-form">
       <input type="text" placeholder="Cerca giochi per nome..." name="nomeGioco" class="search-input">
       <button type="submit" class="search-button">Cerca</button>
@@ -47,8 +50,50 @@
   </form>
 </div>
 
+
+<h1>Catalogo Giochi</h1>
+
+<!-- Form per selezionare l'ordinamento -->
+<form action="Gestione_giochi_servlet" method="get">
+    <label for="order">Ordina per:</label>
+    <select name="order" id="order">
+        <option value="nome">Nome</option>
+        <option value="prezzo">Prezzo</option>
+        <option value="genere">Genere</option>
+        <option value="piattaforma">Piattaforma</option>
+    </select>
+    <input type="submit" value="Ordina">
+</form>
+
+<!-- Codice per visualizzare la lista dei giochi -->
+<%
+    Collection<Game_bean> games = (Collection<Game_bean>) request.getAttribute("games");
+    if (games != null && !games.isEmpty()) {
+        for (Game_bean game : games) {
+%>
+    <div>
+        <h2><%= game.get_nome() %></h2>
+        <p>Piattaforma: <%= game.get_piattaforma() %></p>
+        <p>Genere: <%= game.get_genere() %></p>
+        <p>Prezzo: <%= game.get_prezzo() %></p>
+        <p>Data di uscita: <%= game.get_g_uscita() %>-<%= game.get_m_uscita() %>-<%= game.get_a_uscita() %></p>
+        <% if (game.getImmagine() != null) { %>
+        <img src="data:image/jpeg;base64,<%= new String(game.getImmagine()) %>" alt="<%= game.get_nome() %>">
+        <% } %>
+    </div>
+<%
+        }
+    } else {
+%>
+    <p>Nessun gioco disponibile.</p>
+<%
+    }
+%>
+
+
 <!-- Inclusione del file JavaScript -->
 <script src="<%= contextPath %>/scripts/script_index.js"></script>
 
 </body>
 </html>
+
