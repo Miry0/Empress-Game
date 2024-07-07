@@ -93,8 +93,41 @@ public class Login_servlet extends HttpServlet {
             if (password != null && !password.trim().isEmpty()) {
                 utente.set_password(password);
             }
-
-            // E altri campi dell'utente che desideri aggiornare...
+            
+            
+            String g_nascitaStr = request.getParameter("g_nascita");//restituisce una stringa che rappresenta il valore del parametro g_nascita passato nella richiesta HTTP
+            if (g_nascitaStr != null && !g_nascitaStr.trim().isEmpty()) {
+                try {
+                    int g_nascita = Integer.parseInt(g_nascitaStr);
+                    utente.set_g_nascita(g_nascita);
+                } catch (NumberFormatException e) { //se la conversione in intero non va a buon fine, si solleva l'eccezione
+                   
+                    // diamo errore direttamente sul campo
+                }
+            }
+            
+            String m_nascitaStr = request.getParameter("m_nascita");//restituisce una stringa che rappresenta il valore del parametro g_nascita passato nella richiesta HTTP
+            if (m_nascitaStr != null && !m_nascitaStr.trim().isEmpty()) {
+                try {
+                    int m_nascita = Integer.parseInt(m_nascitaStr);
+                    utente.set_g_nascita(m_nascita);
+                } catch (NumberFormatException e) { //se la conversione in intero non va a buon fine, si solleva l'eccezione
+                   
+                    // diamo errore direttamente sul campo
+                }
+            }
+            
+            String a_nascitaStr = request.getParameter("a_nascita");//restituisce una stringa che rappresenta il valore del parametro g_nascita passato nella richiesta HTTP
+            if (a_nascitaStr != null && !a_nascitaStr.trim().isEmpty()) {
+                try {
+                    int a_nascita = Integer.parseInt(a_nascitaStr);
+                    utente.set_g_nascita(a_nascita);
+                } catch (NumberFormatException e) { //se la conversione in intero non va a buon fine, si solleva l'eccezione
+                   
+                    // diamo errore direttamente sul campo
+                }
+            }
+            
 
             // Aggiorna l'utente nel database utilizzando il DAO
             utenti.update(utente);
@@ -106,8 +139,8 @@ public class Login_servlet extends HttpServlet {
             request.setAttribute("updateError", "Utente non trovato nel database");
         }
 
-        // Utilizza il dispatcher per inoltrare la richiesta alla pagina desiderata
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Pagina_di_conferma.jsp");
+        // Utilizza il dispatcher per inoltrare la richiesta alla pagina Profilo_utente
+        RequestDispatcher dispatcher = request.getRequestDispatcher("Profilo_utente.jsp");
         dispatcher.forward(request, response);
     }
 
