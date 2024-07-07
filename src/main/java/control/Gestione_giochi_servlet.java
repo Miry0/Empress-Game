@@ -1,9 +1,13 @@
 package control;
 
 import java.io.ByteArrayOutputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,6 +29,30 @@ public class Gestione_giochi_servlet extends HttpServlet {
         // Inizializzazione del DAO per interagire con il database dei giochi
         gameDAO = new Game_DAODataSource();
     }
+    
+    //usiamo il metodo doGet: utilizzato per richiedere dati al server. In questo caso, la lista dei giochi
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            // Recupera il parametro di ordinamento dalla richiesta HTTP
+        	String order = request.getParameter("order");
+            if (order == null || order.isEmpty()) {
+                order = "nome"; // Ordina per nome di default (alfabetico)
+            }
+
+            // Recupera i giochi dal database con l'ordinamento specificato
+            Collection<Game_bean> games = gameDAO.doRetrieveAll(order);
+
+            // Passa i giochi alla JSP per la visualizzazione
+            request.setAttribute("games", games);
+
+            // Inoltra la richiesta alla JSP per la visualizzazione dei dati
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+            dispatcher.forward(request, response);
+        } catch (SQLException e) {
+            throw new ServletException("Database error", e); // Gestisce le eccezioni SQL
+        }
+    }
+
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Ottiene l'azione richiesta dalla richiesta HTTP

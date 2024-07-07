@@ -56,7 +56,7 @@ CREATE TABLE sta_nella_lista
     FOREIGN KEY (id_lista) REFERENCES LISTA_DESIDERI(id_lista),
     FOREIGN KEY(nome_utente) REFERENCES LISTA_DESIDERI(nome_utente), 
     FOREIGN KEY(id_gioco) REFERENCES GIOCHI(id_gioco),
-    UNIQUE KEY (id_lista, id_gioco, id_utente) -- Garantisce che un gioco possa apparire solo una volta in una lista dei desideri di un utente specifico
+    UNIQUE KEY (id_lista, id_gioco, nome_utente) -- Garantisce che un gioco possa apparire solo una volta in una lista dei desideri di un utente specifico
 ); 
 
 CREATE TABLE CARRELLO
@@ -74,16 +74,16 @@ CREATE TABLE CARRELLO
     foreign key(nome_utente) REFERENCES UTENTI(nome_utente)
 ); 
 
-/*
+
 CREATE TABLE sta_nel_carrello
 (
 	n_ordine int NOT NULL, 
     id_gioco int NOT NULL,
     
     FOREIGN KEY(id_gioco) REFERENCES GIOCHI(id_gioco),
-    FOREIGN KEY(n_ordine) REFERENCES CARRELLO(id_gioco)
+    FOREIGN KEY(n_ordine) REFERENCES CARRELLO(n_ordine)
 ); 
-*/
+
 
 CREATE TABLE STORICO
 (
@@ -116,28 +116,28 @@ VALUES
 ('Hobi@789@', 'Hoseok', 'Jung', 'password', 'hoseok.jung@example.com', 'base', 18, 2, 1994),  
 ('Jin@!567@', 'Seokjin', 'Kim', 'password', 'seokjin.kim@example.com', 'base', 4, 12, 1992);
 
--- Inserimenti nella tabella GIOCHI
-INSERT INTO GIOCHI (nome, piattaforma, genere, prezzo, g_uscita, m_uscita, a_uscita, quantita) 
+-- Inserimenti nella tabella GIOCHI con immagini
+INSERT INTO GIOCHI (nome, piattaforma, genere, prezzo, g_uscita, m_uscita, a_uscita, quantita, immagine) 
 VALUES 
-('Zelda', 'Nintendo', 'Azione', 59.99, 3, 3, 2017, 10),
-('FIFA 21', 'PlayStation', 'Sport', 49.99, 6, 10, 2020, 25),
-('Minecraft', 'PC', 'Avventura', 26.95, 18, 11, 2011, 100),
-('Cyberpunk 2077', 'PC', 'RPG', 59.99, 10, 12, 2020, 50);
+('Zelda', 'Nintendo', 'Azione', 59.99, 3, 3, 2017, 10, NULL), -- Inserisci l'immagine corrispondente come mediumblob
+('FIFA 21', 'PlayStation', 'Sport', 49.99, 6, 10, 2020, 25, NULL), -- Inserisci l'immagine corrispondente come mediumblob
+('Minecraft', 'PC', 'Avventura', 26.95, 18, 11, 2011, 100, NULL), -- Inserisci l'immagine corrispondente come mediumblob
+('Cyberpunk 2077', 'PC', 'RPG', 59.99, 10, 12, 2020, 50, NULL); -- Inserisci l'immagine corrispondente come mediumblob
 
 -- Inserimenti nella tabella LISTA_DESIDERI
-INSERT INTO LISTA_DESIDERI (nome_utente) 
+INSERT INTO LISTA_DESIDERI (nome_utente, immagine) 
 VALUES 
-('Alex@123!'), 
-('JKook@789!'), 
-('TaeHyung!23'), 
-('Jimin@!456'),
-('RM@345!abc'),
-('Suga@123$'),
-('Hobi@789@'),
-('Jin@!567@');
+('Alex@123!', NULL), 
+('JKook@789!', NULL), 
+('TaeHyung!23', NULL), 
+('Jimin@!456', NULL),
+('RM@345!abc', NULL),
+('Suga@123$', NULL),
+('Hobi@789@', NULL),
+('Jin@!567@', NULL);
 
 -- Inserimenti nella tabella CARRELLO
-INSERT INTO CARRELLO (nome_utente, metodo_pagamento, totale, g_ordine, m_ordine, a_ordine) 
+INSERT INTO CARRELLO ( nome_utente, metodo_pagamento, totale, g_ordine, m_ordine, a_ordine) 
 VALUES 
 ('Alex@123!', 'Carta di credito', 59.99, 12, 6, 2023),
 ('JKook@789!', 'PayPal', 49.99, 15, 6, 2023),

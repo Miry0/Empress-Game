@@ -64,7 +64,7 @@
                                 <input type="hidden" name="nome_gioco" value="<%= product.get_nome_gioco() %>">
                                 <input type="hidden" name="nome_utente" value="<%= product.get_nome_utente() %>">
                                 <input type="hidden" name="id_lista" value="<%= product.get_id_lista() %>">
-                                <button type="submit">Aggiungi al carrello</button>
+                                <button type="submit">Aggiungi al carrello</button> <!-- tasto per l'aggiunta nel carrello -->
                             </form>
                             <form action="wishlist" method="post">
                                 <input type="hidden" name="action" value="remove">

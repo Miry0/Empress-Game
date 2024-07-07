@@ -10,6 +10,8 @@
     <title>Empress Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   	<title>Empress Games - Catalogo Giochi</title>
+  	 <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css">
+  	
  	<!-- va aggiunto un foglio di stile -->
     <!-- Includi qui i tuoi stili CSS se necessario -->
 </head>
