@@ -13,6 +13,7 @@ import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 public class Game_DAODataSource implements IBeanDAO<Game_bean> {
@@ -36,18 +37,12 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
     private static final String SELECT_BY_ID_SQL = "SELECT * FROM " + TABLE_NAME + " WHERE id_gioco = ?";
 
     // Query SQL per l'eliminazione di un gioco tramite id_gioco
-    private static final String DELETE_SQL = "DELETE FROM " + TABLE_NAME + " WHERE id_gioco = ?";
+    private static final String DELETE_SQL = "DELETE FROM " + TABLE_NAME + " WHERE id_gioco = ?";;
 
-    static {
-        try {
-            Context initCtx = new InitialContext();
-            Context envCtx = (Context) initCtx.lookup("java:comp/env");
 
-            ds = (DataSource) envCtx.lookup("jdbc/storage");
-
-        } catch (NamingException e) {
-            System.out.println("Error:" + e.getMessage());
-        }
+ // Costruttore per ottenere il DataSource dal contesto dell'applicazione
+    public Game_DAODataSource(ServletContext context) {
+        ds = (DataSource) context.getAttribute("DataSource");
     }
 
     @Override
@@ -239,7 +234,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
                 games.add(game); //aggiunge i giochi che rispettano il parametro di ricerca ad una lista da mostrare al client
             }
         } finally {
-            closeResources(resultSet, preparedStatement, connection); //chiude le risorse
+            //closeResources(resultSet, preparedStatement, connection); //chiude le risorse
         }
 
         return games; //restituisce la lista

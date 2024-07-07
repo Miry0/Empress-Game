@@ -27,7 +27,7 @@ public class Gestione_giochi_servlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         // Inizializzazione del DAO per interagire con il database dei giochi
-        gameDAO = new Game_DAODataSource();
+        gameDAO = new Game_DAODataSource(getServletContext());
     }
     
     //usiamo il metodo doGet: utilizzato per richiedere dati al server. In questo caso, la lista dei giochi
