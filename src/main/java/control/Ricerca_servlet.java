@@ -24,7 +24,7 @@ public class Ricerca_servlet extends HttpServlet {
     // Metodo init della servlet
     public void init() throws ServletException {
         // Inizializzazione del DAO dei giochi
-        gameDAO = new Game_DAODataSource();
+        gameDAO = new Game_DAODataSource(getServletContext());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
