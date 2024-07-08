@@ -12,7 +12,7 @@
     	utente = (Utenti_bean) session.getAttribute("utente");
     // Se l'utente non è loggato, reindirizza alla pagina di login
     if (utente == null) {
-        response.sendRedirect("Pagina_login.jsp");;
+        response.sendRedirect("Pagina_login.jsp");
         return;
     }
 %>
@@ -69,7 +69,6 @@
         </div>
 
         <!-- Form per Eliminare Gioco -->
-      
         <div class="game-list">
             <h3>Elimina Gioco</h3>
             <!--  form invia una richiesta alla servlet con un parametro gameSearch per cercare giochi per nome. -->
@@ -98,14 +97,12 @@
                             </li>
                 <%
                         }
-                        
                     }
                 %>
             </ul>
         </div>
    
     
-    <!-- Inclusione del file JavaScript -->
-	<script src="<%= contextPath %>/scripts/script_index.js"></script>
+    <script src="<%= contextPath %>/scripts/script_index.js"></script>
 </body>
 </html>

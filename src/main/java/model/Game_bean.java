@@ -19,7 +19,7 @@ public class Game_bean implements Serializable {
 
     // Costruttore
     public Game_bean() {
-        id_gioco = -1;;
+        id_gioco = -1;
         nome = "";
         piattaforma =null;
         genere = null;

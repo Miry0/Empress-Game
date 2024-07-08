@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -97,7 +96,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        Collection<Game_bean> games = new ArrayList<>(); // Utilizzo di ArrayList per maggiore efficienza
+        Collection<Game_bean> games = new LinkedList<>();
 
         String selectSQL = SELECT_ALL_SQL;
         if (order != null && !order.isEmpty()) {
@@ -124,8 +123,9 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
 
                 games.add(game);
             }
+
         } finally {
-            closeResources(resultSet, preparedStatement, connection); // Chiude le risorse in modo sicuro
+            closeResources(resultSet, preparedStatement, connection);
         }
 
         return games;
@@ -203,6 +203,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
             }
         }
     }
+
     
     public List<Game_bean> searchGamesByName(String nome) throws SQLException { //utile per la ricerca di un gioco tramite il nome
         Connection connection = null;
@@ -239,5 +240,6 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
 
         return games; //restituisce la lista
     }
-
 }
+
+
