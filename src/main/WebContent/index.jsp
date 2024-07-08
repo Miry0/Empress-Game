@@ -3,7 +3,6 @@
 <%@ page import="model.Game_bean" %>
 <%@ page import="java.util.Collection" %>
 
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -13,32 +12,32 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_barra_ricerca.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_carrello_profilo.css">
+
   
 </head>
 <body>
 
 <!-- Verifica del contesto dell'applicazione -->
 <%
-    String contextPath = request.getContextPath();;
+    String contextPath = request.getContextPath();
 %>
-
 
 <!-- Header con logo -->
 <header>
   <img src="<%= contextPath %>/images/logo.jpg" alt="Logo">
-</header>
-
-<!-- Bottone per attivare il menu -->
-<div class="toggle-btn" onclick="toggleMenu()"></div>
-
-<div onclick="location.href='<%= contextPath %>/scripts/Carrello.jsp'">
+  <div class="header-right">
+    <div onclick="location.href='<%= contextPath %>/scripts/Carrello.jsp'">
       <img src="<%= contextPath %>/images/cart-icon.png" alt="Carrello">
     </div>
     <div onclick="location.href='<%= contextPath %>/scripts/Profilo_utente.jsp'">
       <img src="<%= contextPath %>/images/user-icon.png" alt="Profilo">
     </div>
-    
-    
+  </div>
+</header>
+
+<!-- Bottone per attivare il menu -->
+<div class="toggle-btn" onclick="toggleMenu()"></div>
+
 <!-- Menu a comparsa -->
 <div id="menu" class="menu">
   <span class="close-icon" onclick="toggleMenu()">X</span> <!-- Icona di chiusura -->
@@ -59,7 +58,6 @@
     </div>
   </form>
 </div>
-
 
 <h1>Catalogo Giochi</h1>
 
@@ -100,10 +98,8 @@
     }
 %>
 
-
 <!-- Inclusione del file JavaScript -->
 <script src="<%= contextPath %>/scripts/script_index.js"></script>
 
 </body>
 </html>
-
