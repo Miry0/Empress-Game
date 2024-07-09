@@ -81,7 +81,7 @@
 
 <!-- Codice per visualizzare la lista dei giochi -->
 <%
-    Collection<Game_bean> games = (Collection<Game_bean>) request.getAttribute("games");
+    Collection<Game_bean> games = (Collection<Game_bean>) request.getAttribute("listaGiochi");
     if (games != null && !games.isEmpty()) {
         for (Game_bean game : games) {
 %>

@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 import model.Game_bean;
 import model.Game_DAODataSource;
@@ -24,7 +25,8 @@ public class Ricerca_servlet extends HttpServlet {
     // Metodo init della servlet
     public void init() throws ServletException {
         // Inizializzazione del DAO dei giochi
-        gameDAO = new Game_DAODataSource(getServletContext());
+    	 DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
+         gameDAO = new Game_DAODataSource(ds);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
