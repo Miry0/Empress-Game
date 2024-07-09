@@ -34,7 +34,7 @@ public class MyServletContextListener implements ServletContextListener {
 	
 }
 */
-
+import javax.servlet.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -52,14 +52,21 @@ public class MyServletContextListener implements ServletContextListener {
         // Creazione del contesto iniziale JNDI
         InitialContext contesto_init;
         DataSource ds = null;
+        ServletContext context= event.getServletContext();
         
         try {
             contesto_init = new InitialContext();
             // Lookup del DataSource
-            ds = (MyDataSource) contesto_init.lookup("java:/comp/env/jdbc/MyDataSource");
+           // ds = (DataSource) contesto_init.lookup("java:/comp/env/jdbc/MyDataSource");
+            
+            Context contesto_init = new InitialContext();
+            Context envCtx = (Context) contesto_init.lookup("java:comp/env");
+
+            ds = (DataSource) envCtx.lookup("jdbc/MyDataSource");
+            
             // Utilizzo del DataSource ottenuto
-            event.getServletContext().setAttribute("myDataSource", ds);
-            System.out.println("DataSource inizializzato correttamente");
+            context.setAttribute("MyDataSource", ds);
+            ServletContext.log("DataSource inizializzato correttamente");
         } catch (NamingException e) {
             // Gestione dell'eccezione in caso di errore durante il lookup del DataSource
             System.err.println("Errore durante il lookup del DataSource: " + e.getMessage());

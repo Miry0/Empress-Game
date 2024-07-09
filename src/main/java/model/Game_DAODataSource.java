@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 
 public class Game_DAODataSource implements IBeanDAO<Game_bean> {
 
-    private static DataSource ds;
+    private DataSource ds;
 
     private static final String TABLE_NAME = "GIOCHI";
     
@@ -40,8 +40,11 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
 
 
  // Costruttore per ottenere il DataSource dal contesto dell'applicazione
-    public Game_DAODataSource(ServletContext context) {
-        ds = (DataSource) context.getAttribute("MyDataSource");
+    public Game_DAODataSource(DataSource ds) {
+        this.ds=ds;
+        if(ds==null) {
+        	System.out.println("DataSource nullo");
+        }
     }
 
     @Override

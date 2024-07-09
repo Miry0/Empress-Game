@@ -14,7 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.sql.DataSource;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+
 import model.Game_bean;
 import model.Game_DAODataSource;
 
@@ -24,15 +27,19 @@ public class Gestione_giochi_servlet extends HttpServlet {
 
     private Game_DAODataSource gameDAO;
 
-    public void init() throws ServletException {
-        super.init();
+    public void init(ServletConfig cfg) throws ServletException {
+        super.init(cfg);
         // Inizializzazione del DAO per interagire con il database dei giochi
-        gameDAO = new Game_DAODataSource(getServletContext());
+       // gameDAO = new Game_DAODataSource(getServletContext());
     }
     
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
+            gameDAO = new Game_DAODataSource(ds);
+            	    
         try {
+        	
+        
             // Recupera il parametro "order" dalla richiesta
             String order = request.getParameter("order");
 
