@@ -40,8 +40,12 @@
   <span class="close-icon" onclick="toggleMenu()">X</span> <!-- Icona di chiusura -->
   <a href="<%= contextPath %>/index.jsp">Home</a>
   <a href="#">Impostazioni</a>
- 	
-  <!-- Aggiungi altre voci del menu qui se necessario -->
+</div>
+
+<!-- Box laterale con i bottoni -->
+<div class="sidebar">
+    <button onclick="location.href='<%= contextPath %>scripts/wishlist.jsp'">Lista Desideri</button>
+    <button onclick="location.href='<%= contextPath %>scripts/Storico_client.jsp'">I Miei Ordini</button>
 </div>
 	
 <div class="login-form">

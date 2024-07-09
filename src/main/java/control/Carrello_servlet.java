@@ -77,7 +77,7 @@ public class Carrello_servlet extends HttpServlet {
             throws ServletException, IOException {
         // Recupera i parametri dalla richiesta
         int n_ordine = Integer.parseInt(request.getParameter("n_ordine"));
-        int id_utente = Integer.parseInt(request.getParameter("id_utente"));
+        String nome_utente = request.getParameter("nome_utente");
         String metodo_pagamento = request.getParameter("metodo_pagamento");
         float totale = Float.parseFloat(request.getParameter("totale"));
         int g_ordine = Integer.parseInt(request.getParameter("g_ordine"));
@@ -88,7 +88,7 @@ public class Carrello_servlet extends HttpServlet {
         // Crea un nuovo oggetto Carrello_bean
         Carrello_bean carrello = new Carrello_bean();
         carrello.set_n_ordine(n_ordine);
-        carrello.set_id_utente(id_utente);
+        carrello.set_nome_utente(nome_utente);
         carrello.set_metodo_pagamento(metodo_pagamento);
         carrello.set_totale(totale);
         carrello.set_g_ordine(g_ordine);

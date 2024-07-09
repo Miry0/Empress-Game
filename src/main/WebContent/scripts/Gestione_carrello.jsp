@@ -33,8 +33,8 @@
             <tbody>
                 <% for (Carrello_bean prodotto : carrello) { %>
                     <tr>
-                        <td><%= prodotto.getNome() %></td>
-                        <td><%= prodotto.getQuantita() %></td>
+                        <td><%= prodotto.get_nome_utente() %></td>
+                        <td><%= prodotto.get_quantita() %></td>
                         <td><%= prodotto.getPrezzo() %></td>
                         <td>
                             <form action="${pageContext.request.contextPath}/Carrello_servlet" method="post">

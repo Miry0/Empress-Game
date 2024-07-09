@@ -34,7 +34,7 @@ public class Carrello_DAODataSource implements IBeanDAO<Carrello_bean> {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
             preparedStatement.setInt(1, carrello.get_n_ordine());
-            preparedStatement.setInt(2, carrello.get_id_utente());
+            preparedStatement.setString(2, carrello.get_nome_utente());
             preparedStatement.setString(3, carrello.get_metodo_pagamento());
             preparedStatement.setFloat(4, carrello.get_totale());
             preparedStatement.setInt(5, carrello.get_g_ordine());
@@ -106,7 +106,7 @@ public class Carrello_DAODataSource implements IBeanDAO<Carrello_bean> {
                 Carrello_bean carrello = new Carrello_bean();
 
                 carrello.set_n_ordine(rs.getInt("n_ordine"));
-                carrello.set_id_utente(rs.getInt("id_utente"));
+                carrello.set_nome_utente(rs.getString("nome_utente"));
                 carrello.set_metodo_pagamento(rs.getString("metodo_pagamento"));
                 carrello.set_totale(rs.getFloat("totale"));
                 carrello.set_g_ordine(rs.getInt("g_ordine"));
@@ -146,7 +146,7 @@ public class Carrello_DAODataSource implements IBeanDAO<Carrello_bean> {
 
             if (rs.next()) {
                 carrello.set_n_ordine(rs.getInt("n_ordine"));
-                carrello.set_id_utente(rs.getInt("id_utente"));
+                carrello.set_nome_utente(rs.getString("nome_utente"));
                 carrello.set_metodo_pagamento(rs.getString("metodo_pagamento"));
                 carrello.set_totale(rs.getFloat("totale"));
                 carrello.set_g_ordine(rs.getInt("g_ordine"));

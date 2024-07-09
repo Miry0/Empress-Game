@@ -7,7 +7,7 @@ public class Carrello_bean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int n_ordine;
-    private int id_utente;
+    private String nome_utente;
     private String metodo_pagamento;
     private Float totale;
     private int g_ordine;
@@ -18,7 +18,7 @@ public class Carrello_bean implements Serializable {
     // Costruttore
     public Carrello_bean() {
         n_ordine = -1;
-        id_utente = -1;
+        nome_utente = null;
         metodo_pagamento = null;
         totale = -1f;
         g_ordine = -1;
@@ -45,12 +45,12 @@ public class Carrello_bean implements Serializable {
         this.n_ordine = n_ordine;
     }
 
-    public int get_id_utente() {
-        return id_utente;
+    public String get_nome_utente() {
+        return nome_utente;
     }
 
-    public void set_id_utente(int id_utente) {
-        this.id_utente = id_utente;
+    public void set_nome_utente(String nome_utente) {
+        this.nome_utente = nome_utente;
     }
 
     public String get_metodo_pagamento() {
@@ -95,7 +95,7 @@ public class Carrello_bean implements Serializable {
 
     @Override
     public String toString() {
-        return "Carrello_bean [n_ordine=" + n_ordine + ", id_utente=" + id_utente + ", metodo_pagamento="
+        return "Carrello_bean [n_ordine=" + n_ordine + ", id_utente=" + nome_utente + ", metodo_pagamento="
                 + metodo_pagamento + ", totale=" + totale + ", g_ordine=" + g_ordine + ", m_ordine=" + m_ordine
                 + ", a_ordine=" + a_ordine + "]";
     }

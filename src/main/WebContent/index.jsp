@@ -32,7 +32,7 @@
 <!-- tasto per carrello e profilo -->
 <div class="header-right">
   
-<div onclick="location.href='<%= contextPath %>/scripts/Carrello.jsp'">
+<div onclick="location.href='<%= contextPath %>/scripts/Gestione_carrello.jsp'">
       <img src="<%= contextPath %>/images/cart-icon.png" alt="Carrello">
     </div>
     <div>
