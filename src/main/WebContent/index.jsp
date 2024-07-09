@@ -25,23 +25,29 @@
 <!-- Header con logo -->
 <header>
   <img src="<%= contextPath %>/images/logo.jpg" alt="Logo">
-  <div class="header-right">
-    <div onclick="location.href='<%= contextPath %>/scripts/Carrello.jsp'">
+  
+</header>
+<body>
+
+<!-- tasto per carrello e profilo -->
+<div class="header-right">
+  
+<div onclick="location.href='<%= contextPath %>/scripts/Carrello.jsp'">
       <img src="<%= contextPath %>/images/cart-icon.png" alt="Carrello">
     </div>
-    <div onclick="location.href='<%= contextPath %>/scripts/Profilo_utente.jsp'">
+    <div>
+    <a id="profile-link" href="<%= contextPath %>/scripts/Profilo_utente.jsp" >
       <img src="<%= contextPath %>/images/user-icon.png" alt="Profilo">
+    </a>
     </div>
-  </div>
-</header>
-
+ </div>
+   
 <!-- Bottone per attivare il menu -->
 <div class="toggle-btn" onclick="toggleMenu()"></div>
 
 <!-- Menu a comparsa -->
 <div id="menu" class="menu">
   <span class="close-icon" onclick="toggleMenu()">X</span> <!-- Icona di chiusura -->
-  <a href="<%= contextPath %>/scripts/Profilo_utente.jsp" id="profile-link">Profilo</a>
   <a href="<%= contextPath %>/scripts/Registrazione.jsp" id="profile-link">Registrati</a>
   <a href="<%= contextPath %>/scripts/Pagina_login.jsp" id="profile-link">Login</a>
   <a href="#">Impostazioni</a>
