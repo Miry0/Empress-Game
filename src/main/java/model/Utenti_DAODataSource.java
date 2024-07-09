@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 public class Utenti_DAODataSource {
@@ -22,16 +23,8 @@ public class Utenti_DAODataSource {
     private static final String UPDATE_SQL = "UPDATE " + TABLE_NAME
             + " SET nome = ?, cognome=?, _password = ?, tipo = ?, g_nascita = ?, m_nascita = ?, a_nascita = ? WHERE nome_utente = ?";
 
-    static {
-        try {
-            Context initCtx = new InitialContext();
-            Context envCtx = (Context) initCtx.lookup("java:comp/env");
-
-            ds = (DataSource) envCtx.lookup("jdbc/storage");
-
-        } catch (NamingException e) {
-            System.out.println("Error:" + e.getMessage());
-        }
+    public Utenti_DAODataSource(ServletContext context) {
+        ds = (DataSource) context.getAttribute("MyDataSource");
     }
 
     public synchronized void doSave(Utenti_bean utente) throws SQLException {

@@ -24,7 +24,7 @@ public class Login_servlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         // Inizializzazione del DAO per l'interazione con il database
-        utenti = new Utenti_DAODataSource();
+        utenti = new Utenti_DAODataSource(getServletContext());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

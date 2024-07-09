@@ -10,24 +10,16 @@ import java.util.LinkedList;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 public class Storico_DAODataSource implements IBeanDAO<Storico_bean> {//implementiamo la classe bean degli utenti del catalogo che abbiamo creato
 
 	private static DataSource ds; 
-/*
-	static {
-		try {
-			Context initCtx = new InitialContext();
-			Context envCtx = (Context) initCtx.lookup("java:comp/env");
-
-			ds = (DataSource) envCtx.lookup("jdbc/storage");
-
-		} catch (NamingException e) {
-			System.out.println("Error:" + e.getMessage());
-		}
-	}
-*/
+	
+	public Storico_DAODataSource(ServletContext context) {
+        ds = (DataSource) context.getAttribute("MyDataSource");
+    }
 	private static final String TABLE_NAME = "STORICO"; //passiamo il carrello 
 
 	@Override

@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 public class Desideri_DAODataSource implements IBeanDAO<Desideri_bean> {
@@ -19,7 +20,10 @@ public class Desideri_DAODataSource implements IBeanDAO<Desideri_bean> {
     private static DataSource ds;
 
     private static final String TABLE_NAME = "LISTA_DESIDERI";
-
+    
+    public Desideri_DAODataSource(ServletContext context) {
+        ds = (DataSource) context.getAttribute("MyDataSource");
+    }
     @Override
     public synchronized void doSave(Desideri_bean Lista_desideri) throws SQLException {
         Connection connection = null;

@@ -20,7 +20,7 @@ public class Carrello_DAODataSource implements IBeanDAO<Carrello_bean> {
     private static final String TABLE_NAME = "CARRELLO";
     
     public Carrello_DAODataSource(ServletContext context) {
-        ds = (DataSource) context.getAttribute("DataSource");
+        ds = (DataSource) context.getAttribute("MyDataSource");
     }
     @Override
     public synchronized void doSave(Carrello_bean carrello) throws SQLException {

@@ -3,6 +3,7 @@ package model;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.*;
@@ -14,16 +15,8 @@ public class Sta_nella_lista_DAODataSource implements IBeanDAO<Sta_nella_lista_b
 
     private static DataSource ds;
 
-    static {
-        try {
-            Context initCtx = new InitialContext();
-            Context envCtx = (Context) initCtx.lookup("java:comp/env");
-
-            ds = (DataSource) envCtx.lookup("jdbc/storage");
-
-        } catch (NamingException e) {
-            System.out.println("Error:" + e.getMessage());
-        }
+    public Sta_nella_lista_DAODataSource(ServletContext context) {
+        ds = (DataSource) context.getAttribute("MyDataSource");
     }
 
     private static final String TABLE_NAME = "sta_nella_lista";

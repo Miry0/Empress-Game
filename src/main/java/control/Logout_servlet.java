@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -20,8 +21,9 @@ public class Logout_servlet extends HttpServlet {
     private Utenti_DAODataSource utenti;
 
     public void init() throws ServletException {
-    	super.init(); 
+        super.init();
         // Inizializzazione del DAO per l'interazione con il database
+        utenti = new Utenti_DAODataSource(getServletContext());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

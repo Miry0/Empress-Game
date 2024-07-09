@@ -1,6 +1,7 @@
 package control;
 
 import model.Sta_nella_lista_bean;
+import model.Utenti_DAODataSource;
 import model.Sta_nella_lista_DAODataSource;
 
 import javax.naming.Context;
@@ -20,21 +21,13 @@ import java.util.Collection;
 //@WebServlet("/wishlist")
 public class lista_desideri_servlet extends HttpServlet {
 
-    private static DataSource ds;
+	private Sta_nella_lista_DAODataSource staNellaListaDAO;
 
-    static {
-        try {
-            Context initCtx = new InitialContext();
-            Context envCtx = (Context) initCtx.lookup("java:comp/env");
-
-            ds = (DataSource) envCtx.lookup("jdbc/storage");
-
-        } catch (NamingException e) {
-            System.out.println("Error:" + e.getMessage());
-        }
+    public void init() throws ServletException {
+        super.init();
+        // Inizializzazione del DAO per l'interazione con il database
+        staNellaListaDAO = new Sta_nella_lista_DAODataSource(getServletContext());
     }
-
-    private Sta_nella_lista_DAODataSource staNellaListaDAO = new Sta_nella_lista_DAODataSource();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

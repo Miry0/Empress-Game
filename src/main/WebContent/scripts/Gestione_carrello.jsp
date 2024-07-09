@@ -35,7 +35,7 @@
                     <tr>
                         <td><%= prodotto.get_nome_utente() %></td>
                         <td><%= prodotto.get_quantita() %></td>
-                        <td><%= prodotto.getPrezzo() %></td>
+                        <td><%= prodotto.get_prezzo() %></td>
                         <td>
                             <form action="${pageContext.request.contextPath}/Carrello_servlet" method="post">
                                 <input type="hidden" name="action" value="elimina">

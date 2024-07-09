@@ -20,7 +20,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
     private static DataSource ds;
 
     private static final String TABLE_NAME = "GIOCHI";
-
+    
     // Query SQL per l'inserimento di un nuovo gioco
     private static final String INSERT_SQL = "INSERT INTO " + TABLE_NAME
             + " (id_gioco, nome, piattaforma, genere, prezzo, g_uscita, m_uscita, a_uscita, immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -41,7 +41,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
 
  // Costruttore per ottenere il DataSource dal contesto dell'applicazione
     public Game_DAODataSource(ServletContext context) {
-        ds = (DataSource) context.getAttribute("DataSource");
+        ds = (DataSource) context.getAttribute("MyDataSource");
     }
 
     @Override

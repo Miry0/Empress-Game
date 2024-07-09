@@ -56,7 +56,7 @@ public class MyServletContextListener implements ServletContextListener {
         try {
             contesto_init = new InitialContext();
             // Lookup del DataSource
-            ds = (DataSource) contesto_init.lookup("java:/comp/env/jdbc/MyDataSource");
+            ds = (MyDataSource) contesto_init.lookup("java:/comp/env/jdbc/MyDataSource");
             // Utilizzo del DataSource ottenuto
             event.getServletContext().setAttribute("myDataSource", ds);
             System.out.println("DataSource inizializzato correttamente");

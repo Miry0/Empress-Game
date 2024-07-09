@@ -8,14 +8,25 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import model.Utenti_bean;
+import model.Sta_nella_lista_DAODataSource;
 import model.Utenti_DAODataSource;
 
 //@WebServlet("/UserProfileServlet")
 public class profili_servlet extends HttpServlet {
+	  private static final long serialVersionUID = 1L;
+	  
+	  private Utenti_DAODataSource utenti;
 
+	    public void init() throws ServletException {
+	        super.init();
+	        // Inizializzazione del DAO per l'interazione con il database
+	        utenti = new Utenti_DAODataSource(getServletContext());
+	        }
+	    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
+        
+    	HttpSession session = request.getSession(false);
         Utenti_bean utente = (Utenti_bean) session.getAttribute("utente");
 
         if (utente == null) {
@@ -32,5 +43,10 @@ public class profili_servlet extends HttpServlet {
 
             }
         }
+    }
+    
+    public void destroy() {
+        super.destroy();
+        // Eventuale chiusura risorse
     }
 }
