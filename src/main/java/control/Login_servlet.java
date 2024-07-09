@@ -33,28 +33,43 @@ public class Login_servlet extends HttpServlet {
         String password = request.getParameter("password");
 
         HttpSession session = request.getSession();
-        session.setAttribute("loginAttempted", true);  //validazione della sessione creata per l'utente
+        session.setAttribute("loginAttempted", true);
 
         try {
-            Utenti_bean utente = utenti.verificaCredenziali(username, password); //verifica delle credenziali passate dall'utente
+            Utenti_bean utente = utenti.verificaCredenziali(username, password);
 
             if (utente != null) {
                 session.setAttribute("utente", utente);
-                // Utilizzo di RequestDispatcher per inoltrare a login_successo.
-                //in questo modo, il client non vedrà il cambio di URL
-                
-                RequestDispatcher dispatcher = request.getRequestDispatcher("Login_successo.jsp");
-                dispatcher.forward(request, response);
+
+                // Determina la destinazione in base al tipo di utente
+                String tipoUtente = utente.get_tipo(); // recuperiamo il tipo   "admin" o "base"
+
+                if ("admin".equals(tipoUtente)) {
+                    // Reindirizza a Profilo_admin.jsp usando il dispatcher
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("Profilo_admin.jsp");
+                    dispatcher.forward(request, response);
+
+                    // Reindirizza a storico.jsp usando un altro dispatcher
+                    RequestDispatcher storicoDispatcher = request.getRequestDispatcher("storico.jsp");
+                    storicoDispatcher.forward(request, response);
+                } else if ("base".equals(tipoUtente)) {
+                    // Reindirizza a Profilo_utente.jsp usando il dispatcher
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("Profilo_utente.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    // Gestione altri tipi di utente, se necessario
+                    session.setAttribute("login-error", "Tipo di utente non gestito");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("Pagina_login.jsp");
+                    dispatcher.forward(request, response);
+                }
             } else {
                 session.setAttribute("login-error", "Credenziali non valide");
-                // Utilizzo di RequestDispatcher per inoltrare a Pagina_login.jsp con messaggio di errore
                 RequestDispatcher dispatcher = request.getRequestDispatcher("Pagina_login.jsp");
                 dispatcher.forward(request, response);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             session.setAttribute("login-error", "Errore del server");
-            // Utilizzo di RequestDispatcher per inoltrare a Pagina_login.jsp con messaggio di errore
             RequestDispatcher dispatcher = request.getRequestDispatcher("Pagina_login.jsp");
             dispatcher.forward(request, response);
         }

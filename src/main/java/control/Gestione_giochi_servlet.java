@@ -4,6 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +29,41 @@ public class Gestione_giochi_servlet extends HttpServlet {
         // Inizializzazione del DAO per interagire con il database dei giochi
         gameDAO = new Game_DAODataSource(getServletContext());
     }
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            // Recupera il parametro "order" dalla richiesta
+            String order = request.getParameter("order");
 
+            // Recupera la lista dei giochi dal DAO
+            Collection<Game_bean> listaGiochi = gameDAO.doRetrieveAll(order);
+            
+         // Converte la collezione in una lista per poterla ordinare
+            List<Game_bean> listaGiochi2 = new ArrayList<>(listaGiochi);
+            
+            // Ordina la lista in base al parametro "order"
+            if ("name".equals(order)) {
+                listaGiochi2.sort((g1, g2) -> g1.get_nome().compareToIgnoreCase(g2.get_nome()));
+            } else if ("prezzo".equals(order)) {
+                listaGiochi2.sort((g1, g2) -> Double.compare(g1.get_prezzo(), g2.get_prezzo()));
+            }
+            // Puoi aggiungere altri criteri di ordinamento qui
+            
+            // Imposta la lista dei giochi come attributo della richiesta per la JSP
+            request.setAttribute("listaGiochi", listaGiochi);
+
+            // Imposta il parametro "order" nella richiesta per essere utilizzato nella JSP
+            request.setAttribute("order", order);
+
+            // Inoltra la richiesta alla JSP per mostrare i giochi
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace(); // Gestisci l'eccezione in base alla tua logica
+            request.setAttribute("error", "Errore durante il recupero dei giochi.");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+    }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Ottiene l'azione richiesta dalla richiesta HTTP
         String action = request.getParameter("submitAction");

@@ -56,7 +56,7 @@ CREATE TABLE sta_nella_lista
     FOREIGN KEY (id_lista) REFERENCES LISTA_DESIDERI(id_lista),
     FOREIGN KEY(nome_utente) REFERENCES LISTA_DESIDERI(nome_utente), 
     FOREIGN KEY(id_gioco) REFERENCES GIOCHI(id_gioco),
-    UNIQUE KEY (id_lista, id_gioco, id_utente) -- Garantisce che un gioco possa apparire solo una volta in una lista dei desideri di un utente specifico
+    UNIQUE KEY (id_lista, id_gioco, nome_utente) -- Garantisce che un gioco possa apparire solo una volta in una lista dei desideri di un utente specifico
 ); 
 
 CREATE TABLE CARRELLO
@@ -104,10 +104,10 @@ CREATE TABLE legge
 ); 
 */
 
--- Inserimenti nella tabella UTENTI con nomi utente univoci
+/* Inserimenti nella tabella UTENTI con nomi utente univoci*/
 INSERT INTO UTENTI (nome_utente, nome, cognome, _password, email, tipo, g_nascita, m_nascita, a_nascita) 
 VALUES 
-('Alex@123!', 'Alessandro', 'D\'Africa', 'password', 'alessandro.dafrica@example.com', 'admin', 12, 12, 2012),
+('Alex@123!', 'Alessandro', 'DAfrica', 'password', 'alessandro.dafrica@example.com', 'admin', 12, 12, 2012 ),
 ('JKook@789!', 'Jungkook', 'Jeon', 'password', 'jungkook.jeon@example.com', 'base', 1, 8, 1997),  
 ('TaeHyung!23', 'Taehyung', 'Kim', 'password', 'taehyung.kim@example.com', 'base', 30, 12, 1995),  
 ('Jimin@!456', 'Jimin', 'Park', 'password', 'jimin.park@example.com', 'base', 13, 1, 1995),
@@ -116,13 +116,14 @@ VALUES
 ('Hobi@789@', 'Hoseok', 'Jung', 'password', 'hoseok.jung@example.com', 'base', 18, 2, 1994),  
 ('Jin@!567@', 'Seokjin', 'Kim', 'password', 'seokjin.kim@example.com', 'base', 4, 12, 1992);
 
--- Inserimenti nella tabella GIOCHI
-INSERT INTO GIOCHI (nome, piattaforma, genere, prezzo, g_uscita, m_uscita, a_uscita, quantita) 
+/*Inserimenti nella tabella GIOCHI*/
+
+INSERT INTO GIOCHI (nome, piattaforma, genere, prezzo, g_uscita, m_uscita, a_uscita, quantita, immagine) 
 VALUES 
-('Zelda', 'Nintendo', 'Azione', 59.99, 3, 3, 2017, 10),
-('FIFA 21', 'PlayStation', 'Sport', 49.99, 6, 10, 2020, 25),
-('Minecraft', 'PC', 'Avventura', 26.95, 18, 11, 2011, 100),
-('Cyberpunk 2077', 'PC', 'RPG', 59.99, 10, 12, 2020, 50);
+('Zelda', 'Nintendo', 'Azione', 59.99, 3, 3, 2017, 10, NULL),
+('FIFA 21', 'PlayStation', 'Sport', 49.99, 6, 10, 2020, 25,NULL),
+('Minecraft', 'PC', 'Avventura', 26.95, 18, 11, 2011, 100,NULL),
+('Cyberpunk 2077', 'PC', 'RPG', 59.99, 10, 12, 2020, 50,NULL);
 
 -- Inserimenti nella tabella LISTA_DESIDERI
 INSERT INTO LISTA_DESIDERI (nome_utente) 

@@ -76,6 +76,7 @@
     <!-- Link per il logout -->
     <button type="logout" href="Logout_servlet">Logout</button> <!-- gestito dalla Logout_servlet -->
    </div>
+   
 </div>
 <!-- Inclusione del file JavaScript -->
 <script src="<%= contextPath %>/scripts/script_index.js"></script>

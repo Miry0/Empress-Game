@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 public class Carrello_DAODataSource implements IBeanDAO<Carrello_bean> {
@@ -17,7 +18,10 @@ public class Carrello_DAODataSource implements IBeanDAO<Carrello_bean> {
     private static DataSource ds;
 
     private static final String TABLE_NAME = "CARRELLO";
-
+    
+    public Carrello_DAODataSource(ServletContext context) {
+        ds = (DataSource) context.getAttribute("DataSource");
+    }
     @Override
     public synchronized void doSave(Carrello_bean carrello) throws SQLException {
         Connection connection = null;
