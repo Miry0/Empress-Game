@@ -51,7 +51,7 @@
 <div class="login-form">
     <div class="login-container">
         <h5>Profilo Admin</h5>
-        <form id="profilo_form" action="<%= contextPath %>/Login_servlet" method="post" onsubmit="return validateForm('profilo_form', ['nome', 'cognome']);">
+        <form id="profilo_form" action="Login_servlet" method="post" onsubmit="return validateForm('profilo_form', ['nome', 'cognome']);">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" value="<%= utente.get_nome() %>"><br>
 
@@ -78,7 +78,7 @@
         </form>
         
         <!-- Link per il logout -->
-        <form action="<%= contextPath %>/scripts/Logout_" method="post">
+        <form action="Logout_servlet" method="post">
             <button type="submit">Logout</button> <!-- gestito dalla Logout_servlet -->
         </form>
         
