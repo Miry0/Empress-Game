@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 
 public class Utenti_DAODataSource {
 
-    private static DataSource ds;
+    private DataSource ds;
 
     private static final String TABLE_NAME = "UTENTI";
 
@@ -23,10 +23,16 @@ public class Utenti_DAODataSource {
     private static final String UPDATE_SQL = "UPDATE " + TABLE_NAME
             + " SET nome = ?, cognome=?, _password = ?, tipo = ?, g_nascita = ?, m_nascita = ?, a_nascita = ? WHERE nome_utente = ?";
 
-    public Utenti_DAODataSource(ServletContext context) {
-        ds = (DataSource) context.getAttribute("MyDataSource");
-    }
+    public Utenti_DAODataSource(DataSource ds) {
+        this.ds=ds;
+        if(ds==null) {
+        	System.out.println("DataSource utenti nullo");
+        }
+        else {
+        	System.out.println("DataSource utenti instanziaro correttamente");
 
+        }
+    }
     public synchronized void doSave(Utenti_bean utente) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -147,7 +153,8 @@ public class Utenti_DAODataSource {
         }
         return bean;
     }
-
+    
+    
     public synchronized Utenti_bean verificaCredenziali(String username, String password) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

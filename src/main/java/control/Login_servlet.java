@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 
+import model.Game_DAODataSource;
 import model.Utenti_DAODataSource;
 import model.Utenti_bean;
 
@@ -21,32 +24,36 @@ public class Login_servlet extends HttpServlet {
 
     private Utenti_DAODataSource utenti;
 
-    public void init() throws ServletException {
-        super.init();
-        // Inizializzazione del DAO per l'interazione con il database
-        utenti = new Utenti_DAODataSource(getServletContext());
+    public void init(ServletConfig cfg) throws ServletException {
+        super.init(cfg);
+        // Inizializzazione del DAO per interagire con il database dei giochi
+       // gameDAO = new Game_DAODataSource(getServletContext());
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+    DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
+    utenti = new Utenti_DAODataSource(ds);
+    
+           
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
-        HttpSession session = request.getSession();
-        session.setAttribute("loginAttempted", true);
+        
 
         try {
             Utenti_bean utente = utenti.verificaCredenziali(username, password);
+            HttpSession session = request.getSession();
 
             if (utente != null) {
-                session.setAttribute("utente", utente);
-
+            	; //se l'utente con il seguente nome utente e password è presente nel db, allora creiamo la sessione
+                session.setAttribute("utente", utente);   
+                session.setAttribute("loginAttempted", true); //se l'utente non ha la sessione, la crea
+                
                 // Determina la destinazione in base al tipo di utente
                 String tipoUtente = utente.get_tipo(); // recuperiamo il tipo   "admin" o "base"
 
                 if ("admin".equals(tipoUtente)) {
                     // Reindirizza a Profilo_admin.jsp usando il dispatcher
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("Profilo_admin.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("scripts/Profilo_admin.jsp");
                     dispatcher.forward(request, response);
 
                     // Reindirizza a storico.jsp usando un altro dispatcher
@@ -59,18 +66,19 @@ public class Login_servlet extends HttpServlet {
                 } else {
                     // Gestione altri tipi di utente, se necessario
                     session.setAttribute("login-error", "Tipo di utente non gestito");
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("Pagina_login.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("scripts/Pagina_login.jsp");
                     dispatcher.forward(request, response);
                 }
             } else {
                 session.setAttribute("login-error", "Credenziali non valide");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("Pagina_login.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("scripts/Pagina_login.jsp");
                 dispatcher.forward(request, response);
             }
         } catch (SQLException e) {
+            HttpSession session = request.getSession();
             e.printStackTrace();
             session.setAttribute("login-error", "Errore del server");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Pagina_login.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("scripts/Pagina_login.jsp");
             dispatcher.forward(request, response);
         }
     }

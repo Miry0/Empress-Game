@@ -19,7 +19,8 @@
 
 <%
     Collection<Game_bean> games = (Collection<Game_bean>) request.getAttribute("listaGiochi");
-    Collection<Game_bean> games3 = (Collection<Game_bean>) request.getAttribute("listaGiochi3");
+    //Collection<Game_bean> games3 = (Collection<Game_bean>) request.getAttribute("listaGiochi3");
+    
 %>
 
 <!-- Verifica del contesto dell'applicazione -->
@@ -37,9 +38,11 @@
 <!-- tasto per carrello e profilo -->
 <div class="header-right">
   
-<div onclick="location.href='<%= contextPath %>/scripts/Gestione_carrello.jsp'">
+  <form action="Carrello_servlet" method="post">
+	<div>
       <img src="<%= contextPath %>/images/cart-icon.png" alt="Carrello">
     </div>
+ </form>
     <div>
     <a id="profile-link" href="<%= contextPath %>/scripts/Profilo_utente.jsp" >
       <img src="<%= contextPath %>/images/user-icon.png" alt="Profilo">
@@ -89,21 +92,6 @@
 <%
     if (games != null && !games.isEmpty()) {
         for (Game_bean game : games) {
-%>
-    <div>
-        <h2><%= game.get_nome() %></h2>
-        <p>Piattaforma: <%= game.get_piattaforma() %></p>
-        <p>Genere: <%= game.get_genere() %></p>
-        <p>Prezzo: <%= game.get_prezzo() %></p>
-        <p>Data di uscita: <%= game.get_g_uscita() %>-<%= game.get_m_uscita() %>-<%= game.get_a_uscita() %></p>
-        <% if (game.getImmagine() != null) { %>
-        <img src="data:image/jpeg;base64,<%= new String(game.getImmagine()) %>" alt="<%= game.get_nome() %>">
-        <% } %>
-    </div>
-<%
-        }
-    } else if (games3 != null && !games3.isEmpty()) {
-        for (Game_bean game : games3) {
 %>
     <div>
         <h2><%= game.get_nome() %></h2>

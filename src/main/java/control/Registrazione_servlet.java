@@ -5,11 +5,13 @@ import java.io.IOException;
 
 import java.sql.SQLException;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 import model.Utenti_DAODataSource;
 import model.Utenti_bean;
@@ -20,16 +22,17 @@ public class Registrazione_servlet extends HttpServlet {
     
     private Utenti_DAODataSource utenti; // DAO per l'interazione con il database degli utenti
     
-    public void init() throws ServletException {
-    	//Calling the parent function
-    	super.init();
-    	//inizializziamo le risorse che la servlet userà nel suo ciclo di vita; 
-    	utenti = new Utenti_DAODataSource(getServletContext()); // Inizializzazione del DAO all'avvio della servlet
+    public void init(ServletConfig cfg) throws ServletException {
+        super.init(cfg);
+        // Inizializzazione del DAO per interagire con il database dei giochi
+       // gameDAO = new Game_DAODataSource(getServletContext());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Recupera i parametri dal form di registrazione
-    	
+    	DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
+        utenti = new Utenti_DAODataSource(ds);
+        
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String password = request.getParameter("password");
@@ -53,8 +56,9 @@ public class Registrazione_servlet extends HttpServlet {
             // Salva il nuovo utente nel database utilizzando il DAO
             utenti.doSave(nuovoUtente);
             
+            request.setAttribute("nuovoUtente", nuovoUtente);
             // Reindirizzamento alla pagina di conferma registrazione
-            response.sendRedirect("registrazione_successo.jsp");
+            request.getRequestDispatcher("scripts/Successo_registrazione.jsp").forward(request, response);
         } catch (SQLException e) {
             // Gestione dell'eccezione SQL
             e.printStackTrace();

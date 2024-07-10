@@ -1,10 +1,13 @@
 package control; 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
+
 import java.io.IOException;
 
 import model.Utenti_bean;
@@ -17,14 +20,16 @@ public class profili_servlet extends HttpServlet {
 	  
 	  private Utenti_DAODataSource utenti;
 
-	    public void init() throws ServletException {
-	        super.init();
-	        // Inizializzazione del DAO per l'interazione con il database
-	        utenti = new Utenti_DAODataSource(getServletContext());
-	        }
+	  public void init(ServletConfig cfg) throws ServletException {
+	        super.init(cfg);
+	        // Inizializzazione del DAO per interagire con il database dei giochi
+	       // gameDAO = new Game_DAODataSource(getServletContext());
+	    }
 	    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
+        utenti = new Utenti_DAODataSource(ds);
         
     	HttpSession session = request.getSession(false);
         Utenti_bean utente = (Utenti_bean) session.getAttribute("utente");

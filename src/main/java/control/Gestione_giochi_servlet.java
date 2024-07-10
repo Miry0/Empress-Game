@@ -44,13 +44,6 @@ public class Gestione_giochi_servlet extends HttpServlet {
             // Recupera il parametro "order" dalla richiesta
             String order = request.getParameter("order");
             
-            if(order==null) {
-            System.out.println("order1"+ order);
-            Collection<Game_bean> listaGiochi3 = gameDAO.Mostra_tutto(); //se il parametro order è null, viene mostrata semplicemente la lista dei giochi
-            System.out.println("listaGiochi3"+ listaGiochi3);
-
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-            }
             // Recupera la lista dei giochi dal DAO
             Collection<Game_bean> listaGiochi = gameDAO.doRetrieveAll(order);
             
