@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -36,7 +37,7 @@ public class Gestione_giochi_servlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
             gameDAO = new Game_DAODataSource(ds);
-            	    
+            
         try {
         	
         
@@ -46,6 +47,7 @@ public class Gestione_giochi_servlet extends HttpServlet {
             // Recupera la lista dei giochi dal DAO
             Collection<Game_bean> listaGiochi = gameDAO.doRetrieveAll(order);
             
+          
          // Converte la collezione in una lista per poterla ordinare
             List<Game_bean> listaGiochi2 = new ArrayList<>(listaGiochi);
             
@@ -65,6 +67,7 @@ public class Gestione_giochi_servlet extends HttpServlet {
 
             // Inoltra la richiesta alla JSP per mostrare i giochi
             request.getRequestDispatcher("index.jsp").forward(request, response);
+
         } catch (Exception e) {
             e.printStackTrace(); // Gestisci l'eccezione in base alla tua logica
             request.setAttribute("error", "Errore durante il recupero dei giochi.");
@@ -73,8 +76,12 @@ public class Gestione_giochi_servlet extends HttpServlet {
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Ottiene l'azione richiesta dalla richiesta HTTP
-        String action = request.getParameter("submitAction");
-
+    	 DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
+         gameDAO = new Game_DAODataSource(ds);
+         
+      String action = request.getParameter("submitAction");
+       System.out.println("1action " + action);
+        
         try {
             // Gestisce le diverse azioni in base al parametro 'submitAction'
             if ("Aggiungi".equals(action)) {
@@ -83,6 +90,11 @@ public class Gestione_giochi_servlet extends HttpServlet {
                 updateGame(request, response); // Aggiorna un gioco esistente
             } else if ("Elimina".equals(action)) {
                 deleteGame(request, response); // Elimina un gioco esistente
+            }
+            else if("search".equals(action)) {
+            	Ricerca(request, response);
+            	System.out.println("2action " + action);
+            	
             }
         } catch (SQLException e) {
             throw new ServletException("Database error", e); // Gestisce le eccezioni SQL
@@ -218,4 +230,30 @@ public class Gestione_giochi_servlet extends HttpServlet {
     public void destroy() {
         super.destroy();
     }
-}
+   
+    
+    private void Ricerca(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+    	DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
+        gameDAO = new Game_DAODataSource(ds);
+        
+    	//String order = request.getParameter("order");
+    	String name=request.getParameter("nomeGioco");//recuperiamo il nome del gioco dalla barra di ricerca
+    	//Collection<Game_bean> listaGiochi = gameDAO.doRetrieveAll(order);
+    	 System.out.println("Nome del gioco cercato: " + name);
+    	 
+    	List<Game_bean> listaGiochi=new LinkedList<>();
+    	
+    	try {
+    	listaGiochi=gameDAO.searchGamesByName(name); //chiamoiamo la ricerca con la fujnzione del dao
+    	System.out.println("Lista dei giochi : " + listaGiochi);
+    	}
+    	catch(SQLException e) {
+    		System.out.println("la lista dei giochi nella servlet è" + listaGiochi);
+    	}
+    	request.setAttribute("listaGiochi", listaGiochi);
+    	 request.getRequestDispatcher("scripts/Risultati_ricerca.jsp").forward(request, response); //gestiamo i risultati nella jsp designata
+    	
+    }
+    
+  }
+

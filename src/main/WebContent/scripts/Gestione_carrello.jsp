@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.Collection" %>
 <%@ page import="model.Carrello_bean" %>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -34,12 +35,11 @@
                 <% for (Carrello_bean prodotto : carrello) { %>
                     <tr>
                         <td><%= prodotto.get_nome_utente() %></td>
-                        <td><%= prodotto.get_quantita() %></td>
-                        <td><%= prodotto.get_prezzo() %></td>
+                        <td><%= prodotto.get_totale() %></td>
                         <td>
                             <form action="${pageContext.request.contextPath}/Carrello_servlet" method="post">
                                 <input type="hidden" name="action" value="elimina">
-                                <input type="hidden" name="n_ordine" value="<%= prodotto.getN_ordine() %>">
+                                <input type="hidden" name="n_ordine" value="<%= prodotto.get_n_ordine() %>">
                                 <button type="submit">Elimina</button>
                             </form>
                         </td>

@@ -57,14 +57,15 @@
 
 <!-- Barra di ricerca -->
 <div class="search-container">
-  <form action="<%= contextPath %>/scripts/Risultati_ricerca.jsp" method="post">
+  <form action="Gestione_giochi_servlet" method="post">
     <div class="search-form">
-      <input type="text" placeholder="Cerca giochi per nome..." name="nomeGioco" class="search-input">
-      <button type="submit" class="search-button">Cerca</button>
+      <input type="text" placeholder="Cerca giochi per nome..." name="nomeGioco"  id="nomeGioco" class="search-input">
+      <button type="submit" name="submitAction" value="search" class="search-button">Cerca</button>
     </div>
   </form>
 </div>
 
+    
 <h1>Catalogo Giochi</h1>
 
 <!-- Form per selezionare l'ordinamento -->

@@ -1,5 +1,6 @@
-package control; 
+//package control; 
 
+/*
 import java.io.IOException;
 import java.util.List;
 
@@ -70,3 +71,4 @@ public class Ricerca_servlet extends HttpServlet {
         gameDAO = null;
     }
 }
+*/

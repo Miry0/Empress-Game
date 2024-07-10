@@ -208,7 +208,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
     }
 
     
-    public List<Game_bean> searchGamesByName(String nome) throws SQLException { //utile per la ricerca di un gioco tramite il nome
+    public synchronized List<Game_bean> searchGamesByName(String nome) throws SQLException { //utile per la ricerca di un gioco tramite il nome
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -219,7 +219,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(searchSQL);
-            preparedStatement.setString(1, "%" + nome + "%"); // Per cercare il nome parziale in ogni parte della stringa nome
+            preparedStatement.setString(1, nome); // Per cercare il nome parziale in ogni parte della stringa nome
 
             resultSet = preparedStatement.executeQuery();
 
@@ -238,11 +238,13 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
                 games.add(game); //aggiunge i giochi che rispettano il parametro di ricerca ad una lista da mostrare al client
             }
         } finally {
-            //closeResources(resultSet, preparedStatement, connection); //chiude le risorse
+            closeResources(resultSet, preparedStatement, connection); //chiude le risorse
         }
 
         return games; //restituisce la lista
     }
+    
+    
 }
 
 

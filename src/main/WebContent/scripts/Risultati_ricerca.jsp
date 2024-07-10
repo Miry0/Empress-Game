@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="java.util.Collection" %>
 <%@ page import="model.Game_bean" %>
 <%@ page import="java.util.List" %>
 
@@ -40,19 +41,33 @@
 	</div>
 	
 <h2>Risultati della Ricerca</h2>
+<% List <Game_bean> listaGiochi = (List <Game_bean>) request.getAttribute("listaGiochi");
 
-<c:if test="${not empty risultatiRicerca}"> <!-- se la ricerca ha dato dei risultati -->
-    <ul>
-        <c:forEach var="game" items="${risultatiRicerca}">
-            <li>${game.immagine}- ${game.nome} - ${game.piattaforma} - ${game.genere} - ${game.prezzo}</li> 
-            <!-- inseriamo i campi che vogliamo far mostrare -->
-        </c:forEach>
-    </ul>
-<c:else> 
-    <p>Nessun risultato trovato per la ricerca: <strong>${param.searchQuery}</strong></p>
-    <!-- se la ricerca non è andata a buon fine. "String" contiene tutti i parametri della richiesta http e "param" rappresenta uno string -->
-    </c:else>
-</c:if>
+if (listaGiochi != null && !listaGiochi.isEmpty()) {
+    for (Game_bean game : listaGiochi) {
+%>
+
+ <div>
+        <h2><%= game.get_nome() %></h2>
+        <p>Piattaforma: <%= game.get_piattaforma() %></p>
+        <p>Genere: <%= game.get_genere() %></p>
+        <p>Prezzo: <%= game.get_prezzo() %></p>
+        <p>Data di uscita: <%= game.get_g_uscita() %>-<%= game.get_m_uscita() %>-<%= game.get_a_uscita() %></p>
+        <% if (game.getImmagine() != null) { %>
+        <img src="data:image/jpeg;base64,<%= new String(game.getImmagine()) %>" alt="<%= game.get_nome() %>">
+        <% } %>
+    </div>
+    <%
+  }  
+ 
+    } else {
+%>
+    <p>Nessun gioco disponibile.</p>
+   <%  String message = "la lista è"+ listaGiochi;%>
+    <% System.out.println(message);%>
+<%
+    }
+%>
 
 
 <!-- Inclusione del file JavaScript -->
