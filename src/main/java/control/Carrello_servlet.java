@@ -5,40 +5,30 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+
 import model.Carrello_DAODataSource;
 import model.Carrello_bean;
+import model.Game_DAODataSource;
 
 //@WebServlet("/CarrelloServlet")
 public class Carrello_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Carrello_DAODataSource carrelloDAO;
 
-    public void init() throws ServletException {
-        // Inizializza il DAO del carrello con il DataSource dal context
-        carrelloDAO = new Carrello_DAODataSource(getServletContext());
+    public void init(ServletConfig cfg) throws ServletException {
+        super.init(cfg);
+        // Inizializzazione del DAO per interagire con il database dei giochi
+       // gameDAO = new Game_DAODataSource(getServletContext());
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String action = request.getParameter("action");
-
-        if (action == null) {
-            // Se l'azione non è definita, mostra il carrello
-            mostraCarrello(request, response);
-        } else {
-            switch (action) {
-                default:
-                    mostraCarrello(request, response);
-                    break;
-            }
-        }
-    }
-
+ //gestiamo il carrello direttamente con il metodo dopost
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -52,21 +42,23 @@ public class Carrello_servlet extends HttpServlet {
                     eliminaElemento(request, response);
                     break;
                 default:
-                	RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_carrello.jsp");
-                    dispatcher.forward(request, response);                    
+                	 mostraCarrello(request, response);
+                	//RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_carrello.jsp");
+                    //dispatcher.forward(request, response);                    
                     break;
             }
         } else {
-        	RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_carrello.jsp");
-            dispatcher.forward(request, response);        }
+            mostraCarrello(request, response);
+        }
     }
+    
 
     private void mostraCarrello(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            Collection<Carrello_bean> carrello = carrelloDAO.doRetrieveAll(null);
-            request.setAttribute("carrello", carrello);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_carrello.jsp");
+            Collection<Carrello_bean> carrello = carrelloDAO.doRetrieveAll(null); //recuperiamo il contenuto del carrello
+            request.setAttribute("carrello", carrello); //settiamo l'attributo carrello che verrà recuperato nella jsp
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_carrello.jsp"); //reindirizziamo alla jsp
             dispatcher.forward(request, response);
             } catch (SQLException e) {
             throw new ServletException(e);
@@ -100,6 +92,7 @@ public class Carrello_servlet extends HttpServlet {
         try {
             carrelloDAO.doSave(carrello);
             
+            request.setAttribute("carrello", carrello);
             RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_carrello.jsp");
             dispatcher.forward(request, response);
         } catch (SQLException e) {

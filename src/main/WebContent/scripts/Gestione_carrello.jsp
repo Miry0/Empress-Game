@@ -37,10 +37,10 @@
                         <td><%= prodotto.get_nome_utente() %></td>
                         <td><%= prodotto.get_totale() %></td>
                         <td>
-                            <form action="${pageContext.request.contextPath}/Carrello_servlet" method="post">
+                            <form action="Carrello_servlet" method="post">
                                 <input type="hidden" name="action" value="elimina">
                                 <input type="hidden" name="n_ordine" value="<%= prodotto.get_n_ordine() %>">
-                                <button type="submit">Elimina</button>
+                                <button value="elimina" type="submit">Elimina</button>
                             </form>
                         </td>
                     </tr>

@@ -93,7 +93,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
         return (result != 0);
     }
 
-    @Override
+    
     public synchronized Collection<Game_bean> doRetrieveAll(String order) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -219,7 +219,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(searchSQL);
-            preparedStatement.setString(1,"%"+ nome+"%"); // Per cercare il nome parziale in ogni parte della stringa nome
+            preparedStatement.setString(1,"%" + nome+ "%"); // Per cercare il nome parziale in ogni parte della stringa nome
 
             resultSet = preparedStatement.executeQuery();
 
@@ -244,6 +244,50 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
         return games; //restituisce la lista
     }
     
+    //mostra tutti gli elementi contenuti nella tabella GIOCHI
+    public synchronized Collection<Game_bean> Mostra_tutto() throws SQLException{
+    	Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        Collection<Game_bean> games = new LinkedList<>();
+
+         try {
+             connection = ds.getConnection();
+            
+
+             preparedStatement = connection.prepareStatement(SELECT_ALL_SQL);
+             resultSet = preparedStatement.executeQuery();
+
+             while (resultSet.next()) {
+                 Game_bean game = new Game_bean();
+                 game.set_id_gioco(resultSet.getInt("id_gioco"));
+                 game.set_nome(resultSet.getString("nome"));
+                 game.set_piattaforma(resultSet.getString("piattaforma"));
+                 game.set_genere(resultSet.getString("genere"));
+                 game.set_prezzo(resultSet.getFloat("prezzo"));
+                 game.set_g_uscita(resultSet.getInt("g_uscita"));
+                 game.set_m_uscita(resultSet.getInt("m_uscita"));
+                 game.set_a_uscita(resultSet.getInt("a_uscita"));
+                 game.setImmagine(resultSet.getBytes("immagine"));
+
+                 games.add(game);
+             }
+         } finally {
+             // Chiudi le risorse in un blocco finally per garantire che vengano sempre chiuse
+             if (resultSet != null) {
+                 resultSet.close();
+             }
+             if (preparedStatement != null) {
+                 preparedStatement.close();
+             }
+             if (connection != null) {
+                 connection.close();
+             }
+         }
+
+         return games;
+    }
     
 }
 

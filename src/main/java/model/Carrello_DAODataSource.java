@@ -15,12 +15,19 @@ import javax.sql.DataSource;
 
 public class Carrello_DAODataSource implements IBeanDAO<Carrello_bean> {
 
-    private static DataSource ds;
+    private DataSource ds;
 
     private static final String TABLE_NAME = "CARRELLO";
     
-    public Carrello_DAODataSource(ServletContext context) {
-        ds = (DataSource) context.getAttribute("MyDataSource");
+    public Carrello_DAODataSource(DataSource ds) {
+        this.ds=ds;
+        if(ds==null) {
+        	System.out.println("DataSource carrello nullo");
+        }
+        else {
+        	System.out.println("DataSource carrello instanziato correttamente");
+        }
+        
     }
     @Override
     public synchronized void doSave(Carrello_bean carrello) throws SQLException {
