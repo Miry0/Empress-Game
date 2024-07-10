@@ -219,7 +219,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(searchSQL);
-            preparedStatement.setString(1, nome); // Per cercare il nome parziale in ogni parte della stringa nome
+            preparedStatement.setString(1,"%"+ nome+"%"); // Per cercare il nome parziale in ogni parte della stringa nome
 
             resultSet = preparedStatement.executeQuery();
 
