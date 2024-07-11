@@ -22,7 +22,7 @@ CREATE TABLE UTENTI
 	nome_utente varchar(20) , 
     nome varchar(20) NOT NULL, 
 	cognome varchar(20) NOT NULL, 
-    _password varchar(8) NOT NULL, 
+    _password varchar(1000) NOT NULL, 
     email varchar(50) NOT NULL, 
     tipo varchar(20) NOT NULL, 
 	g_nascita int NOT NULL, 
@@ -107,14 +107,14 @@ CREATE TABLE legge
 /* Inserimenti nella tabella UTENTI con nomi utente univoci*/
 INSERT INTO UTENTI (nome_utente, nome, cognome, _password, email, tipo, g_nascita, m_nascita, a_nascita) 
 VALUES 
-('Alex@123!', 'Alessandro', 'DAfrica', 'password', 'alessandro.dafrica@example.com', 'admin', 12, 12, 2012 ),
-('JKook@789!', 'Jungkook', 'Jeon', 'password', 'jungkook.jeon@example.com', 'base', 1, 8, 1997),  
-('TaeHyung!23', 'Taehyung', 'Kim', 'password', 'taehyung.kim@example.com', 'base', 30, 12, 1995),  
-('Jimin@!456', 'Jimin', 'Park', 'password', 'jimin.park@example.com', 'base', 13, 1, 1995),
-('RM@345!abc', 'Namjoon', 'Kim', 'password', 'namjoon.kim@example.com', 'base', 12, 9, 1994),
-('Suga@123$', 'Yoongi', 'Min', 'password', 'yoongi.min@example.com', 'base', 9, 3, 1993),  
-('Hobi@789@', 'Hoseok', 'Jung', 'password', 'hoseok.jung@example.com', 'base', 18, 2, 1994),  
-('Jin@!567@', 'Seokjin', 'Kim', 'password', 'seokjin.kim@example.com', 'base', 4, 12, 1992);
+('Alex@123!', 'Alessandro', 'DAfrica', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'alessandro.dafrica@example.com', 'admin', 12, 12, 2012 ),
+('JKook@789!', 'Jungkook', 'Jeon', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'jungkook.jeon@example.com', 'base', 1, 8, 1997),  
+('TaeHyung!23', 'Taehyung', 'Kim', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'taehyung.kim@example.com', 'base', 30, 12, 1995),  
+('Jimin@!456', 'Jimin', 'Park', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'jimin.park@example.com', 'base', 13, 1, 1995),
+('RM@345!abc', 'Namjoon', 'Kim', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'namjoon.kim@example.com', 'base', 12, 9, 1994),
+('Suga@123$', 'Yoongi', 'Min', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'yoongi.min@example.com', 'base', 9, 3, 1993),  
+('Hobi@789@', 'Hoseok', 'Jung', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'hoseok.jung@example.com', 'base', 18, 2, 1994),  
+('Jin@!567@', 'Seokjin', 'Kim', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'seokjin.kim@example.com', 'base', 4, 12, 1992);
 
 /*Inserimenti nella tabella GIOCHI*/
 

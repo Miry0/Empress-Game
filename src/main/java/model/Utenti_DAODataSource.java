@@ -187,7 +187,7 @@ public class Utenti_DAODataSource {
                     connection.close();
             }
         }
-        return bean;
+        return bean; //ritona l'utente se le credenziali sono corrette
     }
 
     public synchronized void update(Utenti_bean utente) throws SQLException {

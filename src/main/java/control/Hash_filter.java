@@ -35,8 +35,7 @@ public class Hash_filter extends HttpFilter implements Filter {
 	    }
 	 
 	 @Override
-	    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-	            throws IOException, ServletException {
+	    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 	        if (request instanceof HttpServletRequest) {
 	            HttpServletRequest httpRequest = (HttpServletRequest) request;
 	            String password = httpRequest.getParameter("password");
@@ -85,26 +84,24 @@ public class Hash_filter extends HttpFilter implements Filter {
 	        return hexString.toString();
 	    }
 	    
+		// Classe wrapper per HttpServletRequest che sostituisce il valore del parametro "password" con l'hash
 	    private static class FilterRequestWrapper extends HttpServletRequestWrapper {
 	        private final String hashedPassword;
 
 	        public FilterRequestWrapper(HttpServletRequest request, String hashedPassword) {
-	            super(request);
+	            super(request); // Chiamata al costruttore della superclasse come primo statement
 	            this.hashedPassword = hashedPassword;
 	        }
 
-	        
+	        @Override
 	        public String getParameter(String name) {
 	            if ("password".equals(name)) {
 	                return hashedPassword;
 	            }
-	            return getParameter(name);
+	            return super.getParameter(name); // Usa il valore originale del parametro per tutti gli altri casi
 	        }
 	    }
-	
-}
-
-
+	}
 
 
 

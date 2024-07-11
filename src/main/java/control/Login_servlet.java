@@ -33,14 +33,16 @@ public class Login_servlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
     DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
     utenti = new Utenti_DAODataSource(ds);
-    
            
         String username = request.getParameter("username");
+        System.out.println("username" + username);
         String password = request.getParameter("password");
+        System.out.println("password" + password);
         
 
         try {
             Utenti_bean utente = utenti.verificaCredenziali(username, password);
+            
             HttpSession session = request.getSession();
 
             if (utente != null) {
@@ -59,28 +61,28 @@ public class Login_servlet extends HttpServlet {
                     dispatcher.forward(request, response);
 
                     // Reindirizza a storico.jsp usando un altro dispatcher
-                    RequestDispatcher storicoDispatcher = request.getRequestDispatcher("storico.jsp");
+                    RequestDispatcher storicoDispatcher = request.getRequestDispatcher("/scripts/storico.jsp");
                     storicoDispatcher.forward(request, response);
                 } else if ("base".equals(tipoUtente)) {
                     // Reindirizza a Profilo_utente.jsp usando il dispatcher
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("Profilo_utente.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Profilo_utente.jsp");
                     dispatcher.forward(request, response);
                 } else {
                     // Gestione altri tipi di utente, se necessario
                     session.setAttribute("login-error", "Tipo di utente non gestito");
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("scripts/Pagina_login.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Pagina_login.jsp");
                     dispatcher.forward(request, response);
                 }
             } else {
-                session.setAttribute("login-error", "Credenziali non valide");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("scripts/Pagina_login.jsp");
+                request.setAttribute("login-error", "Credenziali non valide");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Pagina_login.jsp");
                 dispatcher.forward(request, response);
             }
         } catch (SQLException e) {
             HttpSession session = request.getSession();
             e.printStackTrace();
             session.setAttribute("login-error", "Errore del server");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("scripts/Pagina_login.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Pagina_login.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -88,7 +90,7 @@ public class Login_servlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Inoltra alla pagina di login per le richieste GET
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Pagina_login.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Pagina_login.jsp");
         dispatcher.forward(request, response);
     }
     
@@ -132,7 +134,7 @@ public class Login_servlet extends HttpServlet {
         }
 
         // Utilizza il dispatcher per inoltrare la richiesta alla pagina desiderata
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Pagina_di_conferma.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Pagina_di_conferma.jsp");
         dispatcher.forward(request, response);
     }
 

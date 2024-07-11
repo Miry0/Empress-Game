@@ -41,10 +41,19 @@
   <!-- Aggiungi altre voci del menu qui se necessario -->
 </div>
 
+<!-- Mostra messaggio di errore di login, se presente -->
+<%-- Controlla se è stato impostato un messaggio di errore di login --%>
+<% if (request.getAttribute("login-error") != null) { %>
+    <div class="alert alert-danger" role="alert">
+        <%= request.getAttribute("login-error") %>
+    </div>
+<% } %>
+
+
 <!-- Form di login -->
 <div class="login-form">
   <div class="login-container">
-    <form id="loginForm" action="Login_servlet" method="POST" onsubmit="return validateForm()">
+    <form id="loginForm" action="${pageContext.request.contextPath}/Login_servlet" method="POST" onsubmit="return validateForm()">
       <input type="text" name="username" id="username" placeholder="Username">
       <span id="usernameError" class="error-message"></span>
       <input type="password" name="password" id="password" placeholder="Password">
