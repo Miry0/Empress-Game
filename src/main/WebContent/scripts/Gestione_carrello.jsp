@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.Collection" %>
 <%@ page import="model.Carrello_bean" %>
+<%@ page import="model.Utenti_bean" %>
+
+<%
+    // Verifica se l'utente ha una sessione attiva
+    session = request.getSession(false); //se l'utente non ha la sessione, non viene creata. Perchè noi stiamo facendo solo un controllo
+    Utenti_bean utente = null;
+    if (session != null) {
+        utente = (Utenti_bean) session.getAttribute("utente"); //se esiste una sessione, ci recuperiamo l'utente
+    }
+    else {
+        // Se l'utente non è autenticato, reindirizza alla pagina di login
+ 		request.getRequestDispatcher("Pagina_login.jsp").forward(request, response);      
+    }
+%>
 
 <!DOCTYPE html>
 <html lang="it">

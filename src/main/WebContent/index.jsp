@@ -39,11 +39,12 @@
 <!-- tasto per carrello e profilo -->
 <div class="header-right">
   
-  <form action="Carrello_servlet" method="post">
+ 
 	<div>
+		<a href="<%= contextPath %>/scripts/Gestione_carrello.jsp">
       <img src="<%= contextPath %>/images/cart-icon.png" alt="Carrello">
+      </a>
     </div>
- </form>
    <div>
         <% if ("admin".equals(tipoUtente)) { %>
             <a href="<%= contextPath %>/scripts/Profilo_admin.jsp">

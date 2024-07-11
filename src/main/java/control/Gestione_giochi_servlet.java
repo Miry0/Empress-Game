@@ -38,14 +38,14 @@ public class Gestione_giochi_servlet extends HttpServlet {
             DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
             gameDAO = new Game_DAODataSource(ds);
             
+            
         try {
         	
-        
             // Recupera il parametro "order" dalla richiesta
             String order = request.getParameter("order");
             
             // Recupera la lista dei giochi dal DAO
-            Collection<Game_bean> listaGiochi = gameDAO.doRetrieveAll(order);
+            Collection <Game_bean> listaGiochi = gameDAO.doRetrieveAll(order);
             
           
          // Converte la collezione in una lista per poterla ordinare
