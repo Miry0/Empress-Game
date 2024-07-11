@@ -52,6 +52,7 @@
       <button type="submit" >Login</button> <!-- gestito dalla Login_servlet -->
     </form>
     
+    
     <!-- Link per la registrazione -->
     <p>Non hai un account? <a class="link1" href="<%= contextPath %>/scripts/Registrazione.jsp">Registrati qui </a></p>
 

@@ -29,7 +29,7 @@
 <!-- Menu a comparsa -->
 <div id="menu" class="menu">
   <span class="close-icon" onclick="toggleMenu()">X</span> <!-- Icona di chiusura -->
-  <a href="<%= contextPath %>/index.jsp">Home</a>
+  <a href="<%= contextPath %>/scripts/index.jsp">Home</a>
   <a href="#">Impostazioni</a>
   <a href="#">Logout</a>
   <!-- Aggiungi altre voci del menu qui se necessario -->
@@ -37,7 +37,7 @@
 
 <div class="login-form">
  <div class="login-container">
-<form id=registrazione_form onsubmit="return validateForm('registrazione_form', ['nome', 'cognome'], ['g_nascita', 'm_nascita', 'a_nascita'])" action="<%= contextPath %>/Registrazione_servlet"  method="post">
+<form id=registrazione_form onsubmit="return validateForm('registrazione_form', ['nome', 'cognome'], ['g_nascita', 'm_nascita', 'a_nascita'], null)" action="${pageContext.request.contextPath}/Registrazione_servlet"  method="post">
 	
 		<h5>Dati personali</h5>
 			<input type="text" name="nome" placeholder="nome" class="formInput" required autofocus>
@@ -48,14 +48,14 @@
 			
 	
 	<h5>Dati di login</h5>
-	<input type="text" name="nome utente" placeholder="nome utente" class="formInput" required>
+	<input type="text" name="nome_utente" placeholder="nome utente" class="formInput" required>
 	<input type="text" name="email" placeholder="email" class="formInput" required>
 	<input type="password" name="pass" placeholder="password" class="formInput" required>
-	<input type="password" name="repass" placeholder="reinserisci password" class="formInput" required>
 	
 	 <span id="passwordError" class="error-message"></span>
 	
-	<input type="submit" name="invio" value="Invia" class="button1"  onclick="location.href='index.html';">
+	<!-- quando preme su invia, viene rimandato sulla home -->
+	<input type="submit" name="invio" value="Invia" class="button1">
 	<input type="reset" name="reset" value="Reset" class="button1" >
 </form>
 </div>

@@ -33,36 +33,45 @@ public class Registrazione_servlet extends HttpServlet {
     	DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
         utenti = new Utenti_DAODataSource(ds);
         
+        System.out.println("utenti"+ utenti);
+        
+        String nome_utente=request.getParameter("nome_utente");
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
-        String password = request.getParameter("password");
+        String password = request.getParameter("pass");
         String tipo = "base"; // Assegna tipo base di default. Questo significa che stiamo registrando un utente base. 
         //se vogliamo inserire un admin, lo andremo a modificare; 
+        String email=request.getParameter("email");
         int giornoNascita = Integer.parseInt(request.getParameter("g_nascita"));
         int meseNascita = Integer.parseInt(request.getParameter("m_nascita"));
         int annoNascita = Integer.parseInt(request.getParameter("a_nascita"));
         
         // Crea un nuovo Utenti_bean con i dati ricevuti 
         Utenti_bean nuovoUtente = new Utenti_bean();
+        nuovoUtente.set_nome_utente(nome_utente);
         nuovoUtente.set_nome(nome);
         nuovoUtente.set_cognome(cognome);
         nuovoUtente.set_password(password);
+        nuovoUtente.set_email(email);
         nuovoUtente.set_tipo(tipo);
         nuovoUtente.set_g_nascita(giornoNascita);
         nuovoUtente.set_m_nascita(meseNascita);
         nuovoUtente.set_a_nascita(annoNascita);
         
+        System.out.println("nuovoUtente"+ nuovoUtente);
+        
         try {
             // Salva il nuovo utente nel database utilizzando il DAO
             utenti.doSave(nuovoUtente);
             
-            request.setAttribute("nuovoUtente", nuovoUtente);
+            //ci sarà un tasto che riporta all'home e l'utente dovrà effettuare l'accesso
             // Reindirizzamento alla pagina di conferma registrazione
-            request.getRequestDispatcher("scripts/Successo_registrazione.jsp").forward(request, response);
+            request.getRequestDispatcher("/scripts/Successo_registrazione.jsp").forward(request, response);
         } catch (SQLException e) {
             // Gestione dell'eccezione SQL
             e.printStackTrace();
-            response.sendRedirect("registrazione_fallita.jsp"); // Reindirizza a pagina di errore
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+            	// Reindirizza a pagina di errore
         }
     }
 

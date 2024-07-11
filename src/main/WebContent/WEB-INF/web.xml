@@ -121,4 +121,14 @@
         <url-pattern>/Ricerca_servlet</url-pattern>
     </servlet-mapping>
     
+    <!-- giochi_index_servlet-->
+    <servlet>
+        <servlet-name>giochi_index_servlet</servlet-name>
+        <servlet-class>control.giochi_index_servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>giochi_index_servlet</servlet-name>
+        <url-pattern>/giochi_index_servlet</url-pattern>
+    </servlet-mapping>
+    
 </web-app>

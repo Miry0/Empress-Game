@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,10 +9,16 @@
 </head>
 <body>
 
+<!-- Verifica del contesto dell'applicazione -->
+<%
+    String contextPath = request.getContextPath();
+%>
+
 <div>
     <h1>Registrazione avvenuta con successo!</h1>
     <p>Grazie per esserti registrato.</p>
-    <p><a href="Pagina_login.jsp">Accedi alla tua area riservata</a></p>
+     <a href="<%=contextPath %>/scripts/index_login.jsp">Torna sulla home page</a>
+    <a href="<%=contextPath %>/scripts/Pagina_login.jsp">Accedi alla tua area riservata</a>
 </div>
 
 </body>

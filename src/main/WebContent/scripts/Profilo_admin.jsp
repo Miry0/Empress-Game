@@ -51,7 +51,7 @@
 <div class="login-form">
     <div class="login-container">
         <h5>Profilo Admin</h5>
-        <form id="profilo_form" action="Login_servlet" method="post" onsubmit="return validateForm('profilo_form', ['nome', 'cognome']);">
+        <form id="profilo_form" action="Login_servlet" method="post" onsubmit="return validateForm('profilo_form', ['nome', 'cognome'], ['g_nascita'. 'm_nascita', 'a_nascita'], null);">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" value="<%= utente.get_nome() %>"><br>
 
