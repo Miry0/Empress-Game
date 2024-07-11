@@ -107,14 +107,14 @@ CREATE TABLE legge
 /* Inserimenti nella tabella UTENTI con nomi utente univoci*/
 INSERT INTO UTENTI (nome_utente, nome, cognome, _password, email, tipo, g_nascita, m_nascita, a_nascita) 
 VALUES 
-('Alex@123!', 'Alessandro', 'DAfrica', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'alessandro.dafrica@example.com', 'admin', 12, 12, 2012 ),
-('JKook@789!', 'Jungkook', 'Jeon', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'jungkook.jeon@example.com', 'base', 1, 8, 1997),  
-('TaeHyung!23', 'Taehyung', 'Kim', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'taehyung.kim@example.com', 'base', 30, 12, 1995),  
-('Jimin@!456', 'Jimin', 'Park', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'jimin.park@example.com', 'base', 13, 1, 1995),
-('RM@345!abc', 'Namjoon', 'Kim', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'namjoon.kim@example.com', 'base', 12, 9, 1994),
-('Suga@123$', 'Yoongi', 'Min', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'yoongi.min@example.com', 'base', 9, 3, 1993),  
-('Hobi@789@', 'Hoseok', 'Jung', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'hoseok.jung@example.com', 'base', 18, 2, 1994),  
-('Jin@!567@', 'Seokjin', 'Kim', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'seokjin.kim@example.com', 'base', 4, 12, 1992);
+('Alex@123!', 'Alessandro', 'DAfrica', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 'alessandro.dafrica@example.com', 'admin', 12, 12, 2012 ),
+('JKook@789!', 'Jungkook', 'Jeon', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 'jungkook.jeon@example.com', 'base', 1, 8, 1997),  
+('TaeHyung!23', 'Taehyung', 'Kim', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 'taehyung.kim@example.com', 'base', 30, 12, 1995),  
+('Jimin@!456', 'Jimin', 'Park', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 'jimin.park@example.com', 'base', 13, 1, 1995),
+('RM@345!abc', 'Namjoon', 'Kim', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 'namjoon.kim@example.com', 'base', 12, 9, 1994),
+('Suga@123$', 'Yoongi', 'Min', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 'yoongi.min@example.com', 'base', 9, 3, 1993),  
+('Hobi@789@', 'Hoseok', 'Jung', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 'hoseok.jung@example.com', 'base', 18, 2, 1994),  
+('Jin@!567@', 'Seokjin', 'Kim', 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86', 'seokjin.kim@example.com', 'base', 4, 12, 1992);
 
 /*Inserimenti nella tabella GIOCHI*/
 

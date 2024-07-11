@@ -154,41 +154,6 @@ public class Utenti_DAODataSource {
         return bean;
     }
     
-    
-    public synchronized Utenti_bean verificaCredenziali(String username, String password) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        Utenti_bean bean = null;
-        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_utente = ? AND _password = ?";
-        try {
-            connection = ds.getConnection();
-            preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                bean = new Utenti_bean();
-                bean.set_nome_utente(rs.getString("nome_utente"));
-                bean.set_nome(rs.getString("nome"));
-                bean.set_email(rs.getString("email"));
-                bean.set_cognome(rs.getString("cognome"));
-                bean.set_password(rs.getString("password"));
-                bean.set_tipo(rs.getString("tipo"));
-                bean.set_g_nascita(rs.getInt("gg"));
-                bean.set_m_nascita(rs.getInt("mm"));
-                bean.set_a_nascita(rs.getInt("aaaa"));
-            }
-        } finally {
-            try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
-            } finally {
-                if (connection != null)
-                    connection.close();
-            }
-        }
-        return bean; //ritona l'utente se le credenziali sono corrette
-    }
 
     public synchronized void update(Utenti_bean utente) throws SQLException {
         Connection connection = null;

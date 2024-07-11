@@ -1,7 +1,7 @@
 package control;
 
 import java.io.IOException;
-
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -38,14 +38,14 @@ public class Login_servlet extends HttpServlet {
         System.out.println("username" + username);
         String password = request.getParameter("password");
         System.out.println("password" + password);
-        
+        String hashedPassword=toHash(password);
 
         try {
-            Utenti_bean utente = utenti.verificaCredenziali(username, password);
+            Utenti_bean utente = utenti.doRetrieveByKey(username);
             
             HttpSession session = request.getSession();
 
-            if (utente != null) {
+            if (utente != null && utente.get_password().equals(hashedPassword)) {
             	; //se l'utente con il seguente nome utente e password è presente nel db, allora creiamo la sessione
                 session.setAttribute("utente", utente);   
                 session.setAttribute("loginAttempted", true); //se l'utente non ha la sessione, la crea
@@ -117,8 +117,9 @@ public class Login_servlet extends HttpServlet {
             }
 
             String password = request.getParameter("password");
-            if (password != null && !password.trim().isEmpty()) {
-                utente.set_password(password);
+            String hashedPassword=toHash(password);
+            if (hashedPassword != null && !hashedPassword.trim().isEmpty()) {
+                utente.set_password(hashedPassword);
             }
 
             // E altri campi dell'utente che desideri aggiornare...
@@ -138,7 +139,23 @@ public class Login_servlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-
+    
+    private String toHash(String password) {
+    	String hashString=null;
+    	
+    	try {
+    		java.security.MessageDigest digest=java.security.MessageDigest.getInstance("SHA-512");
+    		byte [] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+    		
+    		hashString=""; for(int i=0; i<hash.length; i++) {
+    			hashString+=Integer.toHexString(hash[i] & 0xFF | 0x100).substring(1,3);
+    		}
+    	}
+    		catch(java.security.NoSuchAlgorithmException e) {
+        	}
+    		return hashString;
+    	}
+    	
     public void destroy() {
         super.destroy();
         // Eventuale chiusura risorse

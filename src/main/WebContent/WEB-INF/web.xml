@@ -43,35 +43,7 @@
         <servlet-name>Logout_servlet</servlet-name>
         <url-pattern>/Logout_servlet</url-pattern>
     </servlet-mapping>
-    
-    <!-- Hash_filter -->
-    <filter>
-        <filter-name>Hash_filter</filter-name>
-        <filter-class>control.Hash_filter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>Hash_filter</filter-name>
-        <url-pattern>/Registrazione_servlet</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>Hash_filter</filter-name>
-        <url-pattern>/Login_servlet</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>Hash_filter</filter-name>
-        <url-pattern>/Logout_servlet</url-pattern>
-    </filter-mapping>
-    
-     <!-- Login_filter -->
-    <filter>
-        <filter-name>Login_filter</filter-name>
-        <filter-class>control.Login_filter</filter-class>
-    </filter>
-    <filter-mapping>
-    	<filter-name>Login_filter</filter-name>
-        <url-pattern>/Login_servlet</url-pattern>
-     </filter-mapping>
-    
+     
      <!-- Gestione_giochi_servlet -->
     <servlet>
         <servlet-name>Gestione_giochi_servlet</servlet-name>

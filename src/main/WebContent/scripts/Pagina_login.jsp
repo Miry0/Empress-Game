@@ -35,7 +35,7 @@
 <!-- Menu a comparsa -->
 <div id="menu" class="menu">
   <span class="close-icon" onclick="toggleMenu()">X</span> <!-- Icona di chiusura -->
-  <a href="<%= contextPath %>/index.jsp">Home</a>
+  <a href="<%= contextPath %>/../index.jsp">Home</a>
   <a href="#">Impostazioni</a>
   <a href="#">Logout</a>
   <!-- Aggiungi altre voci del menu qui se necessario -->

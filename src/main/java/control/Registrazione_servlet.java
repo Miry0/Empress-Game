@@ -2,7 +2,7 @@
 package control;
 
 import java.io.IOException;
-
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 
 import javax.servlet.ServletConfig;
@@ -46,12 +46,14 @@ public class Registrazione_servlet extends HttpServlet {
         int meseNascita = Integer.parseInt(request.getParameter("m_nascita"));
         int annoNascita = Integer.parseInt(request.getParameter("a_nascita"));
         
+        String hashedPassword=toHash(password); //criptiamo password
+        
         // Crea un nuovo Utenti_bean con i dati ricevuti 
         Utenti_bean nuovoUtente = new Utenti_bean();
         nuovoUtente.set_nome_utente(nome_utente);
         nuovoUtente.set_nome(nome);
         nuovoUtente.set_cognome(cognome);
-        nuovoUtente.set_password(password);
+        nuovoUtente.set_password(hashedPassword);
         nuovoUtente.set_email(email);
         nuovoUtente.set_tipo(tipo);
         nuovoUtente.set_g_nascita(giornoNascita);
@@ -74,7 +76,24 @@ public class Registrazione_servlet extends HttpServlet {
             	// Reindirizza a pagina di errore
         }
     }
-
+    
+    private String toHash(String password) {
+    	String hashString=null;
+    	
+    	try {
+    		java.security.MessageDigest digest=java.security.MessageDigest.getInstance("SHA-512");
+    		byte [] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+    		
+    		hashString=""; for(int i=0; i<hash.length; i++) {
+    			hashString+=Integer.toHexString(hash[i] & 0xFF | 0x100).substring(1,3);
+    		}
+    	}
+    		catch(java.security.NoSuchAlgorithmException e) {
+        	}
+    		return hashString;
+    	}
+    	
+    
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Gestione GET, reindirizzamento a pagina di errore o altro se necessario
         response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Metodo non supportato.");

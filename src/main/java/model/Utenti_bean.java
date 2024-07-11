@@ -115,7 +115,7 @@ public class Utenti_bean implements Serializable {
 
 		@Override //metodo per la stampa di una tupla della tabella "UTENTI" del DB; 
 		public String toString() {
-			return nome_utente + " " + nome + " " + cognome + " " + tipo + " " + email + " " + g_nascita+"/"+m_nascita+"/"+"a_nascita";
+			return nome_utente + " " + nome + " " + cognome + " " + tipo + " " + email + "_password"  + g_nascita+"/"+m_nascita+"/"+"a_nascita";
 		}
 
 }
