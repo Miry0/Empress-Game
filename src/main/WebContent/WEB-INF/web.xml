@@ -3,6 +3,7 @@
 <web-app>         
     <title>Empress_Game</title>
     <welcome-file-list>
+    	 <welcome-file>Gestione_giochi_servlet</welcome-file> 
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     
