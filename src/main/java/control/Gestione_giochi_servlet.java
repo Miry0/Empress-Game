@@ -18,6 +18,7 @@ import javax.servlet.http.Part;
 import javax.sql.DataSource;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 
 import model.Game_bean;
 import model.Game_DAODataSource;
@@ -30,6 +31,13 @@ public class Gestione_giochi_servlet extends HttpServlet {
 
     public void init(ServletConfig cfg) throws ServletException {
         super.init(cfg);
+        /*try {
+        	Collection<Game_bean> gamesList = gameDAO.Mostra_tutto();
+        }catch(SQLException e){
+        	e.printStackTrace();
+        }*/
+        
+        
         // Inizializzazione del DAO per interagire con il database dei giochi
        // gameDAO = new Game_DAODataSource(getServletContext());
     }

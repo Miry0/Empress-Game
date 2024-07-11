@@ -2,6 +2,7 @@
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
 <%@ page import="model.Game_bean" %>
 <%@ page import="java.util.Collection" %>
+<jsp:include page="/Gestione_giochi_servlet"/>
 
 <!DOCTYPE html>
 <html lang="it">
