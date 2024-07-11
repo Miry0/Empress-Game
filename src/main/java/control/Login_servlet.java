@@ -44,6 +44,7 @@ public class Login_servlet extends HttpServlet {
             Utenti_bean utente = utenti.doRetrieveByKey(username);
             
             HttpSession session = request.getSession();
+            System.out.println("sessione" + session);
 
             if (utente != null && utente.get_password().equals(hashedPassword)) {
             	; //se l'utente con il seguente nome utente e password è presente nel db, allora creiamo la sessione
@@ -57,7 +58,7 @@ public class Login_servlet extends HttpServlet {
                 
                 if ("admin".equals(tipoUtente)) {
                     // Reindirizza a Profilo_admin.jsp usando il dispatcher
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("scripts/Profilo_admin.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Profilo_admin.jsp");
                     dispatcher.forward(request, response);
 
                     // Reindirizza a storico.jsp usando un altro dispatcher

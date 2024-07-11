@@ -38,12 +38,12 @@ public class Logout_servlet extends HttpServlet {
         }
         
         // Redirige alla pagina di login
-        request.getRequestDispatcher("/scripts/Pagina_login.jsp").forward(request, response);   
+        request.getRequestDispatcher("index.jsp").forward(request, response);   
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Gestione GET, redirige alla pagina di login
-    	request.getRequestDispatcher("/scripts/Pagina_login.jsp").forward(request, response); 
+    	request.getRequestDispatcher("index.jsp").forward(request, response); 
     }
     
     public void destroy() {
