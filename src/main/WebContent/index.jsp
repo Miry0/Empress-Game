@@ -17,7 +17,8 @@
 </head>
 <body>
 
-<%
+<%	
+	String tipoUtente = (String) session.getAttribute("tipoUtente"); //recupera il tipo del utente
     Collection<Game_bean> games = (Collection<Game_bean>) request.getAttribute("listaGiochi");
     //Collection<Game_bean> games3 = (Collection<Game_bean>) request.getAttribute("listaGiochi3");
     
@@ -43,10 +44,21 @@
       <img src="<%= contextPath %>/images/cart-icon.png" alt="Carrello">
     </div>
  </form>
-    <div>
-    <a id="profile-link" href="<%= contextPath %>/scripts/Profilo_utente.jsp" >
-      <img src="<%= contextPath %>/images/user-icon.png" alt="Profilo">
-    </a>
+   <div>
+        <% if ("admin".equals(tipoUtente)) { %>
+            <a href="<%= contextPath %>/scripts/Profilo_admin.jsp">
+                <img src="<%= contextPath %>/images/user-icon.png" alt="Profilo Admin">
+            </a>
+        <% } else if ("base".equals(tipoUtente)) { %>
+            <a href="<%= contextPath %>/scripts/Profilo_utente.jsp">
+                <img src="<%= contextPath %>/images/user-icon.png" alt="Profilo Utente">
+            </a>
+        <% } else { %>
+            <!-- Gestione caso in cui tipoUtente non è definito o è null -->
+            <a href="<%= contextPath %>/scripts/Pagina_login.jsp">
+                <img src="<%= contextPath %>/images/user-icon.png" alt="Login">
+            </a>
+        <% } %>
     </div>
  </div>
    

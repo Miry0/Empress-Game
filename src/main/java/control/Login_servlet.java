@@ -47,10 +47,12 @@ public class Login_servlet extends HttpServlet {
             	; //se l'utente con il seguente nome utente e password è presente nel db, allora creiamo la sessione
                 session.setAttribute("utente", utente);   
                 session.setAttribute("loginAttempted", true); //se l'utente non ha la sessione, la crea
+               
                 
                 // Determina la destinazione in base al tipo di utente
                 String tipoUtente = utente.get_tipo(); // recuperiamo il tipo   "admin" o "base"
-
+                session.setAttribute("tipo", tipoUtente); //facciamo in modo che il tipo dell'utente sia recuperabile per tutta la durata della sessione
+                
                 if ("admin".equals(tipoUtente)) {
                     // Reindirizza a Profilo_admin.jsp usando il dispatcher
                     RequestDispatcher dispatcher = request.getRequestDispatcher("scripts/Profilo_admin.jsp");
