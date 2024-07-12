@@ -62,8 +62,8 @@ public class Login_servlet extends HttpServlet {
                     dispatcher.forward(request, response);
 
                     // Reindirizza a storico.jsp usando un altro dispatcher
-                    RequestDispatcher storicoDispatcher = request.getRequestDispatcher("/scripts/storico.jsp");
-                    storicoDispatcher.forward(request, response);
+                   // RequestDispatcher storicoDispatcher = request.getRequestDispatcher("/scripts/storico.jsp");
+                   // storicoDispatcher.forward(request, response);
                 } else if ("base".equals(tipoUtente)) {
                     // Reindirizza a Profilo_utente.jsp usando il dispatcher
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Profilo_utente.jsp");
