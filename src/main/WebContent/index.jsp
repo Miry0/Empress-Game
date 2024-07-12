@@ -73,7 +73,10 @@
   <a href="<%= contextPath %>/scripts/Registrazione.jsp" id="profile-link">Registrati</a>
   <a href="<%= contextPath %>/scripts/Pagina_login.jsp" id="profile-link">Login</a>
   <a href="#">Impostazioni</a>
-  <a href="#">Logout</a>
+  <!-- Link per il logout -->
+        <form action="Logout_servlet" method="post">
+            <button type="submit">Logout</button> <!-- gestito dalla Logout_servlet -->
+        </form>
   <!-- Aggiungi altre voci del menu qui se necessario -->
 </div>
 
