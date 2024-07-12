@@ -3,7 +3,7 @@
 <web-app>         
     <title>Empress_Game</title>
     <welcome-file-list>
-    	 <welcome-file>Gestione_giochi_servlet</welcome-file> 
+    	 <welcome-file>Mostra_giochi_servlet</welcome-file> 
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     
@@ -44,6 +44,17 @@
         <url-pattern>/Logout_servlet</url-pattern>
     </servlet-mapping>
      
+      <!-- Mostra_giochi_servlet -->
+    <servlet>
+        <servlet-name>Mostra_giochi_servlet</servlet-name>
+        <servlet-class>control.Mostra_giochi_servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Mostra_giochi_servlet</servlet-name>
+        <url-pattern>/Mostra_giochi_servlet</url-pattern>
+    </servlet-mapping>
+    
+    
      <!-- Gestione_giochi_servlet -->
     <servlet>
         <servlet-name>Gestione_giochi_servlet</servlet-name>

@@ -52,10 +52,15 @@ public class Gestione_giochi_servlet extends HttpServlet {
             // Recupera il parametro "order" dalla richiesta
             String order = request.getParameter("order");
             
+            if(order!=null) { //se order non è null, allora prosegue con il recupero del catalogo, la chiamata alla funzione del dao che si occupa dell'ordinamento 
+            				//e poi restituisce la lista ordinata su index.jsp
+            	
             // Recupera la lista dei giochi dal DAO
-            Collection <Game_bean> listaGiochi = gameDAO.doRetrieveAll(order);
+            Collection <Game_bean> listaGiochi=  (Collection <Game_bean>) request.getAttribute("listaGiochi");
+             
             
-          
+            listaGiochi = gameDAO.doRetrieveAll(order);
+            
          // Converte la collezione in una lista per poterla ordinare
             List<Game_bean> listaGiochi2 = new ArrayList<>(listaGiochi);
             
@@ -75,12 +80,15 @@ public class Gestione_giochi_servlet extends HttpServlet {
 
             // Inoltra la richiesta alla JSP per mostrare i giochi
             request.getRequestDispatcher("index.jsp").forward(request, response);
-
+            }
         } catch (Exception e) {
             e.printStackTrace(); // Gestisci l'eccezione in base alla tua logica
             request.setAttribute("error", "Errore durante il recupero dei giochi.");
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
+     
+        
+        
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Ottiene l'azione richiesta dalla richiesta HTTP
