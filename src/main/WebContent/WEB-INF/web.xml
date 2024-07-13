@@ -65,6 +65,16 @@
         <url-pattern>/Gestione_giochi_servlet</url-pattern>
     </servlet-mapping>
     
+     <!-- Dettagli_gioco_servlet -->
+    <servlet>
+        <servlet-name>Dettagli_gioco_servlet</servlet-name>
+        <servlet-class>control.Dettagli_gioco_servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Dettagli_gioco_servlet</servlet-name>
+        <url-pattern>/Dettagli_gioco_servlet</url-pattern>
+    </servlet-mapping>
+    
      <!-- lista_desideri_servlet-->
     <servlet>
         <servlet-name>lista_desideri_servlet</servlet-name>
@@ -105,14 +115,6 @@
         <url-pattern>/Ricerca_servlet</url-pattern>
     </servlet-mapping>
     
-    <!-- giochi_index_servlet-->
-    <servlet>
-        <servlet-name>giochi_index_servlet</servlet-name>
-        <servlet-class>control.giochi_index_servlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>giochi_index_servlet</servlet-name>
-        <url-pattern>/giochi_index_servlet</url-pattern>
-    </servlet-mapping>
+   
     
 </web-app>

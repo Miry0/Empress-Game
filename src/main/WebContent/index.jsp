@@ -77,7 +77,6 @@
         <form action="Logout_servlet" method="post">
             <button type="submit">Logout</button> <!-- gestito dalla Logout_servlet -->
         </form>
-  <!-- Aggiungi altre voci del menu qui se necessario -->
 </div>
 
 <!-- Barra di ricerca -->
@@ -111,7 +110,8 @@
         for (Game_bean game : games) {
 %>
     <div>
-        <h2><%= game.get_nome() %></h2>
+    <!-- quando l'utente clicca sul nome, viene reindirizzato alla pagina, passando l'id del gioco come parametro nella query string  -->
+        <h2><a href="Dettagli_gioco_servlet?id_gioco=<%= game.get_id_gioco() %>"><%= game.get_nome() %></a></h2> <!-- usiamo il nome del gioco per poter aprire la scheda dei dettagli -->
         <p>Piattaforma: <%= game.get_piattaforma() %></p>
         <p>Genere: <%= game.get_genere() %></p>
         <p>Prezzo: <%= game.get_prezzo() %></p>
