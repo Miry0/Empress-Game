@@ -35,7 +35,7 @@ public class Carrello_DAODataSource implements IBeanDAO<Carrello_bean> {
         PreparedStatement preparedStatement = null;
 
         String insertSQL = "INSERT INTO " + Carrello_DAODataSource.TABLE_NAME
-                + " (n_ordine, id_utente, metodo_pagamento, totale, g_ordine, m_ordine, a_ordine, immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                + " (n_ordine, nome_utente, metodo_pagamento, totale, data_ordine, immagine) VALUES (?, ?, ?, ?, ?, ?)";
 
         try {
             connection = ds.getConnection();
@@ -44,10 +44,8 @@ public class Carrello_DAODataSource implements IBeanDAO<Carrello_bean> {
             preparedStatement.setString(2, carrello.get_nome_utente());
             preparedStatement.setString(3, carrello.get_metodo_pagamento());
             preparedStatement.setFloat(4, carrello.get_totale());
-            preparedStatement.setInt(5, carrello.get_g_ordine());
-            preparedStatement.setInt(6, carrello.get_m_ordine());
-            preparedStatement.setInt(7, carrello.get_a_ordine());
-            preparedStatement.setBytes(8, carrello.getImmagine()); // Imposta l'immagine come array di byte
+            preparedStatement.setDate(5, carrello.get_data_ordine());
+            preparedStatement.setBytes(6, carrello.getImmagine()); // Imposta l'immagine come array di byte
 
             preparedStatement.executeUpdate();
 
@@ -116,9 +114,7 @@ public class Carrello_DAODataSource implements IBeanDAO<Carrello_bean> {
                 carrello.set_nome_utente(rs.getString("nome_utente"));
                 carrello.set_metodo_pagamento(rs.getString("metodo_pagamento"));
                 carrello.set_totale(rs.getFloat("totale"));
-                carrello.set_g_ordine(rs.getInt("g_ordine"));
-                carrello.set_m_ordine(rs.getInt("m_ordine"));
-                carrello.set_a_ordine(rs.getInt("a_ordine"));
+                carrello.set_data_ordine(rs.getDate("data_ordine"));
                 carrello.setImmagine(rs.getBytes("immagine")); // Ottiene l'immagine come array di byte
 
                 carrelli.add(carrello);
@@ -152,14 +148,12 @@ public class Carrello_DAODataSource implements IBeanDAO<Carrello_bean> {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                carrello.set_n_ordine(rs.getInt("n_ordine"));
-                carrello.set_nome_utente(rs.getString("nome_utente"));
-                carrello.set_metodo_pagamento(rs.getString("metodo_pagamento"));
-                carrello.set_totale(rs.getFloat("totale"));
-                carrello.set_g_ordine(rs.getInt("g_ordine"));
-                carrello.set_m_ordine(rs.getInt("m_ordine"));
-                carrello.set_a_ordine(rs.getInt("a_ordine"));
-                carrello.setImmagine(rs.getBytes("immagine"));
+            	 carrello.set_n_ordine(rs.getInt("n_ordine"));
+                 carrello.set_nome_utente(rs.getString("nome_utente"));
+                 carrello.set_metodo_pagamento(rs.getString("metodo_pagamento"));
+                 carrello.set_totale(rs.getFloat("totale"));
+                 carrello.set_data_ordine(rs.getDate("data_ordine"));
+                 carrello.setImmagine(rs.getBytes("immagine")); // Ottiene l'immagine come array di byte
             }
 
         } finally {
