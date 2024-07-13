@@ -89,7 +89,7 @@
     box-sizing: border-box;
   }
   
-  .login-form button {
+   button {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -100,7 +100,7 @@
     cursor: pointer;
   }
   
-  .login-form button:hover {
+   button:hover {
     background-color: #555;
   }
   

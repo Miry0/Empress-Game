@@ -65,9 +65,7 @@ CREATE TABLE CARRELLO
     nome_utente varchar(20) NOT NULL, 
     metodo_pagamento varchar(20) NOT NULL, 
     totale float NOT NULL, 
-    g_ordine int NOT NULL, 
-	m_ordine int NOT NULL, 
-	a_ordine int NOT NULL, 
+    data_ordine DATE NOT NULL DEFAULT CURRENT_DATE, 
 	immagine mediumblob, 
     
     PRIMARY KEY(n_ordine), 
@@ -137,28 +135,5 @@ VALUES
 ('Hobi@789@'),
 ('Jin@!567@');
 
--- Inserimenti nella tabella CARRELLO
-INSERT INTO CARRELLO (nome_utente, metodo_pagamento, totale, g_ordine, m_ordine, a_ordine) 
-VALUES 
-('Alex@123!', 'Carta di credito', 59.99, 12, 6, 2023),
-('JKook@789!', 'PayPal', 49.99, 15, 6, 2023),
-('TaeHyung!23', 'Carta di credito', 26.95, 18, 6, 2023),
-('Jimin@!456', 'Bonifico', 59.99, 21, 6, 2023),
-('RM@345!abc', 'PayPal', 39.99, 24, 6, 2023),
-('Suga@123$', 'Carta di credito', 19.99, 27, 6, 2023),
-('Hobi@789@', 'Bonifico', 49.99, 30, 6, 2023),
-('Jin@!567@', 'Carta di credito', 29.99, 3, 7, 2023);
-
--- Inserimenti nella tabella STORICO
-INSERT INTO STORICO (n_ordine) 
-VALUES 
-(1), 
-(2), 
-(3), 
-(4),
-(5),
-(6),
-(7),
-(8);
 
 

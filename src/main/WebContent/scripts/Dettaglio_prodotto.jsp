@@ -54,6 +54,18 @@
             <p>Gioco non trovato.</p>
         <% } %>
         
+        <!-- Form per aggiungere il gioco al carrello -->
+      <form action="${pageContext.request.contextPath}/Carrello_servlet" method="post">
+        <input type="hidden" name="aggiungi_lista" value="<%= gioco.get_id_gioco() %>">
+        <button name="azione_carrello" value="aggiungi" type="submit">Aggiungi al carrello</button>
+      </form>
+      
+      <!-- Form per aggiungere il gioco alla lista desideri -->
+      <form action="${pageContext.request.contextPath}/lista_desideri_servlet" method="post">
+        <input type="hidden" name="aggiungi_carrello" value="<%= gioco.get_id_gioco() %>">
+        <button type="submit">Aggiungi alla lista desideri</button>
+      </form>
+        
 <!-- Inclusione del file JavaScript -->
 <script src="<%= contextPath %>/scripts/script_index.js"></script>
  </body>
