@@ -17,14 +17,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.mysql.cj.Session;
+
 import model.Carrello_DAODataSource;
 import model.Carrello_bean;
 import model.Game_DAODataSource;
+import model.Game_bean;
 
 //@WebServlet("/CarrelloServlet")
 public class Carrello_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Carrello_DAODataSource carrelloDAO;
+    private Game_DAODataSource gameDAO;
 
     public void init(ServletConfig cfg) throws ServletException {
         super.init(cfg);
@@ -36,6 +40,7 @@ public class Carrello_servlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	 DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
          carrelloDAO = new Carrello_DAODataSource(ds);
+         gameDAO = new Game_DAODataSource(ds);
          
     	String action = request.getParameter("azione_carrello");
 
@@ -73,6 +78,9 @@ public class Carrello_servlet extends HttpServlet {
 
     private void aggiungiElemento(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	//Retrieving the session
+    	HttpSession session = request.getSession();
+    	
         // Recupera i parametri dalla richiesta
     	// Parametri da richiesta HTTP
         int n_ordine = Integer.parseInt(request.getParameter("n_ordine"));
@@ -80,8 +88,8 @@ public class Carrello_servlet extends HttpServlet {
         String metodo_pagamento = request.getParameter("metodo_pagamento");
         float totale = Float.parseFloat(request.getParameter("totale"));
         String data_ordine_str = request.getParameter("data_ordine");
+        boolean isCartCreated = (boolean)(session.getAttribute("isCartCreated"));
         byte[] immagine = null; // Da implementare la gestione dell'immagine correttamente
-
         // Conversione della data
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date data_ordine = null;
@@ -90,29 +98,40 @@ public class Carrello_servlet extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
+        
+        
+        
         // Crea un nuovo oggetto Carrello_bean
-        Carrello_bean carrello = new Carrello_bean();
-        carrello.set_n_ordine(n_ordine);
-        carrello.set_nome_utente(nome_utente);
-        carrello.set_metodo_pagamento(metodo_pagamento);
-        carrello.set_totale(totale);
-        carrello.set_data_ordine(data_ordine);
-        carrello.setImmagine(immagine);
+        if(!isCartCreated) {
+        	Carrello_bean carrello = new Carrello_bean();
+        	carrello.set_n_ordine(n_ordine);
+        	carrello.set_nome_utente(nome_utente);
+        	carrello.set_metodo_pagamento(metodo_pagamento);
+        	carrello.set_totale(totale);
+        	carrello.set_data_ordine(data_ordine);
+        	carrello.setImmagine(immagine);
+        	carrello.addGame(idGioco);
 
         // Salva il carrello nel database
-        try {
-            carrelloDAO.doSave(carrello);
+        	try {
+        		carrelloDAO.doSave(carrello);
             
-            HttpSession session = request.getSession(); //recuperiamo la sessione e settiamo il nuovo oggetto da mostrare nel carrello
+        		//settiamo il nuovo oggetto da mostrare nel carrello
             
-            session.setAttribute("carrello", carrello);
+        		session.setAttribute("carrello", carrello);
             
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_carrello.jsp");
-            dispatcher.forward(request, response);
-        } catch (SQLException e) {
-            throw new ServletException(e);
+        		RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_carrello.jsp");
+        		dispatcher.forward(request, response);
+        	} catch (SQLException e) {
+        		throw new ServletException(e);
+        	}
+        } else {
+        	Carrello_bean carrello = (Carrello_bean) session.getAttribute("carrello");
+        	
+        	carrello.addGame(idGioco);
         }
+        
+        
     }
 
     private void eliminaElemento(HttpServletRequest request, HttpServletResponse response)

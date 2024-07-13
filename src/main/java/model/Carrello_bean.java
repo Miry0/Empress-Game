@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Carrello_bean implements Serializable {
 
@@ -14,6 +16,7 @@ public class Carrello_bean implements Serializable {
     private Float totale;
     private Date data_ordine; // Campo per la data dell'ordine
     private byte[] immagine; // Aggiungi questa variabile per l'immagine
+    private ArrayList<Integer> gamesList;
 
     // Costruttore
     public Carrello_bean() {
@@ -23,6 +26,7 @@ public class Carrello_bean implements Serializable {
         totale = -1f;
         data_ordine=new Date(System.currentTimeMillis()); // Inizializzazione con la data corrente
         immagine = null; // Inizializzazione dell'immagine
+        gamesList = new ArrayList<Integer>();
     }
 
     // Getter e setter per l'immagine
@@ -74,6 +78,23 @@ public class Carrello_bean implements Serializable {
 
     public void set_data_ordine(Date data_ordine) {
         this.data_ordine = data_ordine;
+    }
+    
+    public ArrayList<Integer> getGamesList(){
+    	return gamesList;
+    }
+    
+    public void addGame(int idGioco) {
+    	gamesList.add(idGioco);
+    }
+    
+    public boolean removeGame(int idGioco) {
+    	if(gamesList.isEmpty())
+    		return false;
+    	
+    	gamesList.remove(idGioco);
+    	
+    	return true;
     }
 
     @Override

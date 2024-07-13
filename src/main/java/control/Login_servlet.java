@@ -55,9 +55,12 @@ public class Login_servlet extends HttpServlet {
                 // Determina la destinazione in base al tipo di utente
                 String tipoUtente = utente.get_tipo(); // recuperiamo il tipo   "admin" o "base"
                 session.setAttribute("tipo", tipoUtente); //facciamo in modo che il tipo dell'utente sia recuperabile per tutta la durata della sessione
+                boolean isCartCreated = false;
                 
                 if ("admin".equals(tipoUtente)) {
                     // Reindirizza a Profilo_admin.jsp usando il dispatcher
+                	isCartCreated = true;
+                	session.setAttribute("isCartCreated", isCartCreated);
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Profilo_admin.jsp");
                     dispatcher.forward(request, response);
 
@@ -66,6 +69,8 @@ public class Login_servlet extends HttpServlet {
                    // storicoDispatcher.forward(request, response);
                 } else if ("base".equals(tipoUtente)) {
                     // Reindirizza a Profilo_utente.jsp usando il dispatcher
+                	isCartCreated = true;
+                	session.setAttribute("isCartCreated", isCartCreated);
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Profilo_utente.jsp");
                     dispatcher.forward(request, response);
                 } else {
