@@ -42,6 +42,7 @@ public class Carrello_servlet extends HttpServlet {
          carrelloDAO = new Carrello_DAODataSource(ds);
          gameDAO = new Game_DAODataSource(ds);
          
+         
     	String action = request.getParameter("azione_carrello");
 
         if (action != null) {
@@ -80,6 +81,7 @@ public class Carrello_servlet extends HttpServlet {
             throws ServletException, IOException {
     	//Retrieving the session
     	HttpSession session = request.getSession();
+    	 int idGioco=(int) request.getAttribute("id_gioco"); //recuperiamo l'id del gioco passato nella richiesta alla servlet
     	
         // Recupera i parametri dalla richiesta
     	// Parametri da richiesta HTTP
