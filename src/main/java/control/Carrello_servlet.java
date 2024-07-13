@@ -140,7 +140,7 @@ public class Carrello_servlet extends HttpServlet {
             throws ServletException, IOException {
         // Recupera il parametro dalla richiesta
         int n_ordine = Integer.parseInt(request.getParameter("n_ordine"));
-
+        
         // Elimina l'elemento dal carrello nel database
         try {
             carrelloDAO.doDelete(n_ordine);
@@ -150,6 +150,41 @@ public class Carrello_servlet extends HttpServlet {
             throw new ServletException(e);
         }
     }
+    
+    /**
+     * Recupera i dati essenziali di un gioco dal database e li restituisce come una stringa formattata.
+     * Se il gioco non viene trovato o se si verifica un errore durante il recupero, restituisce un messaggio appropriato.
+     * 
+     * @param idGioco ID del gioco da recuperare
+     * @return Stringa contenente i dati essenziali del gioco, oppure un messaggio di errore
+     */
+    public String RecuperaDatiGioco(int idGioco) {
+        try {
+            // Recupera il gioco dal database utilizzando il DAO appropriato
+            Game_bean gioco = gameDAO.doRetrieveByKey(idGioco);
+
+            if (gioco != null) {
+                // Costruisci la stringa con i dati essenziali del gioco
+                return "ID: " + gioco.get_id_gioco() +
+                       ", Nome: " + gioco.get_nome() +
+                       ", Prezzo: " + gioco.get_prezzo();
+                // Aggiungi altri attributi se necessario
+            } else {
+                // Se il gioco non viene trovato, restituisce un messaggio
+                return null;
+            }
+
+        } catch (SQLException e) {
+            // Gestione dell'eccezione SQLException
+            e.printStackTrace(); // Stampa il trace dell'eccezione per il debugging
+            return "Errore durante il recupero dei dati del gioco";
+        } catch (Exception e) {
+            // Gestione di altre eccezioni generiche
+            e.printStackTrace(); // Stampa il trace dell'eccezione per il debugging
+            return "Errore generale";
+        }
+    }
+
     
     public void destroy() {
         super.destroy();

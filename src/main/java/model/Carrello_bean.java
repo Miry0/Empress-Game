@@ -84,6 +84,10 @@ public class Carrello_bean implements Serializable {
     	return gamesList;
     }
     
+    public void setGameList(ArrayList<Integer> gamesList) {
+    	this.gamesList=gamesList;
+    }
+    
     public void addGame(int idGioco) {
     	gamesList.add(idGioco);
     }

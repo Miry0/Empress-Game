@@ -289,6 +289,39 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
          return games;
     }
     
+    //data una stringa, ritraduci i dati all'interno nei tipi originali e li salva in un oggetto Game_bean
+    public synchronized Game_bean convertiStringaInGameBean(String datiGiocoStringa) throws SQLException{
+    	    Game_bean gioco = new Game_bean();
+
+    	    // Divide la stringa utilizzando il metodo split e assegna i valori all'oggetto Game_bean
+    	    String[] attributi = datiGiocoStringa.split(",");
+    	    for (String attributo : attributi) {
+    	        String[] coppia = attributo.split(":");
+    	        if (coppia.length == 2) {
+    	            String nomeAttributo = coppia[0].trim();
+    	            String valoreAttributo = coppia[1].trim();
+
+    	            // Assegna il valore dell'attributo all'oggetto Game_bean in base al nome dell'attributo
+    	            switch (nomeAttributo) {
+    	                case "ID":
+    	                    gioco.set_id_gioco(Integer.parseInt(valoreAttributo));
+    	                    break;
+    	                case "Nome":
+    	                    gioco.set_nome(valoreAttributo);
+    	                    break;
+    	                case "Prezzo":
+    	                    gioco.set_prezzo(Float.parseFloat(valoreAttributo));
+    	                    break;
+    	                default:
+    	                    // Ignora attributi sconosciuti o non gestiti
+    	                    break;
+    	            }
+    	        }
+    	    }
+
+    	    return gioco;
+    	
+    }
 }
 
 
