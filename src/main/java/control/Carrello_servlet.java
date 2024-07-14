@@ -82,6 +82,7 @@ public class Carrello_servlet extends HttpServlet {
     	//Retrieving the session
     	HttpSession session = request.getSession();
     	 int idGioco=(int) request.getAttribute("id_gioco"); //recuperiamo l'id del gioco passato nella richiesta alla servlet
+    	 System.out.println("idGioco"+idGioco); 
     	
         // Recupera i parametri dalla richiesta
     	// Parametri da richiesta HTTP

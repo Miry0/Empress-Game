@@ -52,10 +52,14 @@
                 <input type="text" name="a_uscita" placeholder="Anno di uscita" value="${game.a_uscita}">
                 <input type="file" name="immagine"> <!-- Campo per caricare l'immagine del gioco -->
 
-                <button id="agg_button" type="submit" name="submitAction" value="Aggiungi">Aggiungi</button> <!-- Pulsante per aggiungere un nuovo gioco -->
-                <button id="up_butt" type="submit" name="submitAction" value="Modifica">Modifica</button> <!-- Pulsante per modificare un gioco esistente -->
+                <button id="agg_button" name="submitAction" type="submit"  value="Aggiungi">Aggiungi</button> <!-- Pulsante per aggiungere un nuovo gioco -->
+                <button id="up_butt" name="submitAction" type="submit"  value="Modifica">Modifica</button> <!-- Pulsante per modificare un gioco esistente -->
+           
+           <!-- Campo nascosto per contenere il valore del pulsante cliccato -->
+      	  <input type="hidden" id="submitAction" name="submitAction" value="">
             </form>
         </div>
+        
 
         <!-- Form per Eliminare Gioco -->
         <div class="game-list">
