@@ -70,7 +70,7 @@
 <!-- Menu a comparsa -->
 <div id="menu" class="menu">
   <span class="close-icon" onclick="toggleMenu()">X</span> <!-- Icona di chiusura -->
-  <a href="<%= contextPath %>/scripts/Registrazione.jsp" id="profile-link">Registrati</a>
+  <a href="<%= contextPath %>/scripts/Registrazione.jsp" id="registrazione-link">Registrati</a>
   <a href="<%= contextPath %>/scripts/Pagina_login.jsp" id="profile-link">Login</a>
   <a href="#">Impostazioni</a>
   <!-- Link per il logout -->

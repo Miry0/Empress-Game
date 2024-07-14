@@ -2,6 +2,12 @@
 <jsp:useBean id="utente" class="model.Utenti_bean" scope="session"/>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
 
+<%
+    // Controlla se l'utente è già registrato e loggato
+    if (utente != null && utente.get_nome_utente() != null && !utente.get_nome_utente().isEmpty()) {
+        	response.sendRedirect("Successo_registrazione.jsp");
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
