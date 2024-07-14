@@ -95,7 +95,6 @@ public class Gestione_giochi_servlet extends HttpServlet {
         // Ottiene l'azione richiesta dalla richiesta HTTP
     	 DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
          gameDAO = new Game_DAODataSource(ds);
-         
       String action = request.getParameter("submitAction");
        System.out.println("1action " + action);
         
@@ -107,6 +106,9 @@ public class Gestione_giochi_servlet extends HttpServlet {
                 updateGame(request, response); // Aggiorna un gioco esistente
             } else if ("Elimina".equals(action)) {
                 deleteGame(request, response); // Elimina un gioco esistente
+            }
+            else if("Cerca".equals(action)) {
+                searchGame(request, response); // Elimina un gioco esistente
             }
             else if("search".equals(action)) {
             	Ricerca(request, response);
@@ -272,5 +274,27 @@ public class Gestione_giochi_servlet extends HttpServlet {
     	
     }
     
+    private void searchGame(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+    	DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
+        gameDAO = new Game_DAODataSource(ds);
+        
+    	//String order = request.getParameter("order");
+    	String name=request.getParameter("gameSearch");//recuperiamo il nome del gioco dalla barra di ricerca
+    	//Collection<Game_bean> listaGiochi = gameDAO.doRetrieveAll(order);
+    	 System.out.println("Nome del gioco cercato: " + name);
+    	 
+    	List<Game_bean> games=new LinkedList<>();
+    	
+    	try {
+    	games=gameDAO.searchGamesByName(name); //chiamoiamo la ricerca con la fujnzione del dao
+    	System.out.println("Lista dei giochi : " + games);
+    	}
+    	catch(SQLException e) {
+    		System.out.println("la lista dei giochi nella servlet è" + games);
+    	}
+    	request.setAttribute("games", games);
+    	 request.getRequestDispatcher("scripts/Gestione_catalogo.jsp").forward(request, response); //gestiamo i risultati nella jsp designata
+    	
+    }
   }
 

@@ -52,8 +52,8 @@
                 <input type="text" name="a_uscita" placeholder="Anno di uscita" value="${game.a_uscita}">
                 <input type="file" name="immagine"> <!-- Campo per caricare l'immagine del gioco -->
 
-                <input type="submit" name="submitAction" value="Aggiungi"> <!-- Pulsante per aggiungere un nuovo gioco -->
-                <input type="submit" name="submitAction" value="Modifica"> <!-- Pulsante per modificare un gioco esistente -->
+                <button id="agg_button" type="submit" name="submitAction" value="Aggiungi">Aggiungi</button> <!-- Pulsante per aggiungere un nuovo gioco -->
+                <button id="up_butt" type="submit" name="submitAction" value="Modifica">Modifica</button> <!-- Pulsante per modificare un gioco esistente -->
             </form>
         </div>
 
@@ -64,24 +64,24 @@
             <!-- Una volta trovati i giochi corrispondenti, viene mostrato un elenco con ciascun gioco e un pulsante "Elimina" accanto ad ogni voce -->
             <form id="delete_form" action="${pageContext.request.contextPath}/Gestione_giochi_servlet" method="post" onsubmit="return validateForm('delete_form', ['gameSearch']);">
                 <input type="text" name="gameSearch" placeholder="Cerca gioco per nome">
-                <input type="submit" value=search>
+                <button name="submitAction" type="submit" value="Cerca">cerca</button>
             </form>
             <ul>
                 <!-- Mostra l'elenco dei giochi trovati per la ricerca -->
                 <%
-                	List<Game_bean> games = (List<Game_bean>) request.getAttribute("gameList");
+                	List<Game_bean> games = (List<Game_bean>) request.getAttribute("games");
                     if (games != null && !games.isEmpty()) {
                         for (Game_bean game : games) {
                 %>
                             <li>
-                                <%= game.get_nome() %>
+                                <p>Nome: <%= game.get_nome() %></p>
                                 <form action="${pageContext.request.contextPath}/Gestione_giochi_servlet" method="post" style="display:inline;">
                                     <input type="hidden" name="id" value="<%= game.get_id_gioco() %>">
                                     <!-- Quando si preme il pulsante "Elimina" accanto a un gioco nell'elenco, 
                                     il valore di submitAction sarà impostato automaticamente a delete, 
                                     il che indica alla servlet di procedere con l'eliminazione del gioco corrispondente -->
-                                    <input type="hidden" name="submitAction" value="Elimina"> 
-                                    <input type="submit" value="Elimina">
+                                    <input type="hidden" value="Elimina"> 
+                                    <button name="submitAction" type="submit" value="Elimina">Elimina</button>
                                 </form>
                             </li>
                 <%

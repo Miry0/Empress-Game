@@ -6,30 +6,48 @@
 }
 
 /* Stili per l'immagine */
- .image-wrapper img {
-      width: 100%; /* Occupa tutta la larghezza disponibile */
-      height: auto;
-      display: block;
-      margin: 0 auto;
-      max-width: 100px; /* Larghezza massima desiderata */
-    }
+.image-wrapper img {
+    max-width: 100px; /* Larghezza massima desiderata */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
 
-    .button-wrapper {
-      display: inline-block; /* Per posizionare in linea */
-      vertical-align: top; /* Allinea in alto rispetto al contenuto circostante */
-      width: 100px; /* Larghezza dei pulsanti */
-      margin-left: 20px; /* Spaziatura a sinistra tra i dettagli del gioco e i pulsanti */
-    }
+.button-wrapper {
+    width: 100px; /* Larghezza dei pulsanti */
+    text-align: center; /* Allinea il testo al centro */
+    margin-left: -50px; /* Margine sinistro negativo per spostare più a sinistra */
+    margin-top: -100px; /* Margine superiore negativo per allineare verticalmente */
+    margin-right:40px;
+    border-color:#fdf88c;
+    border:solid;
+    border-right:-10px; 
+    border-right:-30px;
+}
 
-    .button-wrapper button {
-      width: 100%; /* Occupa tutta la larghezza del wrapper */
-      margin-bottom: 10px;
-      background-color: #610361;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-    }
+
+
+.button-wrapper button {
+    width: 100%; /* Occupa tutta la larghezza del wrapper */
+    margin-bottom: 10px; /* Spaziatura inferiore tra i pulsanti */
+    background-color: #610361;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.game-details {
+    flex: 1; /* Occupa lo spazio rimanente */
+    padding-right: 20px; /* Spaziatura a destra */
+}
+
+.details-and-buttons {
+    display: flex; /* Utilizza Flexbox per allineare i dettagli e i pulsanti */
+    align-items: flex-start; /* Allinea gli elementi in alto */
+    justify-content: space-between; /* Spaziatura uniforme tra i dettagli e i pulsanti */
+    margin-bottom: 20px; /* Spaziatura inferiore tra i dettagli e i pulsanti */
+}
 
 /* Stili del container principale */
 .container {

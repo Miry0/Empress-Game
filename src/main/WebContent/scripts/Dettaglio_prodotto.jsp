@@ -34,37 +34,40 @@
 </div>
 
 <div class="container">
-  <div class="game-details">
-    <h2><%= gioco.get_nome() %></h2>
-    <p>Piattaforma: <%= gioco.get_piattaforma() %></p>
-    <p>Genere: <%= gioco.get_genere() %></p>
-    <p>Prezzo: <%= gioco.get_prezzo() %>€</p>
-    <p>Data di uscita: <%= gioco.get_g_uscita() %>-<%= gioco.get_m_uscita() %>-<%= gioco.get_a_uscita() %></p>
-    <% if (gioco.getImmagine() != null) { %>
-      <img src="data:image/jpeg;base64,<%= new String(gioco.getImmagine()) %>" alt="<%= gioco.get_nome() %>">
-    <% } %>
-  </div>
+  <div class="details-and-buttons">
+    <div class="game-details">
+      <h2><%= gioco.get_nome() %></h2>
+      <p>Piattaforma: <%= gioco.get_piattaforma() %></p>
+      <p>Genere: <%= gioco.get_genere() %></p>
+      <p>Prezzo: <%= gioco.get_prezzo() %>€</p>
+      <p>Data di uscita: <%= gioco.get_g_uscita() %>-<%= gioco.get_m_uscita() %>-<%= gioco.get_a_uscita() %></p>
+      <% if (gioco.getImmagine() != null) { %>
+        <img src="data:image/jpeg;base64,<%= new String(gioco.getImmagine()) %>" alt="<%= gioco.get_nome() %>">
+      <% } %>
+    </div>
 
-  <div class="image-wrapper">
-    <img src="<%= contextPath %>/images/vasi_canopi.png" alt="Immagine dei vasi sopra">
-  </div>
+    <div class="button-wrapper">
+      <div class="image-wrapper">
+        <img src="<%= contextPath %>/images/vasi_canopi.png" alt="Immagine dei vasi">
+      </div>
+      
+      <form action="${pageContext.request.contextPath}/Carrello_servlet?id_gioco=<%= gioco.get_id_gioco() %>" method="post">
+        <input type="hidden" name="aggiungi_carrello" value="<%= gioco.get_id_gioco() %>">
+        <button name="azione_carrello" value="aggiungi" type="submit">Aggiungi al carrello</button>
+      </form>
 
-  <div class="button-wrapper">
-    <form action="${pageContext.request.contextPath}/Carrello_servlet?id_gioco=<%= gioco.get_id_gioco() %>" method="post">
-      <input type="hidden" name="aggiungi_carrello" value="<%= gioco.get_id_gioco() %>">
-      <button name="azione_carrello" value="aggiungi" type="submit">Aggiungi al carrello</button>
-    </form>
+      <form action="${pageContext.request.contextPath}/lista_desideri_servlet?id_gioco=<%= gioco.get_id_gioco() %>" method="post">
+        <input type="hidden" name="aggiungi_lista" value="<%= gioco.get_id_gioco() %>">
+        <button type="submit">Aggiungi alla lista desideri</button>
+      </form>
 
-    <form action="${pageContext.request.contextPath}/lista_desideri_servlet?id_gioco=<%= gioco.get_id_gioco() %>" method="post">
-      <input type="hidden" name="aggiungi_lista" value="<%= gioco.get_id_gioco() %>">
-      <button type="submit">Aggiungi alla lista desideri</button>
-    </form>
-  </div>
-
-  <div class="image-wrapper">
-    <img src="<%= contextPath %>/images/vasi_canopi.png" alt="Immagine dei vasi sotto">
+      <div class="image-wrapper">
+        <img src="<%= contextPath %>/images/vasi_canopi.png" alt="Immagine dei vasi">
+      </div>
+    </div>
   </div>
 </div>
+
 
 <script src="<%= contextPath %>/scripts/script_index.js"></script>
 </body>
