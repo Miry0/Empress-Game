@@ -5,8 +5,15 @@
 <%
     // Controlla se l'utente è già loggato
     if (utente != null && utente.get_nome_utente() != null && !utente.get_nome_utente().isEmpty()) {
-        response.sendRedirect("index.jsp");
-        return;
+        String tipo=utente.get_tipo(); //recuperiamo il ripo dell'utente
+    	
+        if("base".equals(tipo)){
+        	response.sendRedirect("Profilo_utente.jsp");
+        }
+        else
+        	response.sendRedirect("Profilo_admin.jsp");
+    	
+       
     }
 %>
 
