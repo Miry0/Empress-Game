@@ -17,7 +17,7 @@
 <div>
     <h1>Registrazione avvenuta con successo!</h1>
     <p>Grazie per esserti registrato.</p>
-     <a href="<%=contextPath %>/index_login.jsp">Torna sulla home page</a>
+     <a href="<%=contextPath %>/">Torna sulla home page</a>
     <a href="<%=contextPath %>/scripts/Pagina_login.jsp">Accedi alla tua area riservata</a>
 </div>
 
