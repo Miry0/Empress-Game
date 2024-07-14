@@ -1,0 +1,71 @@
+/* Stili del wrapper per l'immagine */
+.image-wrapper {
+    text-align: center;
+    margin-top: 20px; /* Spaziatura sopra */
+    margin-bottom: 20px; /* Spaziatura sotto */
+}
+
+/* Stili per l'immagine */
+ .image-wrapper img {
+      width: 100%; /* Occupa tutta la larghezza disponibile */
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      max-width: 100px; /* Larghezza massima desiderata */
+    }
+
+    .button-wrapper {
+      display: inline-block; /* Per posizionare in linea */
+      vertical-align: top; /* Allinea in alto rispetto al contenuto circostante */
+      width: 100px; /* Larghezza dei pulsanti */
+      margin-left: 20px; /* Spaziatura a sinistra tra i dettagli del gioco e i pulsanti */
+    }
+
+    .button-wrapper button {
+      width: 100%; /* Occupa tutta la larghezza del wrapper */
+      margin-bottom: 10px;
+      background-color: #610361;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+/* Stili del container principale */
+.container {
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 40px 16px;
+    background-color: #fff;
+    color: #000;
+}
+
+/* Stili del titolo principale */
+.game-details h2 {
+    text-align: center;
+    color: #610361;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Stili del testo */
+.game-details p {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Stili dell'immagine del gioco */
+.game-details img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+/* Stili del form (pulsanti) */
+.game-details .button-wrapper {
+    text-align: center;
+    margin-top: 20px;
+}
