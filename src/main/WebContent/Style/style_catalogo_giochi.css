@@ -1,0 +1,79 @@
+ body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        .carousel-container {
+            width: 620px; /* Adjusted width to fit two items */
+            overflow: hidden;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-item {
+            min-width: 300px;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .carousel-item h2 {
+            font-size: 1.5em; /* Increased the font size of the title */
+            text-align: center;
+            margin: 10px 0 0;
+        }
+
+        .carousel-item p {
+            font-size: 1.2em; /* Increased the font size of the paragraphs */
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            width: 30px;
+            height: 30px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transform: translateY(-50%);
+        }
+
+        .arrow-left {
+            left: 10px;
+        }
+
+        .arrow-right {
+            right: 10px;
+        }
+
+        .arrow:hover {
+            background-color: #f0f0f0;
+        }
+
+        .order-form {
+            margin-bottom: 20px;
+        }

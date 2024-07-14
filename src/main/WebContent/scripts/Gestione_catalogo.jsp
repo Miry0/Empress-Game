@@ -5,17 +5,6 @@
 <%@ page import="java.util.List" %>
 
 
-<%
-
-
-    // Recupera l'oggetto utente dalla sessione
-    	utente = (Utenti_bean) session.getAttribute("utente");
-    // Se l'utente non è loggato, reindirizza alla pagina di login
-    if (utente == null) {
-        response.sendRedirect("Pagina_login.jsp");
-        return;
-    }
-%>
 <!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
@@ -51,7 +40,7 @@
  <!-- vengono modificati solo i campi non null, grazie ad un metodo che sta nella servlet -->
  
         <div class="form-group">
-            <form id="add_form" action="<%= contextPath %>/Gestione_giochi_servlet" method="post" enctype="multipart/form-data" onsubmit="return validateForm('add_form', ['nome', 'piattaforma', 'genere'], ['g_uscita', 'm_uscita', 'a_uscita' ],['prezzo']);">
+            <form id="add_form" action="${pageContext.request.contextPath}/Gestione_giochi_servlet" method="post" enctype="multipart/form-data" onsubmit="return validateForm('add_form', ['nome', 'piattaforma', 'genere'], ['g_uscita', 'm_uscita', 'a_uscita' ],['prezzo']);">
                 <h3>Aggiungi/Modifica Gioco</h3>
                 <input type="hidden" name="id" value="${game.id}">
                 <input type="text" name="nome" placeholder="Nome del gioco" value="${game.nome}">
@@ -73,9 +62,9 @@
             <h3>Elimina Gioco</h3>
             <!--  form invia una richiesta alla servlet con un parametro gameSearch per cercare giochi per nome. -->
             <!-- Una volta trovati i giochi corrispondenti, viene mostrato un elenco con ciascun gioco e un pulsante "Elimina" accanto ad ogni voce -->
-            <form id="delete_form" action="Gestione_giochi_servlet" method="post" onsubmit="return validateForm('delete_form', ['gameSearch']);">
+            <form id="delete_form" action="${pageContext.request.contextPath}/Gestione_giochi_servlet" method="post" onsubmit="return validateForm('delete_form', ['gameSearch']);">
                 <input type="text" name="gameSearch" placeholder="Cerca gioco per nome">
-                <input type="submit" value="Cerca">
+                <input type="submit" value=search>
             </form>
             <ul>
                 <!-- Mostra l'elenco dei giochi trovati per la ricerca -->
@@ -86,12 +75,12 @@
                 %>
                             <li>
                                 <%= game.get_nome() %>
-                                <form action="Gestione_giochi_servlet" method="post" style="display:inline;">
+                                <form action="${pageContext.request.contextPath}/Gestione_giochi_servlet" method="post" style="display:inline;">
                                     <input type="hidden" name="id" value="<%= game.get_id_gioco() %>">
                                     <!-- Quando si preme il pulsante "Elimina" accanto a un gioco nell'elenco, 
                                     il valore di submitAction sarà impostato automaticamente a delete, 
                                     il che indica alla servlet di procedere con l'eliminazione del gioco corrispondente -->
-                                    <input type="hidden" name="submitAction" value="delete"> 
+                                    <input type="hidden" name="submitAction" value="Elimina"> 
                                     <input type="submit" value="Elimina">
                                 </form>
                             </li>

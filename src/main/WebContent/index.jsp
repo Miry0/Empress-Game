@@ -11,6 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Empress Games</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_catalogo_giochi.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_barra_ricerca.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_carrello_profilo.css">
 
@@ -104,30 +105,59 @@
     <input type="submit" value="Ordina">
 </form>
 
-<!-- Codice per visualizzare la lista dei giochi -->
-<%
-    if (games != null && !games.isEmpty()) {
-        for (Game_bean game : games) {
-%>
-    <div>
-    <!-- quando l'utente clicca sul nome, viene reindirizzato alla pagina, passando l'id del gioco come parametro nella query string  -->
-        <h2><a href="Dettagli_gioco_servlet?id_gioco=<%= game.get_id_gioco() %>"><%= game.get_nome() %></a></h2> <!-- usiamo il nome del gioco per poter aprire la scheda dei dettagli -->
-        <p>Piattaforma: <%= game.get_piattaforma() %></p>
-        <p>Genere: <%= game.get_genere() %></p>
-        <p>Prezzo: <%= game.get_prezzo() %></p>
-        <p>Data di uscita: <%= game.get_g_uscita() %>-<%= game.get_m_uscita() %>-<%= game.get_a_uscita() %></p>
-        <% if (game.getImmagine() != null) { %>
-        <img src="data:image/jpeg;base64,<%= new String(game.getImmagine()) %>" alt="<%= game.get_nome() %>">
-        <% } %> 
+    <!-- Codice per visualizzare la lista dei giochi -->
+    <div class="carousel-container">
+        <div class="arrow arrow-left" onclick="scrollCarousel(-1)">&#8249;</div>
+        <div class="carousel" id="carousel">
+            <%
+                if (games != null && !games.isEmpty()) {
+                    for (Game_bean game : games) {
+            %>
+            <div class="carousel-item">
+                <h2><a href="Dettagli_gioco_servlet?id_gioco=<%= game.get_id_gioco() %>"><%= game.get_nome() %></a></h2>
+                <p>Piattaforma: <%= game.get_piattaforma() %></p>
+                <p>Genere: <%= game.get_genere() %></p>
+                <p>Prezzo: <%= game.get_prezzo() %></p>
+                <p>Data di uscita: <%= game.get_g_uscita() %>-<%= game.get_m_uscita() %>-<%= game.get_a_uscita() %></p>
+                <% if (game.getImmagine() != null) { %>
+                <img src="data:image/jpeg;base64,<%= new String(game.getImmagine()) %>" alt="<%= game.get_nome() %>">
+                <% } %> 
+            </div>
+            <%
+                    }
+                } else {
+            %>
+            <div class="carousel-item">
+                <p>Nessun gioco disponibile.</p>
+            </div>
+            <%
+                }
+            %>
+        </div>
+        <div class="arrow arrow-right" onclick="scrollCarousel(1)">&#8250;</div>
     </div>
-<%
+
+    <script>
+        let currentIndex = 0;
+
+        function scrollCarousel(direction) {
+            const carousel = document.getElementById('carousel');
+            const items = document.querySelectorAll('.carousel-item');
+            const itemWidth = items[0].offsetWidth + 20; // item width including padding
+            const visibleItems = 2;
+            const maxIndex = items.length - visibleItems;
+
+            currentIndex += direction;
+
+            if (currentIndex < 0) {
+                currentIndex = 0;
+            } else if (currentIndex > maxIndex) {
+                currentIndex = maxIndex;
+            }
+
+            carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
         }
-    } else {
-%>
-    <p>Nessun gioco disponibile.</p>
-<%
-    }
-%>
+    </script>
 
 <!-- Inclusione del file JavaScript -->
 <script src="<%= contextPath %>/scripts/script_index.js"></script>
