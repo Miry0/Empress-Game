@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="model.Utenti_bean" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="model.Game_bean" %>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
+<jsp:useBean id="utente" class="model.Utenti_bean" scope="session"/>
 
 <html lang="it">
 <head>
@@ -57,8 +58,9 @@
       </form>
 
       <form action="${pageContext.request.contextPath}/lista_desideri_servlet?id_gioco=<%= gioco.get_id_gioco() %>" method="post">
-        <input type="hidden" name="aggiungi_lista" value="<%= gioco.get_id_gioco() %>">
-        <button type="submit">Aggiungi alla lista desideri</button>
+        <input type="hidden" name="gioco_aggiungi_lista" value="<%= gioco.get_id_gioco() %>">
+        <input type="hidden" name="nome_utente_lista" value="<%= utente.get_nome_utente() %>">     
+        <button name="lista_desideri" type="submit" value="add">Aggiungi alla lista desideri</button>
       </form>
 
       <div class="image-wrapper">

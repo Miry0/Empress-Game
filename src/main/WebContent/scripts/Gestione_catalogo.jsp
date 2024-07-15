@@ -30,7 +30,7 @@
 <!-- Menu a comparsa -->
 <div id="menu" class="menu">
   <span class="close-icon" onclick="toggleMenu()">X</span> <!-- Icona di chiusura -->
-  <a href="<%= contextPath %>/index.jsp">Home</a>
+  <a href="<%= contextPath %>/">Home</a>
   <a href="#">Impostazioni</a>
   <a href="#">Logout</a>
   <!-- Aggiungi altre voci del menu qui se necessario -->
@@ -40,7 +40,7 @@
  <!-- vengono modificati solo i campi non null, grazie ad un metodo che sta nella servlet -->
  
         <div class="form-group">
-            <form id="add_form" action="${pageContext.request.contextPath}/Gestione_giochi_servlet" method="post" enctype="multipart/form-data" onsubmit="return validateForm('add_form', ['nome', 'piattaforma', 'genere'], ['g_uscita', 'm_uscita', 'a_uscita' ],['prezzo']);">
+            <form id="add_form" action="${pageContext.request.contextPath}/Gestione_giochi_servlet" method="post" onsubmit="return validateForm('add_form', ['nome', 'piattaforma', 'genere'], ['g_uscita', 'm_uscita', 'a_uscita' ],['prezzo']);">
                 <h3>Aggiungi/Modifica Gioco</h3>
                 <input type="hidden" name="id" value="${game.id}">
                 <input type="text" name="nome" placeholder="Nome del gioco" value="${game.nome}">
@@ -54,9 +54,7 @@
 
                 <button id="agg_button" name="submitAction" type="submit"  value="Aggiungi">Aggiungi</button> <!-- Pulsante per aggiungere un nuovo gioco -->
                 <button id="up_butt" name="submitAction" type="submit"  value="Modifica">Modifica</button> <!-- Pulsante per modificare un gioco esistente -->
-           
-           <!-- Campo nascosto per contenere il valore del pulsante cliccato -->
-      	  <input type="hidden" id="submitAction" name="submitAction" value="">
+           		console.log())
             </form>
         </div>
         

@@ -15,8 +15,11 @@ public class Sta_nella_lista_DAODataSource implements IBeanDAO<Sta_nella_lista_b
 
     private static DataSource ds;
 
-    public Sta_nella_lista_DAODataSource(ServletContext context) {
-        ds = (DataSource) context.getAttribute("MyDataSource");
+    public Sta_nella_lista_DAODataSource(DataSource ds) {
+        this.ds=ds;
+        if(ds==null) {
+        	System.out.println("DataSource nullo");
+        }
     }
 
     private static final String TABLE_NAME = "sta_nella_lista";

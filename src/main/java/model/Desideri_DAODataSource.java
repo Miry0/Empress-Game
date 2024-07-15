@@ -21,9 +21,13 @@ public class Desideri_DAODataSource implements IBeanDAO<Desideri_bean> {
 
     private static final String TABLE_NAME = "LISTA_DESIDERI";
     
-    public Desideri_DAODataSource(ServletContext context) {
-        ds = (DataSource) context.getAttribute("MyDataSource");
+    public Desideri_DAODataSource(DataSource ds) {
+        this.ds=ds;
+        if(ds==null) {
+        	System.out.println("DataSource nullo");
+        }
     }
+    
     @Override
     public synchronized void doSave(Desideri_bean Lista_desideri) throws SQLException {
         Connection connection = null;
@@ -145,6 +149,42 @@ public class Desideri_DAODataSource implements IBeanDAO<Desideri_bean> {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
             preparedStatement.setInt(1, id_lista);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                bean.set_id_lista(rs.getInt("id_lista"));
+                bean.set_nome_utente(rs.getString("nome_utente"));
+
+                // Recupero dell'immagine
+                byte[] immagine = rs.getBytes("immagine");
+                if (immagine != null && immagine.length > 0) {
+                    bean.set_immagine(immagine);
+                }
+            }
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
+        }
+        
+        return bean;
+    }
+    
+    public synchronized Desideri_bean doRetrieveByUserName(String nome_utente) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Desideri_bean bean = new Desideri_bean();
+
+        String selectSQL = "SELECT * FROM " + Desideri_DAODataSource.TABLE_NAME + " WHERE nome_utente = ?";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, nome_utente);
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
