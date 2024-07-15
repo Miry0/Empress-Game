@@ -8,7 +8,7 @@
 
     // Se l'utente non è loggato, reindirizza alla pagina di login
     if (utente == null) {
-        response.sendRedirect("Pagina_login.jsp");
+    	  RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         return;
     }
 %>
@@ -23,6 +23,7 @@
 <body>
 
 <!-- Verifica del contesto dell'applicazione -->
+<!-- klvmklevmkl -->
 <%
     String contextPath = request.getContextPath();
 %>
@@ -38,14 +39,14 @@
 <!-- Menu a comparsa -->
 <div id="menu" class="menu">
   <span class="close-icon" onclick="toggleMenu()">X</span> <!-- Icona di chiusura -->
-  <a href="<%= contextPath %>/index.jsp">Home</a>
+  <a href="<%= contextPath %>/">Home</a>
   <a href="#">Impostazioni</a>
 </div>
 
   <!-- Box laterale con i bottoni -->
 <div class="sidebar">
-    <button onclick="location.href='<%= contextPath %>scripts/wishlist.jsp'">Lista Desideri</button>
-    <button onclick="location.href='<%= contextPath %>scripts/Storico_admin.jsp'">I Miei Ordini</button>
+    <button onclick="location.href='<%= contextPath %>/scripts/wishlist.jsp'">Lista Desideri</button>
+    <button onclick="location.href='<%= contextPath %>/scripts/Storico_admin.jsp'">I Miei Ordini</button>
 </div>
 
 <div class="login-form">
@@ -83,7 +84,7 @@
         </form>
         
         <!-- Pulsanti per lo storico e la gestione del catalogo -->
-        <form action="<%= contextPath %>/scripts/Storico-jsp" method="post">
+        <form action="<%= contextPath %>/scripts/Storico_admin.jsp" method="post">
             <button type="submit">Storico</button> <!-- Reindirizza alla servlet per lo storico -->
         </form>
         
