@@ -11,7 +11,7 @@ public class Desideri_bean implements Serializable {
 
     // Costruttore
     public Desideri_bean() {
-        id_lista = 9;
+      // this.id_lista = id_lista;
         nome_utente = null;
         // Inizializziamo l'immagine a null nel costruttore
     }
