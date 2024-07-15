@@ -9,14 +9,11 @@ public class Desideri_bean implements Serializable {
     private int id_lista; // Chiave primaria
     private String nome_utente; // Chiave esterna
 
-    // Aggiunta del campo per l'immagine del prodotto
-    private byte[] immagine; // Può essere anche una stringa per il percorso dell'immagine
-
     // Costruttore
     public Desideri_bean() {
-        id_lista = -1;
+        id_lista = 9;
         nome_utente = null;
-        immagine = null; // Inizializziamo l'immagine a null nel costruttore
+        // Inizializziamo l'immagine a null nel costruttore
     }
 
     // Getter e setter per id_lista e nome_utente come hai già implementato
@@ -37,14 +34,6 @@ public class Desideri_bean implements Serializable {
         this.nome_utente = nome_utente;
     }
 
-    // Getter e setter per l'immagine
-    public byte[] get_immagine() {
-        return immagine;
-    }
-
-    public void set_immagine(byte[] immagine) {
-        this.immagine = immagine;
-    }
 
     // Metodo toString per la stampa dei dettagli del bean
     @Override

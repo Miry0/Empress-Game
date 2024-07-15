@@ -34,21 +34,13 @@ public class Desideri_DAODataSource implements IBeanDAO<Desideri_bean> {
         PreparedStatement preparedStatement = null;
 
         String insertSQL = "INSERT INTO " + Desideri_DAODataSource.TABLE_NAME
-                + " (id_lista, nome_utente, immagine) VALUES (?, ?, ?)";
+                + " (id_lista, nome_utente) VALUES (?, ?)";
 
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
             preparedStatement.setInt(1, Lista_desideri.get_id_lista());
             preparedStatement.setString(2, Lista_desideri.get_nome_utente());
-
-            // Aggiunta dell'immagine
-            if (Lista_desideri.get_immagine() != null) {
-                InputStream inputStream = new ByteArrayInputStream(Lista_desideri.get_immagine());
-                preparedStatement.setBinaryStream(3, inputStream, Lista_desideri.get_immagine().length);
-            } else {
-                preparedStatement.setNull(3, java.sql.Types.BLOB);
-            }
 
             preparedStatement.executeUpdate();
 
@@ -116,12 +108,6 @@ public class Desideri_DAODataSource implements IBeanDAO<Desideri_bean> {
                 bean.set_id_lista(rs.getInt("id_lista"));
                 bean.set_nome_utente(rs.getString("nome_utente"));
 
-                // Recupero dell'immagine
-                byte[] immagine = rs.getBytes("immagine");
-                if (immagine != null && immagine.length > 0) {
-                    bean.set_immagine(immagine);
-                }
-
                 Lista_desideri.add(bean);
             }
 
@@ -155,11 +141,6 @@ public class Desideri_DAODataSource implements IBeanDAO<Desideri_bean> {
                 bean.set_id_lista(rs.getInt("id_lista"));
                 bean.set_nome_utente(rs.getString("nome_utente"));
 
-                // Recupero dell'immagine
-                byte[] immagine = rs.getBytes("immagine");
-                if (immagine != null && immagine.length > 0) {
-                    bean.set_immagine(immagine);
-                }
             }
         } finally {
             try {
@@ -191,11 +172,6 @@ public class Desideri_DAODataSource implements IBeanDAO<Desideri_bean> {
                 bean.set_id_lista(rs.getInt("id_lista"));
                 bean.set_nome_utente(rs.getString("nome_utente"));
 
-                // Recupero dell'immagine
-                byte[] immagine = rs.getBytes("immagine");
-                if (immagine != null && immagine.length > 0) {
-                    bean.set_immagine(immagine);
-                }
             }
         } finally {
             try {

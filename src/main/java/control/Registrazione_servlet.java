@@ -15,12 +15,15 @@ import javax.sql.DataSource;
 
 import model.Utenti_DAODataSource;
 import model.Utenti_bean;
+import model.Desideri_bean;
+import model.Desideri_DAODataSource;
 
 //@WebServlet("/Registrazione_servlet")
 public class Registrazione_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;;
     
     private Utenti_DAODataSource utenti; // DAO per l'interazione con il database degli utenti
+    private Desideri_DAODataSource desideri; 
     
     public void init(ServletConfig cfg) throws ServletException {
         super.init(cfg);
@@ -32,6 +35,7 @@ public class Registrazione_servlet extends HttpServlet {
         // Recupera i parametri dal form di registrazione
     	DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
         utenti = new Utenti_DAODataSource(ds);
+        desideri= new Desideri_DAODataSource(ds); //creiamo una lista da associare all'utente
         
         System.out.println("utenti"+ utenti);
         
@@ -74,6 +78,22 @@ public class Registrazione_servlet extends HttpServlet {
             e.printStackTrace();
             request.getRequestDispatcher("index.jsp").forward(request, response);
             	// Reindirizza a pagina di errore
+        }
+        
+        Desideri_bean nuovalista = new Desideri_bean();
+        nuovalista.set_nome_utente(nome_utente);
+        
+        try {
+            // Salva il nuovo utente nel database utilizzando il DAO
+            desideri.doSave(nuovalista);
+            System.out.println("lista creata con successo"+nuovalista );
+            //ci sarà un tasto che riporta all'home e l'utente dovrà effettuare l'accesso
+            // Reindirizzamento alla pagina di conferma registrazione
+            //request.getRequestDispatcher("/scripts/Successo_registrazione.jsp").forward(request, response);
+        } catch (SQLException e) {
+        	System.out.println("lista non creata con successo"+nuovalista );
+            // Gestione dell'eccezione SQL
+            e.printStackTrace();
         }
     }
     
