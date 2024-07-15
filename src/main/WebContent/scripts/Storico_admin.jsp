@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Storico degli Ordini - Cliente</title>
+    <title>Storico degli Ordini - Admin</title>
 </head>
 <body>
-    <h1>Storico degli Ordini - Cliente</h1>
+    <h1>Storico degli Ordini - Admin</h1>
     <table>
         <thead>
             <tr>
