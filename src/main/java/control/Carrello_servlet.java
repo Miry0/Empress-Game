@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.LinkedList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -24,6 +25,8 @@ import model.Carrello_bean;
 import model.Game_DAODataSource;
 import model.Game_bean;
 
+import model.Carrello;
+
 //@WebServlet("/CarrelloServlet")
 public class Carrello_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -38,10 +41,12 @@ public class Carrello_servlet extends HttpServlet {
 
  //gestiamo il carrello direttamente con il metodo dopost
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	 DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
-         carrelloDAO = new Carrello_DAODataSource(ds);
-         gameDAO = new Game_DAODataSource(ds);
-         
+    	DataSource ds=(DataSource) getServletContext().getAttribute("MyDataSource");  
+        carrelloDAO = new Carrello_DAODataSource(ds);
+        gameDAO = new Game_DAODataSource(ds);
+        
+        HttpSession session = request.getSession();
+        Carrello carrello = (Carrello) session.getAttribute("carrello");
          
     	String action = request.getParameter("azione_carrello");
 
@@ -54,39 +59,61 @@ public class Carrello_servlet extends HttpServlet {
                     eliminaElemento(request, response);
                     break;
                 default:
-                	 mostraCarrello(request, response);
+                	 mostraCarrello(request, response, carrello);
                 	//RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_carrello.jsp");
                     //dispatcher.forward(request, response);                    
                     break;
             }
         } else {
-            mostraCarrello(request, response);
+            mostraCarrello(request, response, carrello);
         }
     }
     
 
-    private void mostraCarrello(HttpServletRequest request, HttpServletResponse response)
+    private void mostraCarrello(HttpServletRequest request, HttpServletResponse response, Carrello carrello)
             throws ServletException, IOException {
-        try {
+		Collection<Game_bean> catalogo = new LinkedList<>();
+    	
+    	for(int i = 0; i < carrello.getCarrelloLenght(); i++){
+    		int idGioco = carrello.getGiocoByIndex(i);
+    		Game_bean gioco = null;
+    		
+    		try {
+				gioco = gameDAO.doRetrieveByKey(idGioco);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    		if(gioco != null && !gioco.isEmpty())
+    			catalogo.add(gioco);
+    	}
+    	
+    	HttpSession session = request.getSession();
+    	session.setAttribute("catalogo", catalogo);
+    	RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Gestione_carrello.jsp"); //reindirizziamo alla jsp
+        dispatcher.forward(request, response);
+    	
+        /*try {
             Collection<Carrello_bean> carrello = carrelloDAO.doRetrieveAll(null); //recuperiamo il contenuto del carrello
             request.setAttribute("carrello", carrello); //settiamo l'attributo carrello che verrà recuperato nella jsp
             RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_carrello.jsp"); //reindirizziamo alla jsp
             dispatcher.forward(request, response);
             } catch (SQLException e) {
             throw new ServletException(e);
-        }
+        }*/
     }
 
     private void aggiungiElemento(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	//Retrieving the session
     	HttpSession session = request.getSession();
-    	 int idGioco=(int) request.getAttribute("id_gioco"); //recuperiamo l'id del gioco passato nella richiesta alla servlet
-    	 System.out.println("idGioco"+idGioco); 
+    	int idGioco=Integer.parseInt(request.getParameter("aggiungi_carrello")); //recuperiamo l'id del gioco passato nella richiesta alla servlet
+    	System.out.println("idGioco"+idGioco); 
     	
         // Recupera i parametri dalla richiesta
     	// Parametri da richiesta HTTP
-        int n_ordine = Integer.parseInt(request.getParameter("n_ordine"));
+        //int n_ordine = Integer.parseInt(request.getParameter("n_ordine"));
         String nome_utente = request.getParameter("nome_utente");
         String metodo_pagamento = request.getParameter("metodo_pagamento");
         float totale = Float.parseFloat(request.getParameter("totale"));
@@ -107,7 +134,7 @@ public class Carrello_servlet extends HttpServlet {
         // Crea un nuovo oggetto Carrello_bean
         if(!isCartCreated) {
         	Carrello_bean carrello = new Carrello_bean();
-        	carrello.set_n_ordine(n_ordine);
+        	//carrello.set_n_ordine(n_ordine);
         	carrello.set_nome_utente(nome_utente);
         	carrello.set_metodo_pagamento(metodo_pagamento);
         	carrello.set_totale(totale);

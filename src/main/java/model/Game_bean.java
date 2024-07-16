@@ -19,7 +19,7 @@ public class Game_bean implements Serializable {
 
     // Costruttore
     public Game_bean() {
-        id_gioco = -1;
+        //id_gioco = -1;
         nome = "";
         piattaforma =null;
         genere = null;
@@ -111,6 +111,13 @@ public class Game_bean implements Serializable {
 
     public void set_quantita(int quantita) {
         this.quantita = quantita;
+    }
+    
+    public boolean isEmpty(){
+    	if(id_gioco == -1)
+    		return true;
+    	
+    	return false;
     }
 
     @Override
