@@ -108,9 +108,12 @@ public class Carrello_servlet extends HttpServlet {
             throws ServletException, IOException {
     	//Retrieving the session
     	HttpSession session = request.getSession();
-    	int idGioco=Integer.parseInt(request.getParameter("aggiungi_carrello")); //recuperiamo l'id del gioco passato nella richiesta alla servlet
+    	int idGioco = Integer.parseInt(request.getParameter("aggiungi_carrello")); //recuperiamo l'id del gioco passato nella richiesta alla servlet
     	System.out.println("idGioco"+idGioco); 
     	
+    	boolean isCartCreated = (boolean)(session.getAttribute("isCartCreated"));
+    	
+    	/*
         // Recupera i parametri dalla richiesta
     	// Parametri da richiesta HTTP
         //int n_ordine = Integer.parseInt(request.getParameter("n_ordine"));
@@ -128,9 +131,9 @@ public class Carrello_servlet extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        
-        
-        
+     	
+     	
+     	
         // Crea un nuovo oggetto Carrello_bean
         if(!isCartCreated) {
         	Carrello_bean carrello = new Carrello_bean();
@@ -161,11 +164,42 @@ public class Carrello_servlet extends HttpServlet {
         	carrello.addGame(idGioco);
         }
         
+        */
+    	
+    	int idCarrello = 2; //PLACEHOLDER
+    	
+    	if(!isCartCreated) {
+    		Carrello carrello = new Carrello(idCarrello);
+    		carrello.aggiungiGioco(idGioco);
+    		session.setAttribute("carrello", carrello);
+    	} else {
+    		Carrello carrello = (Carrello) session.getAttribute("carrello");
+    		carrello.aggiungiGioco(idGioco);
+    	}
         
     }
 
     private void eliminaElemento(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	HttpSession session = request.getSession();
+    	int idGioco = Integer.parseInt(request.getParameter("aggiungi_carrello")); //recuperiamo l'id del gioco passato nella richiesta alla servlet
+    	System.out.println("idGioco"+idGioco); 
+    	
+    	boolean isCartCreated = (boolean)(session.getAttribute("isCartCreated"));
+    	
+    	
+    	
+    	if(!isCartCreated) {
+    		System.out.println("Il carrello non esiste!");
+    	} else {
+    		Carrello carrello = (Carrello) session.getAttribute("carrello");
+    		
+    		if(!carrello.removeGiocoByKey(idGioco))
+    			System.out.println("Il carrello è vuoto");
+    	}
+    	
+    	
+    	/*
         // Recupera il parametro dalla richiesta
         int n_ordine = Integer.parseInt(request.getParameter("n_ordine"));
         
@@ -177,6 +211,7 @@ public class Carrello_servlet extends HttpServlet {
         } catch (SQLException e) {
             throw new ServletException(e);
         }
+        */
     }
     
     /**

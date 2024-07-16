@@ -34,4 +34,12 @@ public class Carrello {
 	public int getCarrelloLenght() {
 		return listaGiochi.size();
 	}
+	
+	public boolean removeGiocoByKey(int idGioco){
+		if(isCarrelloEmpty())
+			return false;
+		
+		listaGiochi.remove(idGioco);
+		return true;
+	}
 }
