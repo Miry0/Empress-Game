@@ -49,7 +49,6 @@ CREATE TABLE sta_nella_lista
 	id_lista int NOT NULL, 
 	nome_utente varchar(20) NOT NULL, 
     id_gioco int NOT NULL, 
-    immagine mediumblob, 
     
     PRIMARY KEY(id),
     FOREIGN KEY (id_lista) REFERENCES LISTA_DESIDERI(id_lista),
@@ -63,9 +62,6 @@ CREATE TABLE CARRELLO
 	n_ordine int AUTO_INCREMENT, 
     nome_utente varchar(20) NOT NULL, 
     id_gioco int not null, 
-    prezzo int not null,
-    totale float NOT NULL, 
-	immagine mediumblob, 
     
     PRIMARY KEY(n_ordine), 
     foreign key(nome_utente) REFERENCES UTENTI(nome_utente)

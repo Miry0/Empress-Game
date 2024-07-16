@@ -57,7 +57,7 @@
         <button name="azione_carrello" value="aggiungi" type="submit">Aggiungi al carrello</button>
       </form>
 
-      <form action="${pageContext.request.contextPath}/lista_desideri_servlet?id_gioco=<%= gioco.get_id_gioco() %>" method="post">
+      <form action="${pageContext.request.contextPath}/lista_desideri_servlet" method="post">
         <input type="hidden" name="gioco_aggiungi_lista" value="<%= gioco.get_id_gioco() %>">
         <input type="hidden" name="nome_utente_lista" value="<%= utente.get_nome_utente() %>">     
         <button name="lista_desideri" type="submit" value="add">Aggiungi alla lista desideri</button>

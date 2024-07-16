@@ -1,12 +1,29 @@
 package model;
 
 public class Sta_nella_lista_bean {
-    private int id_lista;
+	
+	private int id; //chiave primaria
+	private int id_lista;
     private String nome_utente;
     private int id_gioco;
-    private String nome_gioco;
-    private byte[] immagine;
+    
+    public Sta_nella_lista_bean() {
+        // this.id_lista = id_lista;
+    	id_lista=-1; 
+        nome_utente = null;
+        id_gioco=-1; 
+          // Inizializziamo l'immagine a null nel costruttore
+      }
+    
+    // Getters e setters dell'id della riga della table
+    public int get_id() {
+        return id;
+    }
 
+    public void set_id(int id) {
+        this.id = id;
+    }
+    
     // Getters e setters
     public int get_id_lista() {
         return id_lista;
@@ -32,19 +49,9 @@ public class Sta_nella_lista_bean {
         this.id_gioco = id_gioco;
     }
 
-    public String get_nome_gioco() {
-        return nome_gioco;
-    }
-
-    public void set_nome_gioco(String nome_gioco) {
-        this.nome_gioco = nome_gioco;
-    }
-
-    public byte[] get_immagine() {
-        return immagine;
-    }
-
-    public void set_immagine(byte[] immagine) {
-        this.immagine = immagine;
+    // Metodo toString per la stampa dei dettagli del bean
+    @Override
+    public String toString() {
+        return id+ " "+ id_lista + " " + nome_utente+ " " + id_gioco;
     }
 }

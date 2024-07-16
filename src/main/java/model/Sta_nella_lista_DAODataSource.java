@@ -29,7 +29,7 @@ public class Sta_nella_lista_DAODataSource implements IBeanDAO<Sta_nella_lista_b
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        String insertSQL = "INSERT INTO " + TABLE_NAME + " (id_lista, nome_utente, id_gioco, immagine) VALUES (?, ?, ?, ?)";
+        String insertSQL = "INSERT INTO " + TABLE_NAME + " (id_lista, nome_utente, id_gioco) VALUES (?, ?, ?)";
 
         try {
             connection = ds.getConnection();
@@ -37,8 +37,6 @@ public class Sta_nella_lista_DAODataSource implements IBeanDAO<Sta_nella_lista_b
             preparedStatement.setInt(1, staNellaLista.get_id_lista());
             preparedStatement.setString(2, staNellaLista.get_nome_utente());
             preparedStatement.setInt(3, staNellaLista.get_id_gioco());
-            preparedStatement.setString(3, staNellaLista.get_nome_gioco());
-            preparedStatement.setBytes(4, staNellaLista.get_immagine()); // Imposta l'immagine come array di byte
 
             preparedStatement.executeUpdate();
         } finally {
@@ -93,7 +91,6 @@ public class Sta_nella_lista_DAODataSource implements IBeanDAO<Sta_nella_lista_b
                 bean.set_id_lista(rs.getInt("id_lista"));
                 bean.set_nome_utente(rs.getString("nome_utente"));
                 bean.set_id_gioco(rs.getInt("id_gioco"));
-                bean.set_immagine(rs.getBytes("immagine")); // Recupera l'immagine come array di byte
 
                 listaDesideri.add(bean);
             }
@@ -124,7 +121,7 @@ public class Sta_nella_lista_DAODataSource implements IBeanDAO<Sta_nella_lista_b
                 bean.set_id_lista(rs.getInt("id_lista"));
                 bean.set_nome_utente(rs.getString("nome_utente"));
                 bean.set_id_gioco(rs.getInt("id_gioco"));
-                bean.set_immagine(rs.getBytes("immagine")); // Recupera l'immagine come array di byte
+      
             }
         } finally {
             if (preparedStatement != null) preparedStatement.close();
@@ -155,7 +152,6 @@ public class Sta_nella_lista_DAODataSource implements IBeanDAO<Sta_nella_lista_b
                 bean.set_id_lista(rs.getInt("id_lista"));
                 bean.set_nome_utente(rs.getString("nome_utente"));
                 bean.set_id_gioco(rs.getInt("id_gioco"));
-                bean.set_immagine(rs.getBytes("immagine")); // Recupera l'immagine come array di byte
 
                 wishlist.add(bean);
             }
@@ -166,7 +162,34 @@ public class Sta_nella_lista_DAODataSource implements IBeanDAO<Sta_nella_lista_b
 
         return wishlist;
     }
+    
+    public synchronized Integer getListaIdByUser(String nomeUtente) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Integer idLista = null;
 
+        String selectSQL = "SELECT id_lista FROM " + TABLE_NAME + " WHERE nome_utente = ? LIMIT 1";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, nomeUtente);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                idLista = rs.getInt("id_lista");
+            }
+        } finally {
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
+
+        return idLista;
+    }
+
+
+    /*
     // Metodo per recuperare l'immagine associata al gioco
     public synchronized byte[] retrieveGameImage(int gameId) throws SQLException {
         Connection connection = null;
@@ -192,7 +215,8 @@ public class Sta_nella_lista_DAODataSource implements IBeanDAO<Sta_nella_lista_b
 
         return immagine;
     }
-
+*/
+    
     // Metodo per ottenere l'ID del gioco dal nome
     public synchronized int getGameIdFromName(String gameName) throws SQLException {
         Connection connection = null;
@@ -245,4 +269,47 @@ public class Sta_nella_lista_DAODataSource implements IBeanDAO<Sta_nella_lista_b
         }
         return (result != 0);
     }
+    
+ // Metodo per ottenere la lista dei desideri di un utente ed eliminare un gioco specifico
+    public synchronized Collection<Sta_nella_lista_bean> aggiorna_lista(String nomeUtente, int idGiocoDaEliminare) throws SQLException {
+        Connection connection = null;
+        PreparedStatement deleteStatement = null;
+        PreparedStatement selectStatement = null;
+        Collection<Sta_nella_lista_bean> wishlist = new LinkedList<>();
+
+        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE nome_utente = ? AND id_gioco = ?";
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_utente = ?";
+
+        try {
+            connection = ds.getConnection();
+            
+            // Esegui la query di eliminazione
+            deleteStatement = connection.prepareStatement(deleteSQL);
+            deleteStatement.setString(1, nomeUtente);
+            deleteStatement.setInt(2, idGiocoDaEliminare);
+            deleteStatement.executeUpdate();
+            
+            // Esegui la query per ottenere la lista aggiornata dei desideri
+            selectStatement = connection.prepareStatement(selectSQL);
+            selectStatement.setString(1, nomeUtente);
+
+            ResultSet rs = selectStatement.executeQuery();
+
+            while (rs.next()) {
+                Sta_nella_lista_bean bean = new Sta_nella_lista_bean();
+                bean.set_id_lista(rs.getInt("id_lista"));
+                bean.set_nome_utente(rs.getString("nome_utente"));
+                bean.set_id_gioco(rs.getInt("id_gioco"));
+
+                wishlist.add(bean);
+            }
+        } finally {
+            if (deleteStatement != null) deleteStatement.close();
+            if (selectStatement != null) selectStatement.close();
+            if (connection != null) connection.close();
+        }
+
+        return wishlist;
+    }
+
 }

@@ -155,6 +155,32 @@ public class Desideri_DAODataSource implements IBeanDAO<Desideri_bean> {
         return bean;
     }
     
+    public synchronized Integer getListaIdByUser(String nomeUtente) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Integer idLista = null;
+
+        String selectSQL = "SELECT id_lista FROM " + TABLE_NAME + " WHERE nome_utente = ? LIMIT 1";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, nomeUtente);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                idLista = rs.getInt("id_lista");
+            }
+        } finally {
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
+
+        return idLista;
+    }
+
+    
     public synchronized Desideri_bean doRetrieveByUserName(String nome_utente) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

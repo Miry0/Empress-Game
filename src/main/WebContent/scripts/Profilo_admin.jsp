@@ -45,7 +45,11 @@
 
   <!-- Box laterale con i bottoni -->
 <div class="sidebar">
-    <button onclick="location.href='<%= contextPath %>/scripts/wishlist.jsp'">Lista Desideri</button>
+
+      <form action="${pageContext.request.contextPath}/lista_desideri_servlet" method="post">
+        <input type="hidden" name="nome_utente_lista" value="<%= utente.get_nome_utente() %>">     
+        <button name="lista_desideri" type="submit" value="view">Lista Desideri</button>
+      </form>
     <button onclick="location.href='<%= contextPath %>/scripts/Storico_admin.jsp'">I Miei Ordini</button>
 </div>
 
