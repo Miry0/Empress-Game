@@ -48,7 +48,7 @@ if (listaGiochi != null && !listaGiochi.isEmpty()) {
 %>
 
  <div>
-        <h2><%= game.get_nome() %></h2>
+        <h2><a href="Dettagli_gioco_servlet?id_gioco=<%= game.get_id_gioco() %>"><%= game.get_nome() %></a></h2>
         <p>Piattaforma: <%= game.get_piattaforma() %></p>
         <p>Genere: <%= game.get_genere() %></p>
         <p>Prezzo: <%= game.get_prezzo() %></p>
