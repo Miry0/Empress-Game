@@ -16,6 +16,7 @@
 <%
     String contextPath = request.getContextPath();
     Game_bean gioco = (Game_bean) request.getAttribute("gioco");
+    String messaggioErrore = (String) request.getAttribute("messaggioErrore");
 %>
 
 <header>
@@ -46,7 +47,13 @@
         <img src="data:image/jpeg;base64,<%= new String(gioco.getImmagine()) %>" alt="<%= gioco.get_nome() %>">
       <% } %>
     </div>
-
+	
+	 <%-- Visualizza il messaggio di errore se presente --%>
+      <% if (messaggioErrore != null && !messaggioErrore.isEmpty()) { %>
+        <p class="errore"><%= messaggioErrore %></p>
+      <% } %>
+    </div>
+    
     <div class="button-wrapper">
       <div class="image-wrapper">
         <img src="<%= contextPath %>/images/vasi_canopi.png" alt="Immagine dei vasi">

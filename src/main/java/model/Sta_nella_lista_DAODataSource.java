@@ -311,5 +311,35 @@ public class Sta_nella_lista_DAODataSource implements IBeanDAO<Sta_nella_lista_b
 
         return wishlist;
     }
+    
+    public synchronized boolean isGameInWishlist(String nomeUtente, int idGioco) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        boolean giocoPresente = false;
+
+        String selectSQL = "SELECT COUNT(*) AS count FROM " + TABLE_NAME + " WHERE nome_utente = ? AND id_gioco = ?";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, nomeUtente);
+            preparedStatement.setInt(2, idGioco);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt("count");
+                if (count > 0) {
+                    giocoPresente = true;
+                }
+            }
+        } finally {
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
+
+        return giocoPresente;
+    }
+
 
 }
