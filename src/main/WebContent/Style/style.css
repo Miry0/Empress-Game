@@ -134,3 +134,28 @@
 
  
   }
+  
+  .game-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.order-form-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px; /* Aggiungi margine inferiore per separare dal contenuto successivo */
+}
+
+/* Stile per il form di ordinamento */
+.order-form {
+    text-align: center;
+}
+
+.game-item {
+    width: 45%; /* Larghezza di ogni gioco (puoi regolare questo valore) */
+    margin: 10px; /* Spazio tra i giochi */
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}

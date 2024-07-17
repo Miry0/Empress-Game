@@ -11,11 +11,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Empress Games</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_catalogo_giochi.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_barra_ricerca.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_carrello_profilo.css">
-
   
+  <style>
+    .game-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .game-item {
+        width: 45%; /* Larghezza di ogni gioco (puoi regolare questo valore) */
+        margin: 10px; /* Spazio tra i giochi */
+        padding: 10px;
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+  </style>
 </head>
 <body>
 
@@ -36,18 +49,15 @@
   <img src="<%= contextPath %>/images/logo.jpg" alt="Logo">
   
 </header>
-<body>
 
 <!-- tasto per carrello e profilo -->
 <div class="header-right">
-  
- 
-	<div>
-		<a href="<%= contextPath %>/scripts/Gestione_carrello.jsp">
-      <img src="<%= contextPath %>/images/cart-icon.png" alt="Carrello">
-      </a>
+    <div>
+        <a href="<%= contextPath %>/scripts/Gestione_carrello.jsp">
+            <img src="<%= contextPath %>/images/cart-icon.png" alt="Carrello">
+        </a>
     </div>
-   <div>
+    <div>
         <% if ("admin".equals(tipoUtente)) { %>
             <a href="<%= contextPath %>/scripts/Profilo_admin.jsp">
                 <img src="<%= contextPath %>/images/user-icon.png" alt="Profilo Admin">
@@ -63,101 +73,72 @@
             </a>
         <% } %>
     </div>
- </div>
-   
+</div>
+
 <!-- Bottone per attivare il menu -->
 <div class="toggle-btn" onclick="toggleMenu()"></div>
 
 <!-- Menu a comparsa -->
 <div id="menu" class="menu">
-  <span class="close-icon" onclick="toggleMenu()">X</span> <!-- Icona di chiusura -->
-  <a href="<%= contextPath %>/scripts/Registrazione.jsp" id="registrazione-link">Registrati</a>
-  <a href="<%= contextPath %>/scripts/Pagina_login.jsp" id="profile-link">Login</a>
-  <a href="#">Impostazioni</a>
-  <!-- Link per il logout -->
-        <form action="Logout_servlet" method="post">
-            <button type="submit">Logout</button> <!-- gestito dalla Logout_servlet -->
-        </form>
+    <span class="close-icon" onclick="toggleMenu()">X</span> <!-- Icona di chiusura -->
+    <a href="<%= contextPath %>/scripts/Registrazione.jsp" id="registrazione-link">Registrati</a>
+    <a href="<%= contextPath %>/scripts/Pagina_login.jsp" id="profile-link">Login</a>
+    <a href="#">Impostazioni</a>
+    <!-- Link per il logout -->
+    <form action="Logout_servlet" method="post">
+        <button type="submit">Logout</button> <!-- gestito dalla Logout_servlet -->
+    </form>
 </div>
 
 <!-- Barra di ricerca -->
 <div class="search-container">
-  <form action="Gestione_giochi_servlet" method="post">
-    <div class="search-form">
-      <input type="text" placeholder="Cerca giochi per nome..." name="nomeGioco"  id="nomeGioco" class="search-input">
-      <button type="submit" name="submitAction" value="search" class="search-button">Cerca</button>
-    </div>
-  </form>
+    <form action="Gestione_giochi_servlet" method="post" class="search-form">
+        <input type="text" placeholder="Cerca giochi per nome..." name="nomeGioco" id="nomeGioco" class="search-input">
+        <button type="submit" name="submitAction" value="search" class="search-button">Cerca</button>
+    </form>
 </div>
+<center>
 
-    
+
 <h1>Catalogo Giochi</h1>
 
 <!-- Form per selezionare l'ordinamento -->
-<form action="Gestione_giochi_servlet" method="get">
-    <label for="order">Ordina per:</label>
-    <select name="order" id="order">
-        <option value="nome">Nome</option>
-        <option value="prezzo">Prezzo</option>
-        <option value="genere">Genere</option>
-        <option value="piattaforma">Piattaforma</option>
-    </select>
-    <input type="submit" value="Ordina">
-</form>
+<div class="order-form-container">
+    <form action="Gestione_giochi_servlet" method="get" class="order-form">
+        <label for="order">Ordina per:</label>
+        <select name="order" id="order">
+            <option value="nome">Nome</option>
+            <option value="prezzo">Prezzo</option>
+            <option value="genere">Genere</option>
+            <option value="piattaforma">Piattaforma</option>
+        </select>
+        <input type="submit" value="Ordina">
+    </form>
+</div>
 
-    <!-- Codice per visualizzare la lista dei giochi -->
-    <div class="carousel-container">
-        <div class="arrow arrow-left" onclick="scrollCarousel(-1)">&#8249;</div>
-        <div class="carousel" id="carousel">
-            <%
-                if (games != null && !games.isEmpty()) {
-                    for (Game_bean game : games) {
-            %>
-            <div class="carousel-item">
+</center>
+<br>
+
+<div class="game-container">
+    <% if (games != null && !games.isEmpty()) {
+        for (Game_bean game : games) { %>
+            <div class="game-item">
                 <h2><a href="Dettagli_gioco_servlet?id_gioco=<%= game.get_id_gioco() %>"><%= game.get_nome() %></a></h2>
                 <p>Piattaforma: <%= game.get_piattaforma() %></p>
                 <p>Genere: <%= game.get_genere() %></p>
                 <p>Prezzo: <%= game.get_prezzo() %></p>
                 <p>Data di uscita: <%= game.get_g_uscita() %>-<%= game.get_m_uscita() %>-<%= game.get_a_uscita() %></p>
                 <% if (game.getImmagine() != null) { %>
-                <img src="data:image/jpeg;base64,<%= new String(game.getImmagine()) %>" alt="<%= game.get_nome() %>">
+                    <img src="data:image/jpeg;base64,<%= new String(game.getImmagine()) %>" alt="<%= game.get_nome() %>">
                 <% } %> 
             </div>
-            <%
-                    }
-                } else {
-            %>
-            <div class="carousel-item">
+    <% } 
+       } else { %>
+            <div class="game-item">
                 <p>Nessun gioco disponibile.</p>
             </div>
-            <%
-                }
-            %>
-        </div>
-        <div class="arrow arrow-right" onclick="scrollCarousel(1)">&#8250;</div>
-    </div>
-
-    <script>
-        let currentIndex = 0;
-
-        function scrollCarousel(direction) {
-            const carousel = document.getElementById('carousel');
-            const items = document.querySelectorAll('.carousel-item');
-            const itemWidth = items[0].offsetWidth + 20; // item width including padding
-            const visibleItems = 2;
-            const maxIndex = items.length - visibleItems;
-
-            currentIndex += direction;
-
-            if (currentIndex < 0) {
-                currentIndex = 0;
-            } else if (currentIndex > maxIndex) {
-                currentIndex = maxIndex;
-            }
-
-            carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-        }
-    </script>
+    <% } %>
+</div>
 
 <!-- Inclusione del file JavaScript -->
 <script src="<%= contextPath %>/scripts/script_index.js"></script>

@@ -5,10 +5,11 @@
     }
 
     .search-form {
-      display: inline-block;
       border: 1px solid #ccc;
       border-radius: 5px;
       overflow: hidden;
+      display: flex;
+      align-items: center;
     }
 
     .search-input {
@@ -29,28 +30,10 @@
       font-size: 16px;
       cursor: pointer;
       border-left: 1px solid #ccc;
-    }
-
-    .search-button:hover {
-      background-color: white;
-      color: red;
+      margin-left: 10px;
     }
     
-    .search-button {
-        background-color: red; /* Colore iniziale */
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-    }
-
-    .search-button {
-        background-color: red; /* Colore iniziale */
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-    }
+   
 
     .search-button:hover {
         background-color: white; /* Colore al passaggio del cursore */
