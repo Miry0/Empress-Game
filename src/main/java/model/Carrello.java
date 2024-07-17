@@ -4,21 +4,16 @@ import java.util.ArrayList;
 
 public class Carrello {
 	private ArrayList<Integer> listaGiochi;
-	private int idCarrello;
 	
 	//costruttore
-	public Carrello(int idCarrello) {
+	public Carrello() {
 		this.listaGiochi = new ArrayList<>();
-		this.idCarrello = idCarrello;
 	}
 	
 	public void aggiungiGioco(int idGioco){
 		listaGiochi.add(idGioco);
 	}
 	
-	public int getIdCarrello(){
-		return idCarrello;
-	}
 	
 	public boolean isCarrelloEmpty(){
 		return listaGiochi.isEmpty();
@@ -42,4 +37,14 @@ public class Carrello {
 		listaGiochi.remove(idGioco);
 		return true;
 	}
+	
+	//controlla se un gioco sta nel carrello
+	 public boolean contieneGioco(int idGioco) {
+	        for (int gioco : listaGiochi) {
+	            if (gioco == idGioco) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
 }

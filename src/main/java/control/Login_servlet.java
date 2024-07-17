@@ -69,7 +69,7 @@ public class Login_servlet extends HttpServlet {
                    // storicoDispatcher.forward(request, response);
                 } else if ("base".equals(tipoUtente)) {
                     // Reindirizza a Profilo_utente.jsp usando il dispatcher
-                	isCartCreated = true;
+                	isCartCreated = true; //settiamo un attributo che ci dica che il carrello è stato creato
                 	session.setAttribute("isCartCreated", isCartCreated);
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Profilo_utente.jsp");
                     dispatcher.forward(request, response);
