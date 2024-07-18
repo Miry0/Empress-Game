@@ -12,44 +12,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_dettagli_gioco.css">
 
-  <style>
-    .game-container {
-      background-color: #f0f0f0; /* Grigio chiaro */
-      border-radius: 15px; /* Contorni smussati */
-      padding: 20px;
-      text-align: center;
-      max-width: 600px;
-      margin: 20px auto; /* Centra il contenitore nella pagina */
-    }
-    .game-container img {
-      max-width: 100%; /* Limita la larghezza dell'immagine */
-      border-radius: 10px;
-    }
-    .game-details p {
-      margin-bottom: 20px; /* Spazio tra i paragrafi */
-    }
-    .button-container {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column; /* Disporre i pulsanti uno sotto l'altro */
-      align-items: center;
-    }
-    .button-container button {
-      margin: 10px 0; /* Margine sopra e sotto per ogni pulsante */
-      padding: 10px 20px;
-      border: none;
-      background-color: #FF0000;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .button-container button:hover {
-      background-color: #CC0000;
-    }
-  </style>
-
-   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_barra_ricerca.css">
+     <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_barra_ricerca.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_carrello_profilo.css">
 
 </head>
