@@ -19,11 +19,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profilo Admin</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css"> 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_barra_ricerca.css">
 </head>
 <body>
 
-<!-- Verifica del contesto dell'applicazione -->
-<!-- klvmklevmkl -->
 <%
     String contextPath = request.getContextPath();
 %>
@@ -43,6 +42,15 @@
   <a href="#">Impostazioni</a>
 </div>
 
+<!-- tasto per carrello e profilo -->
+<div class="header-right">
+    <div>
+        <a href="<%= contextPath %>/scripts/Gestione_carrello.jsp">
+            <img src="<%= contextPath %>/images/cart-icon.png" alt="Carrello">
+        </a>
+    </div>
+    </div>
+    
   <!-- Box laterale con i bottoni -->
 <div class="sidebar">
 
