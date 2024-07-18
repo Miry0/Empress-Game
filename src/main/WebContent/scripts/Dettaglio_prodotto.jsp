@@ -11,7 +11,7 @@
   <title>Empress Games</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_dettagli_gioco.css">
-<<<<<<< HEAD
+
   <style>
     .game-container {
       background-color: #f0f0f0; /* Grigio chiaro */
@@ -38,20 +38,20 @@
       margin: 10px 0; /* Margine sopra e sotto per ogni pulsante */
       padding: 10px 20px;
       border: none;
-      background-color: #007BFF;
+      background-color: #FF0000;
       color: white;
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
     .button-container button:hover {
-      background-color: #0056b3;
+      background-color: #CC0000;
     }
   </style>
-=======
+
    <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_barra_ricerca.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_carrello_profilo.css">
->>>>>>> refs/remotes/origin/master
+
 </head>
 <body>
 
