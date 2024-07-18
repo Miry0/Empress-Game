@@ -3,6 +3,7 @@
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
 <jsp:useBean id="utente" class="model.Utenti_bean" scope="session"/>
 
+<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
@@ -10,6 +11,42 @@
   <title>Empress Games</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_dettagli_gioco.css">
+  <style>
+    .game-container {
+      background-color: #f0f0f0; /* Grigio chiaro */
+      border-radius: 15px; /* Contorni smussati */
+      padding: 20px;
+      text-align: center;
+      max-width: 600px;
+      margin: 20px auto; /* Centra il contenitore nella pagina */
+    }
+    .game-container img {
+      max-width: 100%; /* Limita la larghezza dell'immagine */
+      border-radius: 10px;
+    }
+    .game-details p {
+      margin-bottom: 20px; /* Spazio tra i paragrafi */
+    }
+    .button-container {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column; /* Disporre i pulsanti uno sotto l'altro */
+      align-items: center;
+    }
+    .button-container button {
+      margin: 10px 0; /* Margine sopra e sotto per ogni pulsante */
+      padding: 10px 20px;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .button-container button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
 
@@ -36,9 +73,9 @@
 </div>
 
 <div class="container">
-  <div class="details-and-buttons">
+  <div class="game-container">
+    <h2><%= gioco.get_nome() %></h2>
     <div class="game-details">
-      <h2><%= gioco.get_nome() %></h2>
       <p>Piattaforma: <%= gioco.get_piattaforma() %></p>
       <p>Genere: <%= gioco.get_genere() %></p>
       <p>Prezzo: <%= gioco.get_prezzo() %>€</p>
@@ -47,18 +84,13 @@
         <img src="data:image/jpeg;base64,<%= new String(gioco.getImmagine()) %>" alt="<%= gioco.get_nome() %>">
       <% } %>
     </div>
-	
-	 <%-- Visualizza il messaggio di errore se presente --%>
-      <% if (messaggioErrore != null && !messaggioErrore.isEmpty()) { %>
-        <p class="errore"><%= messaggioErrore %></p>
-      <% } %>
-    </div>
     
-    <div class="button-wrapper">
-      <div class="image-wrapper">
-        <img src="<%= contextPath %>/images/vasi_canopi.png" alt="Immagine dei vasi">
-      </div>
-      
+    <%-- Visualizza il messaggio di errore se presente --%>
+    <% if (messaggioErrore != null && !messaggioErrore.isEmpty()) { %>
+      <p class="errore"><%= messaggioErrore %></p>
+    <% } %>
+    
+    <div class="button-container">
       <form action="${pageContext.request.contextPath}/Carrello_servlet?id_gioco=<%= gioco.get_id_gioco() %>" method="post">
         <input type="hidden" name="aggiungi_carrello" value="<%= gioco.get_id_gioco() %>">
         <button name="azione_carrello" value="aggiungi" type="submit">Aggiungi al carrello</button>
@@ -69,14 +101,9 @@
         <input type="hidden" name="nome_utente_lista" value="<%= utente.get_nome_utente() %>">     
         <button name="lista_desideri" type="submit" value="add">Aggiungi alla lista desideri</button>
       </form>
-
-      <div class="image-wrapper">
-        <img src="<%= contextPath %>/images/vasi_canopi.png" alt="Immagine dei vasi">
-      </div>
     </div>
   </div>
 </div>
-
 
 <script src="<%= contextPath %>/scripts/script_index.js"></script>
 </body>
