@@ -211,4 +211,37 @@ public class Desideri_DAODataSource implements IBeanDAO<Desideri_bean> {
         
         return bean;
     }
+    
+    //dato nome_utente e id_gioco controlla quante volte il gioco sta nella lista desideri dell'utente. 
+    //in questo modo, non facciamo aggiungere i giochi più di una volta nella lista desideri
+    
+    public synchronized boolean isGameInWishlist(int idGioco, String nomeUtente) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        boolean presente = false;
+
+        String selectSQL = "SELECT COUNT(*) AS count FROM " + TABLE_NAME + " WHERE id_lista = ? AND nome_utente = ?";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, idGioco);
+            preparedStatement.setString(2, nomeUtente);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt("count");
+                if (count > 0) {
+                    presente = true;
+                }
+            }
+        } finally {
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
+
+        return presente;
+    }
+
 }

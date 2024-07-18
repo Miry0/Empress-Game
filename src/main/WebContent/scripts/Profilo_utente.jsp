@@ -44,7 +44,10 @@
 
 <!-- Box laterale con i bottoni -->
 <div class="sidebar">
-    <button onclick="location.href='<%= contextPath %>/scripts/wishlist.jsp'">Lista Desideri</button>
+     <form action="${pageContext.request.contextPath}/lista_desideri_servlet" method="post">
+        <input type="hidden" name="nome_utente_lista" value="<%= utente.get_nome_utente() %>">     
+        <button name="lista_desideri" type="submit" value="view">Lista Desideri</button>
+      </form>
     <button onclick="location.href='<%= contextPath %>/scripts/Storico_client.jsp'">I Miei Ordini</button>
 </div>
 	
@@ -77,9 +80,10 @@
         <button type="submit">Aggiorna Profilo</button> <!-- l'update di un profilo è gestito dalla login servlet -->
     </form>
     
-    <!-- Link per il logout -->
-    <button type="logout" href="Logout_servlet">Logout</button> <!-- gestito dalla Logout_servlet -->
-   </div>
+     <!-- Link per il logout -->
+        <form action="Logout_servlet" method="post">
+            <button type="submit">Logout</button> <!-- gestito dalla Logout_servlet -->
+        </form>
    
 </div>
 <!-- Inclusione del file JavaScript -->

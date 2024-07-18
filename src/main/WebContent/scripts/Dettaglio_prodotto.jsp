@@ -11,6 +11,7 @@
   <title>Empress Games</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_dettagli_gioco.css">
+<<<<<<< HEAD
   <style>
     .game-container {
       background-color: #f0f0f0; /* Grigio chiaro */
@@ -47,11 +48,17 @@
       background-color: #0056b3;
     }
   </style>
+=======
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_barra_ricerca.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_carrello_profilo.css">
+>>>>>>> refs/remotes/origin/master
 </head>
 <body>
 
 <%
-    String contextPath = request.getContextPath();
+
+	String tipoUtente = (String) session.getAttribute("tipoUtente"); //recupera il tipo del utente
+	String contextPath = request.getContextPath();
     Game_bean gioco = (Game_bean) request.getAttribute("gioco");
     String messaggioErrore = (String) request.getAttribute("messaggioErrore");
 %>
@@ -70,6 +77,31 @@
   <form action="Logout_servlet" method="post">
     <button type="submit">Logout</button>
   </form>
+</div>
+
+<!-- tasto per carrello e profilo -->
+<div class="header-right">
+    <div>
+        <a href="<%= contextPath %>/scripts/Gestione_carrello.jsp">
+            <img src="<%= contextPath %>/images/cart-icon.png" alt="Carrello">
+        </a>
+    </div>
+    <div>
+        <% if ("admin".equals(tipoUtente)) { %>
+            <a href="<%= contextPath %>/scripts/Profilo_admin.jsp">
+                <img src="<%= contextPath %>/images/user-icon.png" alt="Profilo Admin">
+            </a>
+        <% } else if ("base".equals(tipoUtente)) { %>
+            <a href="<%= contextPath %>/scripts/Profilo_utente.jsp">
+                <img src="<%= contextPath %>/images/user-icon.png" alt="Profilo Utente">
+            </a>
+        <% } else { %>
+            <!-- Gestione caso in cui tipoUtente non è definito o è null -->
+            <a href="<%= contextPath %>/scripts/Pagina_login.jsp">
+                <img src="<%= contextPath %>/images/user-icon.png" alt="Login">
+            </a>
+        <% } %>
+    </div>
 </div>
 
 <div class="container">

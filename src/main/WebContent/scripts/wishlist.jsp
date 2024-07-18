@@ -141,12 +141,9 @@
                         <td><%= giocoCorrispondente.get_genere() %></td>
                         <td><%= giocoCorrispondente.get_prezzo() %></td>
                         <td class="buttons">
-                            <form action="cart" method="post">
-                                <input type="hidden" name="action" value="add">
-                                <input type="hidden" name="nome_gioco" value="<%= giocoCorrispondente.get_id_gioco() %>">
-                                <input type="hidden" name="nome_utente" value="<%= utente.get_nome_utente() %>">
-                                <input type="hidden" name="id_lista" value="<%= product.get_id_lista() %>">
-                                <button type="submit">Aggiungi al carrello</button>
+                            <form action="${pageContext.request.contextPath}/Carrello_servlet?id_gioco=<%= giocoCorrispondente.get_id_gioco() %>" method="post">
+                                <input type="hidden" name="aggiungi_carrello" value="<%= giocoCorrispondente.get_id_gioco() %>">
+                               <button name="azione_carrello" value="aggiungi" type="submit">Aggiungi al carrello</button>
                             </form>
                             <form action="${pageContext.request.contextPath}/lista_desideri_servlet" method="post">
                                 <input type="hidden" name="action" value="remove">

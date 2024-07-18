@@ -10,6 +10,7 @@ import model.Sta_nella_lista_DAODataSource;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -98,7 +99,24 @@ public class lista_desideri_servlet extends HttpServlet {
         String nome_utente = request.getParameter("nome_utente_lista"); //recuperiamo il nome_utente 
         Desideri_bean Lista= (Desideri_bean) desideriDAO.doRetrieveByUserName(nome_utente); 
         
-
+        if((desideriDAO.isGameInWishlist(id_gioco, nome_utente))==true) {
+        	
+        	String messaggioErrore = "Il gioco è già presente nella lista desideri.";
+        	
+      	  Game_bean gioco = null;
+            try {
+                gioco = gameDAO.doRetrieveByKey(id_gioco);
+            } catch (SQLException e) {
+                e.printStackTrace(); // Gestisci l'eccezione in base alle tue esigenze
+            }
+            request.setAttribute("gioco", gioco); // Passa l'oggetto gioco alla JSP
+            
+            
+          request.setAttribute("messaggioErrore", messaggioErrore);
+          RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Dettaglio_prodotto.jsp");
+          dispatcher.forward(request, response);      
+        }
+        else { 
         if (Lista != null) {
             Sta_nella_lista_bean staNellaLista = new Sta_nella_lista_bean();
             
@@ -111,6 +129,7 @@ public class lista_desideri_servlet extends HttpServlet {
         
         
         viewWishlist(request, response); // Visualizza nuovamente la lista dei desideri
+        }
     }
     
     // Metodo per rimuovere un prodotto dalla lista desideri
