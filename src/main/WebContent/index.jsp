@@ -97,10 +97,9 @@
         <button type="submit" name="submitAction" value="search" class="search-button">Cerca</button>
     </form>
 </div>
+
 <center>
-
-
-<h1>Catalogo Giochi</h1>
+<h3>Catalogo Giochi</h3>
 
 <!-- Form per selezionare l'ordinamento -->
 <div class="order-form-container">

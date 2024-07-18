@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Carrello {
 	private ArrayList<Integer> listaGiochi;
@@ -30,13 +31,30 @@ public class Carrello {
 		return listaGiochi.size();
 	}
 	
-	public boolean removeGiocoByKey(int idGioco){
-		if(isCarrelloEmpty())
-			return false;
-		
-		listaGiochi.remove(idGioco);
-		return true;
+	public int get_idGioco(int c) {
+		return listaGiochi.get(c);
 	}
+	
+	 // Metodo per rimuovere un gioco per ID
+    public boolean removeGiocoByKey(int idGioco) {
+       
+    	if (isCarrelloEmpty()) {
+            return false;
+    	}
+        
+       int c=0; 
+        while (c< getCarrelloLenght()) {
+           
+            if (listaGiochi.get(c) == idGioco) {
+            	listaGiochi.remove(c); 
+                return true;
+            }
+            c++;
+        }
+       
+        return false;
+    }
+    
 	
 	//controlla se un gioco sta nel carrello
 	 public boolean contieneGioco(int idGioco) {
