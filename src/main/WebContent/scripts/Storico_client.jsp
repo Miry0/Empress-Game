@@ -3,10 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Storico degli Ordini - Amministratore</title>
+    <title>Empress Game- I miei ordini</title>
 </head>
 <body>
-    <h1>Storico degli Ordini - Amministratore</h1>
+    <h1>Storico degli Ordini</h1>
     <table>
         <thead>
             <tr>
