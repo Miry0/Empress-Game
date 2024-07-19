@@ -57,35 +57,13 @@ CREATE TABLE sta_nella_lista
     UNIQUE KEY (id_lista, id_gioco, nome_utente) -- Garantisce che un gioco possa apparire solo una volta in una lista dei desideri di un utente specifico
 ); 
 
-CREATE TABLE CARRELLO
-(
-	n_ordine int AUTO_INCREMENT, 
-    nome_utente varchar(20) NOT NULL, 
-    id_gioco int not null, 
-    
-    PRIMARY KEY(n_ordine), 
-    foreign key(nome_utente) REFERENCES UTENTI(nome_utente)
-); 
-
-/*
-CREATE TABLE sta_nel_carrello
-(
-	n_ordine int NOT NULL, 
-    id_gioco int NOT NULL,
-    
-    FOREIGN KEY(id_gioco) REFERENCES GIOCHI(id_gioco),
-    FOREIGN KEY(n_ordine) REFERENCES CARRELLO(id_gioco)
-); 
-*/
-
 CREATE TABLE STORICO
 (
 	id_storico int AUTO_INCREMENT,
     n_ordine int NOT NULL, 
     id_gioco int not null, 
     nome_utente  varchar(20) NOT NULL, 
-	metodo_pagamento varchar(20) NOT NULL,
-     data_ordine DATE, 
+    data_ordine DATE, 
      
     PRIMARY KEY (id_storico), 
     FOREIGN KEY (n_ordine) REFERENCES CARRELLO(n_ordine),

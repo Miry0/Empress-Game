@@ -26,7 +26,7 @@
     }
 
     Collection<Game_bean> games = (Collection<Game_bean>) request.getAttribute("listaGiochi"); //recuperiamo la lista intera dei giochi
-    ArrayList<Game_bean> prodotti = new ArrayList<Game_bean>(); //creiamoci un array list dove poter memorizzare l'intera descrizione dei giochi
+    //ArrayList<Game_bean> prodotti = new ArrayList<Game_bean>(); //creiamoci un array list dove poter memorizzare l'intera descrizione dei giochi
 //    ArrayList<Integer> catalogo = (ArrayList<Integer>)session.getAttribute("catologo"); //recuperiamo l'id dei giochi nel carrello
    
 	//recuperiamo il carrello dalla sessione
@@ -88,6 +88,9 @@
 
 
 <form action="Carrello_servlet" method="post">
+ <input type="hidden" name="lista_id_gioco" value="<%=catalogo %>">
+  <input type="hidden" name="lista_id_gioco" value="<%=utente.get_nome_utente() %>">
+   
     <input type="submit" value="Conferma Ordine">
 </form>
 

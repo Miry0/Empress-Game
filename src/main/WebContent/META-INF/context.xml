@@ -5,7 +5,7 @@
 	driverClassName="com.mysql.cj.jdbc.Driver"
 	type="javax.sql.DataSource"
 	username="root"
-	password="luke4316"
+	password="#basidat124!"
 	url="jdbc:mysql://localhost:3306/empress_db?useUnicode=true&amp;
 		useJDBCCompliantTimezoneShift=true&amp;
 		useLegacyDatetimeCode=false&amp;autoReconnect=true&amp;
