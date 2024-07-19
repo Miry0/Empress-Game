@@ -40,7 +40,7 @@
  <!-- vengono modificati solo i campi non null, grazie ad un metodo che sta nella servlet -->
  
         <div class="form-group">
-            <form id="add_form" action="${pageContext.request.contextPath}/Gestione_giochi_servlet" method="post" onsubmit="return validateForm('add_form', ['nome', 'piattaforma', 'genere'], ['g_uscita', 'm_uscita', 'a_uscita' ],['prezzo']);">
+            <form id="add_form" action="${pageContext.request.contextPath}/Gestione_giochi_servlet" method="post" enctype="multipart/form-data" onsubmit="return validateForm('add_form', ['nome', 'piattaforma', 'genere'], ['g_uscita', 'm_uscita', 'a_uscita' ],['prezzo']);">
                 <h3>Aggiungi/Modifica Gioco</h3>
                 <input type="hidden" name="id" value="${game.id}">
                 <input type="text" name="nome" placeholder="Nome del gioco" value="${game.nome}">
