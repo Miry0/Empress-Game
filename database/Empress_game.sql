@@ -64,7 +64,7 @@ CREATE TABLE STORICO
 	data_ordine DATE,
 	totale float,
      
-    PRIMARY KEY (id_storico), 
+    PRIMARY KEY (n_ordine), 
 	foreign key(nome_utente) REFERENCES UTENTI(nome_utente)
     
 );
@@ -79,8 +79,21 @@ CREATE TABLE ARTICOLI
     FOREIGN KEY (n_ordine) REFERENCES STORICO(n_ordine),
     FOREIGN KEY (id_gioco) REFERENCES GIOCHI(id_gioco),
     UNIQUE KEY(n_ordine, id_gioco)
-)
+);
 
+CREATE TABLE RECENSIONI 
+(
+
+    id_recensione INT AUTO_INCREMENT,
+    nome_utente VARCHAR(20) not null,
+    id_gioco INT not null,
+    testo varchar(250) not null,
+    
+    PRIMARY KEY(id_recensione), 
+	FOREIGN KEY (id_gioco) REFERENCES GIOCHI(id_gioco), 
+	foreign key(nome_utente) REFERENCES UTENTI(nome_utente)
+	
+);
 /*
 CREATE TABLE legge
 (

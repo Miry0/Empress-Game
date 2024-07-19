@@ -99,7 +99,7 @@ public class lista_desideri_servlet extends HttpServlet {
         String nome_utente = request.getParameter("nome_utente_lista"); //recuperiamo il nome_utente 
         Desideri_bean Lista= (Desideri_bean) desideriDAO.doRetrieveByUserName(nome_utente); 
         
-        if((desideriDAO.isGameInWishlist(id_gioco, nome_utente))==true) {
+        if((staNellaListaDAO.isGameInWishlist( nome_utente, id_gioco))==true) {
         	
         	String messaggioErrore = "Il gioco è già presente nella lista desideri.";
         	
