@@ -30,7 +30,7 @@
 //    ArrayList<Integer> catalogo = (ArrayList<Integer>)session.getAttribute("catologo"); //recuperiamo l'id dei giochi nel carrello
    
 	//recuperiamo il carrello dalla sessione
-	//carrello= (Carrello) session.getAttribute("carrello"); //recuperiamoci gli id che stanno nel carrello
+	carrello= (Carrello) session.getAttribute("carrello"); //recuperiamoci gli id che stanno nel carrello
     
  // Recupera il catalogo dalla sessione
     Collection<Game_bean> catalogo = (Collection<Game_bean>) session.getAttribute("catalogo");
@@ -87,11 +87,11 @@
 </div>
 
 
-<form action="Carrello_servlet" method="post">
- <input type="hidden" name="lista_id_gioco" value="<%=catalogo %>">
-  <input type="hidden" name="lista_id_gioco" value="<%=utente.get_nome_utente() %>">
+<form action="Storico_servlet" method="post">
+ <input type="hidden" name="lista_id_gioco" value="<%=carrello %>"> <!-- contiene id_gioco e quantità dei giochi comprati --> 
+ <input type="hidden" name="lista_id_gioco" value="<%=utente.get_nome_utente() %>">
    
-    <input type="submit" value="Conferma Ordine">
+  <button name="confema_ordine" type="submit" value="conferma"> Conferma l'ordine</button> 
 </form>
 
 <!-- Inclusione del file JavaScript -->
