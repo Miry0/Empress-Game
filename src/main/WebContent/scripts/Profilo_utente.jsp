@@ -75,13 +75,10 @@
         
         <label for="a_nascita">Anno di nascita:</label>
         <input type="text" id="a_nascita" name="a_nascita" value="<%= utente.get_a_nascita() %>"><br>
-        
-        <span id="passwordError" class="error-message"></span>
-        <button type="submit">Aggiorna Profilo</button> <!-- l'update di un profilo è gestito dalla login servlet -->
     </form>
     
-     <!-- Link per il logout -->
-        <form action="Logout_servlet" method="post">
+     < <!-- Link per il logout -->
+        <form action="${pageContext.request.contextPath}/Logout_servlet" method="post">
             <button type="submit">Logout</button> <!-- gestito dalla Logout_servlet -->
         </form>
    

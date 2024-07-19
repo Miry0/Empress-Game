@@ -91,6 +91,7 @@ public class Login_servlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Pagina_login.jsp");
             dispatcher.forward(request, response);
         }
+        
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -104,7 +105,7 @@ public class Login_servlet extends HttpServlet {
         // Recupera l'utente dal database tramite il suo identificativo
         String nome_utente = request.getParameter("username"); // Supponiamo che "username" sia il parametro per identificare l'utente
         Utenti_bean utente = utenti.doRetrieveByKey(nome_utente); // Sostituisci con il metodo corretto per recuperare l'utente dal DAO
-
+        
         if (utente != null) {
             // Se l'utente esiste nel database, aggiorna i suoi dati se presenti nei parametri della richiesta
             String nome = request.getParameter("nome");
@@ -121,20 +122,28 @@ public class Login_servlet extends HttpServlet {
             if (email != null && !email.trim().isEmpty()) {
                 utente.set_email(email);
             }
-
-            String password = request.getParameter("password");
-            String hashedPassword=toHash(password);
-            if (hashedPassword != null && !hashedPassword.trim().isEmpty()) {
-                utente.set_password(hashedPassword);
+            
+            int g_nascita = Integer.parseInt(request.getParameter("g_nascita"));
+            if (g_nascita != 0 && g_nascita!=-1) {
+                utente.set_g_nascita(g_nascita);
             }
-
-            // E altri campi dell'utente che desideri aggiornare...
+            
+            int m_nascita = Integer.parseInt(request.getParameter("m_nascita"));
+            if (m_nascita != 0 && m_nascita!=-1) {
+                utente.set_m_nascita(m_nascita);
+            }
+            
+            int a_nascita = Integer.parseInt(request.getParameter("a_nascita"));
+            if (a_nascita != 0 && a_nascita!=-1) {
+                utente.set_a_nascita(a_nascita);
+            }
 
             // Aggiorna l'utente nel database utilizzando il DAO
             utenti.update(utente);
-
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Pagina_di_conferma.jsp");
+            dispatcher.forward(request, response);
             // Aggiornamento completato con successo
-            request.setAttribute("updateSuccess", true);
+            //request.setAttribute("updateSuccess", true);
         } else {
             // Utente non trovato nel database, gestire l'errore o l'eccezione
             request.setAttribute("updateError", "Utente non trovato nel database");
