@@ -1,18 +1,23 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Set;
 
 public class Carrello {
-	private ArrayList<Integer> listaGiochi;
+	private LinkedHashMap<Integer, Integer> listaGiochi;
 	
 	//costruttore
 	public Carrello() {
-		this.listaGiochi = new ArrayList<>();
+		this.listaGiochi = new LinkedHashMap<>();
 	}
 	
 	public void aggiungiGioco(int idGioco){
-		listaGiochi.add(idGioco);
+		if(listaGiochi.containsKey(idGioco)) {
+			int quant = listaGiochi.get(idGioco);
+			listaGiochi.replace(idGioco, quant++);
+		} else
+			listaGiochi.put(idGioco, 1);
 	}
 	
 	
@@ -35,7 +40,7 @@ public class Carrello {
 		return listaGiochi.get(c);
 	}
 	
-	 // Metodo per rimuovere un gioco per ID
+	// Metodo per rimuovere un gioco per ID
     public boolean removeGiocoByKey(int idGioco) {
        
     	if (isCarrelloEmpty()) {
@@ -43,7 +48,7 @@ public class Carrello {
     	}
         
        int c=0; 
-        while (c< getCarrelloLenght()) {
+        while (c < getCarrelloLenght()) {
            
             if (listaGiochi.get(c) == idGioco) {
             	listaGiochi.remove(c); 
@@ -58,11 +63,20 @@ public class Carrello {
 	
 	//controlla se un gioco sta nel carrello
 	 public boolean contieneGioco(int idGioco) {
+		 Set<Integer> keys = listaGiochi.keySet();
+		 
+		 for(int gioco : keys)
+			 if(gioco == idGioco)
+				 return true;
+		 
+		 return false;
+		 	/*
 	        for (int gioco : listaGiochi) {
 	            if (gioco == idGioco) {
 	                return true;
 	            }
 	        }
 	        return false;
+	       	*/
 	    }
 }
