@@ -2,6 +2,9 @@
 <%@ page import="model.Game_bean" %>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
 <jsp:useBean id="utente" class="model.Utenti_bean" scope="session"/>
+<%@ page import="java.util.Collection" %>
+<%@ page import="model.Recensioni_bean" %>
+
 
 <!DOCTYPE html>
 <html lang="it">
@@ -24,6 +27,7 @@
 	String contextPath = request.getContextPath();
     Game_bean gioco = (Game_bean) request.getAttribute("gioco");
     String messaggioErrore = (String) request.getAttribute("messaggioErrore");
+    Collection <Recensioni_bean> recensioni= ( Collection <Recensioni_bean>) request.getAttribute("recensioni");
 %>
 
 <header>
@@ -100,6 +104,52 @@
   </div>
 </div>
 
+<h4>Lascia una Recensione</h4>
+    <form action="${pageContext.request.contextPath}/recensioni_servlet" method="post" onsubmit="return validateForm();">
+        <label for="review">Recensione:</label>
+        <textarea id="review" name="review" maxlength="250" placeholder="Massimo 250 caratteri"></textarea>
+        <br><br>
+         <input type="hidden" name="gioco_aggiungi_recensione" value="<%= gioco.get_id_gioco() %>">
+         <input type="hidden" name="nome_utente_recensione" value="<%= utente.get_nome_utente() %>">  
+        <button name="recensione" value="add_recensione" type="submit">Invia Recensione</button>
+    </form>
+    
+<h4>Recensioni</h4>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Nome Utente</th>
+      <th>Recensione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (recensioni != null && !recensioni.isEmpty()) { %>
+      <% for (Recensioni_bean recensione : recensioni) { %>
+        <tr>
+          <td><%= recensione.get_nome_utente() %></td>
+          <td><%= recensione.get_testo() %></td>
+        </tr>
+      <% } %>
+    <% } else { %>
+      <tr>
+        <td colspan="2">Nessuna recensione disponibile.</td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+  <script type="text/javascript">
+        function validateForm() {
+            var review = document.getElementById("review").value;
+            if (review.length > 250) {
+                alert("La recensione non può superare i 250 caratteri.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+    
+    
 <script src="<%= contextPath %>/scripts/script_index.js"></script>
 </body>
 </html>

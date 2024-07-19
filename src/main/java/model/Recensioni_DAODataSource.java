@@ -74,7 +74,7 @@ public class Recensioni_DAODataSource {
                 ResultSet rs = preparedStatement.executeQuery();
 
                 while (rs.next()) {
-                    bean.set_id_recensione(rs.getInt("n_ordine"));
+                    bean.set_id_recensione(rs.getInt("id_recensione"));
                     bean.set_nome_utente(rs.getString("nome_utente"));
                     bean.set_id_gioco(rs.getInt("id_gioco"));
                     bean.set_testo(rs.getString("testo"));
@@ -117,17 +117,13 @@ public class Recensioni_DAODataSource {
             return (result != 0);
         }
         
-        public Collection<Recensioni_bean> doRetrieveAll(String order) throws SQLException {
+        public Collection<Recensioni_bean> doRetrieveAll() throws SQLException {
             Connection connection = null;
             PreparedStatement preparedStatement = null;
 
             Collection<Recensioni_bean> recensioni = new LinkedList<Recensioni_bean>();
 
-            String selectSQL = "SELECT * FROM " + TABLE_NAME;
-
-            if (order != null && !order.equals("")) {
-                selectSQL += " ORDER BY " + order;
-            }
+            String selectSQL = "SELECT * FROM " + TABLE_NAME ;
 
             try {
                 connection = ds.getConnection();
@@ -138,7 +134,43 @@ public class Recensioni_DAODataSource {
                 while (rs.next()) {
                    Recensioni_bean bean = new Recensioni_bean();
 
-                    bean.set_id_recensione(rs.getInt("n_ordine"));
+                    bean.set_id_recensione(rs.getInt("id_recensione"));
+                    bean.set_nome_utente(rs.getString("nome_utente"));
+                    bean.set_id_gioco(rs.getInt("id_gioco"));
+                    bean.set_testo(rs.getString("testo"));
+
+                    recensioni.add(bean);
+                }
+
+            } finally {
+                try {
+                    if (preparedStatement != null) preparedStatement.close();
+                } finally {
+                    if (connection != null) connection.close();
+                }
+            }
+
+            return recensioni;
+        }
+        
+        public Collection<Recensioni_bean> doRetrieveByIdGame(int id_gioco) throws SQLException {
+            Connection connection = null;
+            PreparedStatement preparedStatement = null;
+
+            Collection<Recensioni_bean> recensioni = new LinkedList<Recensioni_bean>();
+
+            String selectSQL = "SELECT * FROM " + TABLE_NAME+ " WHERE id_gioco = ?";;
+
+            try {
+                connection = ds.getConnection();
+                preparedStatement = connection.prepareStatement(selectSQL);
+                preparedStatement.setInt(1, id_gioco);
+                ResultSet rs = preparedStatement.executeQuery();
+
+                while (rs.next()) {
+                   Recensioni_bean bean = new Recensioni_bean();
+
+                    bean.set_id_recensione(rs.getInt("id_recensione"));
                     bean.set_nome_utente(rs.getString("nome_utente"));
                     bean.set_id_gioco(rs.getInt("id_gioco"));
                     bean.set_testo(rs.getString("testo"));

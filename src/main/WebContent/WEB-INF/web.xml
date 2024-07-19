@@ -4,6 +4,7 @@
     <title>Empress_Game</title>
     <welcome-file-list>
     	 <welcome-file>Mostra_giochi_servlet</welcome-file> 
+    	 <welcome-file>recensioni_servlet</welcome-file> 
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     
@@ -114,6 +115,28 @@
         <servlet-name>Ricerca_servlet</servlet-name>
         <url-pattern>/Ricerca_servlet</url-pattern>
     </servlet-mapping>
+    
+     <!-- Storico_servlet-->
+    <servlet>
+        <servlet-name>Storico_servlet</servlet-name>
+        <servlet-class>control.Storico_servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Storico_servlet</servlet-name>
+        <url-pattern>/Storico_servlet</url-pattern>
+    </servlet-mapping>
+    
+    <!-- recensioni_servlet-->
+    <servlet>
+        <servlet-name>recensioni_servlet</servlet-name>
+        <servlet-class>control.recensioni_servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>recensioni_servlet</servlet-name>
+        <url-pattern>/recensioni_servlet</url-pattern>
+    </servlet-mapping>
+    
+   
     
    
     

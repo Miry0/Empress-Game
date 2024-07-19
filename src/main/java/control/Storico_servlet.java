@@ -23,7 +23,7 @@ import model.Game_bean;
 import model.Storico_bean;
 import model.Storico_DAODataSource;
 
-@WebServlet("/Storico_servlet")
+//@WebServlet("/Storico_servlet")
 public class Storico_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Game_DAODataSource gameDAO;
