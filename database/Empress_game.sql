@@ -59,18 +59,27 @@ CREATE TABLE sta_nella_lista
 
 CREATE TABLE STORICO
 (
-	id_storico int AUTO_INCREMENT,
-    n_ordine int NOT NULL, 
-    id_gioco int not null, 
-    nome_utente  varchar(20) NOT NULL, 
-    data_ordine DATE, 
+    n_ordine int AUTO_INCREMENT,  
+    nome_utente  varchar(20) NOT NULL,
+	data_ordine DATE,
+	totale float,
      
     PRIMARY KEY (id_storico), 
-    FOREIGN KEY (n_ordine) REFERENCES CARRELLO(n_ordine),
-	FOREIGN KEY(id_gioco) REFERENCES GIOCHI(id_gioco),
 	foreign key(nome_utente) REFERENCES UTENTI(nome_utente)
     
 );
+
+CREATE TABLE ARTICOLI 
+(
+	n_ordine int NOT NULL,
+    id_gioco int NOT NULL,
+    quantità int,
+    
+    PRIMARY KEY (n_ordine),
+    FOREIGN KEY (n_ordine) REFERENCES STORICO(n_ordine),
+    FOREIGN KEY (id_gioco) REFERENCES GIOCHI(id_gioco),
+    UNIQUE KEY(n_ordine, id_gioco)
+)
 
 /*
 CREATE TABLE legge
@@ -115,6 +124,3 @@ VALUES
 ('Suga@123$'),
 ('Hobi@789@'),
 ('Jin@!567@');
-
-
-
