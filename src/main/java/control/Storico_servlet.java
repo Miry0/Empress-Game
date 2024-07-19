@@ -3,6 +3,7 @@ package control;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedList;
 
 import javax.servlet.RequestDispatcher;
@@ -19,15 +20,58 @@ import javax.sql.DataSource;
 import model.Carrello;
 import model.Game_DAODataSource;
 import model.Game_bean;
+import model.Storico_bean;
+import model.Storico_DAODataSource;
 
 @WebServlet("/Storico_servlet")
 public class Storico_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private Game_DAODataSource gameDAO;
+    private Storico_DAODataSource storicoDAO;
+
+
+    public void init(ServletConfig cfg) throws ServletException {
+        super.init(cfg);
+        // Inizializzazione del DAO per interagire con il database dei giochi
+    }
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //TO-DO
+        doPost(request, response);
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //TO-DO
+        String action=request.getParameter("confema_ordine"); 
+        
+        if("conferma".equals(action)) {
+        	conferma_ordine(request, response);
+        }
     }
+    
+    private void conferma_ordine(HttpServletRequest request, HttpServletResponse response) {
+    	 DataSource ds = (DataSource) getServletContext().getAttribute("MyDataSource");
+         gameDAO = new Game_DAODataSource(ds);
+         storicoDAO = new Storico_DAODataSource(ds);
+         
+         
+        String nome_utente=request.getParameter("nome_utente"); 
+    	Carrello carrello = (Carrello) request.getAttribute("carrello"); //reucpero dei dati del carrello dalla richiesta di conferma dell'ordine
+    	float totale = Float.parseFloat(request.getParameter("totale"));
+    	Date data= new Date(); //prende la data del server; 
+    	
+    	Storico_bean storico = new Storico_bean();
+    	
+    	  // Salva i dati nel database
+        try {
+            storicoDAO.doSave(storico);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Gestisci l'errore, ad esempio reindirizzando l'utente a una pagina di errore
+           // response.sendRedirect("errore.jsp");
+            return;
+        }
+
+        // Dopo aver salvato con successo, puoi reindirizzare l'utente a una pagina di conferma
+       // response.sendRedirect("ordine_confermato.jsp");
+    	
+    }
+}

@@ -1,171 +1,152 @@
 package model;
-//implementazione dell'interfaccia di Dao per la tabella "CARRELLO"; 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
-public class Storico_DAODataSource implements IBeanDAO<Storico_bean> {//implementiamo la classe bean degli utenti del catalogo che abbiamo creato
+public class Storico_DAODataSource implements IBeanDAO<Storico_bean> {
 
-	private static DataSource ds; 
-	
-	public Storico_DAODataSource(ServletContext context) {
-        ds = (DataSource) context.getAttribute("MyDataSource");
+    private static DataSource ds;
+
+    // Costruttore per ottenere il DataSource dal contesto dell'applicazione
+    public Storico_DAODataSource(DataSource ds) {
+        this.ds = ds;
+        if (ds == null) {
+            System.out.println("DataSource nullo");
+        }
     }
-	private static final String TABLE_NAME = "STORICO"; //passiamo il carrello 
 
-	@Override
-	//serve per inserire una nuova query nella tabella CARRELLO	; 
-	public synchronized void doSave(Storico_bean Storico) throws SQLException {
+    private static final String TABLE_NAME = "STORICO";
 
-		//creiamo una variabile "connession" che contenga la connessione al DB; 
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+    @Override
+    public synchronized void doSave(Storico_bean storico) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-		//prepariamo una query sql per l'inserimmento della nuoava riga nella tabella CARRELLO; 
-		String insertSQL = "INSERT INTO " + Storico_DAODataSource.TABLE_NAME
-				+ " (n_ordine) VALUES (?)"; //permettiamo l'inserimento di tuple nella table, attraverso una connessione tramite DAO+DataSource
+        String insertSQL = "INSERT INTO " + TABLE_NAME + " (n_ordine, nome_utente, totale, data) VALUES (?, ?, ?, ?)";
 
-	
-		try {// cerchiamo di recuperare i dati salvati nel BD per i vari campi; 
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(insertSQL);
-			preparedStatement.setInt(1, Storico.get_n_ordine());
-		;
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(insertSQL);
+            preparedStatement.setInt(1, storico.get_n_ordine());
+            preparedStatement.setString(2, storico.get_nome_utente());
+            preparedStatement.setFloat(3, storico.get_totale());
+            preparedStatement.setDate(4, storico.get_data());
 
-			//eseguiamo l'inserimento della query recuperata; ; 
-			preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
-		} finally { //dopo l'eliminazione, effettuiamo un controllo e valutiamo se la connessione e la query sonon state chiuse/svuotate; 
-			//se ciò non è stato fatto, lo facciamo manualmente; 
-			try {
-				if (preparedStatement != null)
-					//chiudiamo la connessione con il Preparedstatment; 
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					//chiudimao la connessione con il DB; ; 
-					connection.close();
-			}
-		}
-	}
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } finally {
+                if (connection != null) connection.close();
+            }
+        }
+    }
 
-	@Override
-	//serve per eliminare una query dalla tabella CARRELLO; 
-	public synchronized boolean doDelete(int code) throws SQLException {
-		//stabiliamo una connessione con il DB; 
-		Connection connection = null;
-		//prepariamo una query per l'eliminazione di una tupla della tabella CARRELLO; 
-		PreparedStatement preparedStatement = null;
+    @Override
+    public boolean doDelete(int id) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-		int result = 0;
+        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE n_ordine = ?";
 
-		String deleteSQL = "DELETE FROM " + Storico_DAODataSource.TABLE_NAME + " WHERE CODE = ?";
+        int result = 0;
 
-		try {
-			//ottentiamo una connessione con il DB; 
-			connection = ds.getConnection();
-			
-			//salviamo i dati della query nella variabile 
-			preparedStatement = connection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, code);
-			
-			//eseguiamo l'eliminazione della quesry; 
-			result = preparedStatement.executeUpdate();
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(deleteSQL);
+            preparedStatement.setInt(1, id);
 
-		} finally {//controlliamo se la connessione e la query sono state chiuse/svuotate
-			try {
-				//nel caso contrario, lo facciamo manualmente; 
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		//restituisce true sel aquery è stata eliminata, altrimenti fslse; 
-		return (result != 0);
-	}
+            result = preparedStatement.executeUpdate();
 
-	@Override
-	public synchronized Collection<Storico_bean> doRetrieveAll(String order) throws SQLException {
-		Connection connection = null;
-		//preprata query per la selezione di tutte le righe della tabella CARRELLO; 
-		PreparedStatement preparedStatement = null;
-		
-		Collection<Storico_bean> storico = new LinkedList<Storico_bean>();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } finally {
+                if (connection != null) connection.close();
+            }
+        }
 
-		String selectSQL = "SELECT * FROM " + Storico_DAODataSource.TABLE_NAME;
+        return (result != 0);
+    }
 
-		if (order != null && !order.equals("")) {
-			selectSQL += " ORDER BY " + order;
-		}
+    @Override
+    public Storico_bean doRetrieveByKey(int id) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-		try {
-			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
-			
-			
-			ResultSet rs = preparedStatement.executeQuery();
+        Storico_bean bean = new Storico_bean();
 
-			while (rs.next()) {
-				//per ogni riga salvata in "rs", crea un oggetto Carrello_bean, imposta i valori con quelli salvati in "rs" e lo aggiunge alla collezione "carrello"; 
-				Storico_bean bean = new Storico_bean();
+        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE n_ordine = ?";
 
-				bean.set_n_ordine(rs.getInt("numero ordine"));
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, id);
 
-				storico.add(bean);
-			}
+            ResultSet rs = preparedStatement.executeQuery();
 
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return storico; //restituisce la collezione costruita; 
-	}
-	
-	@Override
-	//serve per selezione una riga della tabella CARRELLO utilizzando la chiave
-	public synchronized Storico_bean doRetrieveByKey(int code) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		Storico_bean bean = new Storico_bean();//creiamo un nuovo bean, della classe Carrello
-		String selectSQL = "SELECT * FROM " + Storico_DAODataSource.TABLE_NAME + " WHERE CODE = ?";
-		try {
-			connection = ds.getConnection();	
-			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setInt(1, code);
-			ResultSet rs = preparedStatement.executeQuery();
-			
-			while (rs.next()) {
-				//per ogni riga salvata in "rs", crea un oggetto Carrello_bean, imposta i valori con quelli salvati in "rs" e lo restituisce; 
+            while (rs.next()) {
+                bean.set_n_ordine(rs.getInt("n_ordine"));
+                bean.set_nome_utente(rs.getString("nome_utente"));
+                bean.set_totale(rs.getFloat("totale"));
+                bean.set_data(rs.getDate("data"));
+            }
 
-				bean.set_n_ordine(rs.getInt("numero ordine"));
-				//int userId = rs.getInt("codice utente");
-			}
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				if (connection != null)
-					connection.close();
-			}
-		}
-		return bean; //restituisce riga trovata; 
-	}
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } finally {
+                if (connection != null) connection.close();
+            }
+        }
+
+        return bean;
+    }
+
+    @Override
+    public Collection<Storico_bean> doRetrieveAll(String order) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        Collection<Storico_bean> storici = new LinkedList<Storico_bean>();
+
+        String selectSQL = "SELECT * FROM " + TABLE_NAME;
+
+        if (order != null && !order.equals("")) {
+            selectSQL += " ORDER BY " + order;
+        }
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Storico_bean bean = new Storico_bean();
+
+                bean.set_n_ordine(rs.getInt("n_ordine"));
+                bean.set_nome_utente(rs.getString("nome_utente"));
+                bean.set_totale(rs.getFloat("totale"));
+                bean.set_data(rs.getDate("data"));
+
+                storici.add(bean);
+            }
+
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } finally {
+                if (connection != null) connection.close();
+            }
+        }
+
+        return storici;
+    }
 }
-

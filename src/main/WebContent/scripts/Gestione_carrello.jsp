@@ -34,6 +34,16 @@
     
  // Recupera il catalogo dalla sessione
     Collection<Game_bean> catalogo = (Collection<Game_bean>) session.getAttribute("catalogo");
+    
+    float totale=0; 
+ // Calcolo del totale
+    if (catalogo != null) {
+        for (Game_bean prodotto : catalogo) {
+            int quantita = carrello.getQuant(prodotto.get_id_gioco());
+            totale += prodotto.get_prezzo() * quantita;
+        }
+    }
+    
 %>
 
 <!-- Header con logo -->
@@ -79,6 +89,9 @@
                         </td>
                     </tr>
                 <% } %>
+                 <tr>
+                    <td colspan="4" style="text-align: right;"><strong>Totale: <%= totale %> €</strong></td>
+                </tr>
             </tbody>
         </table>
     <% } else { %>
@@ -88,8 +101,9 @@
 
 
 <form action="Storico_servlet" method="post">
- <input type="hidden" name="lista_id_gioco" value="<%=carrello %>"> <!-- contiene id_gioco e quantità dei giochi comprati --> 
- <input type="hidden" name="lista_id_gioco" value="<%=utente.get_nome_utente() %>">
+ <input type="hidden" name="carrello" value="<%=carrello %>"> <!-- contiene id_gioco e quantità dei giochi comprati --> 
+ <input type="hidden" name="nome_utente" value="<%=utente.get_nome_utente() %>">
+ <input type="hidden" name="totale" value="<%=totale%>">
    
   <button name="confema_ordine" type="submit" value="conferma"> Conferma l'ordine</button> 
 </form>

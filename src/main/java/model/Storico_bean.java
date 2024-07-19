@@ -2,6 +2,7 @@ package model;
 // classe bean che gestisce carrello; 
 
 import java.io.Serializable;
+import java.sql.Date;
 
 //import java.java.serializable; 
 
@@ -9,7 +10,11 @@ public class Storico_bean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private int n_ordine;  //chiave esterna. La poniamo come intera, invece che di tipo Utente_bean, in modo ch ci si possa lavorare in maniera meno faticosa; 
+	private int n_ordine;  //chiave primaria; 
+	private String nome_utente; 
+	private Date data; 
+	private float totale; 
+	
 	
 	
 
@@ -17,10 +22,12 @@ public class Storico_bean implements Serializable {
 	    
 	    // Costruttore
 	    public Storico_bean() {
-	        n_ordine = -1;
+	    	 nome_utente = null;
+	    	 data=null; 
+	    	 totale=-1; 
 	    }
 
-	    // Getter e setter
+	    // Getter e setter n_ordine
 	    public int get_n_ordine() {
 	        return n_ordine;
 	    }
@@ -28,9 +35,37 @@ public class Storico_bean implements Serializable {
 	    public void set_n_ordine(int n_ordine) {
 	        this.n_ordine = n_ordine;
 	    }
-
-	    public String toString() {
-	        return String.valueOf(n_ordine); //accetta un argomento di tipo int e lo restituisce come stringa; 
+	    
+	 // Getter e setter nome_utente
+	    public String get_nome_utente() {
+	        return nome_utente;
 	    }
 
+	    public void set_nome_utente(String nome_utente) {
+	        this.nome_utente = nome_utente;
+	    }
+	    
+	    // Getter e setter data
+	    public Date get_data() {
+	        return data;
+	    }
+
+	    public void set_data(Date data) {
+	        this.data = data;
+	    }
+	    
+	 // Getter e setter totale
+	    public float get_totale() {
+	        return totale;
+	    }
+
+	    public void set_totale(float totale) {
+	        this.totale = totale;
+	    }
+	    
+	 // Metodo toString per la stampa dei dettagli del bean
+	    @Override
+	    public String toString() {
+	        return n_ordine + " " + nome_utente+ " " + totale+ " " + data;
+	    }
 }

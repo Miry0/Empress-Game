@@ -54,7 +54,7 @@ CREATE TABLE sta_nella_lista
     FOREIGN KEY (id_lista) REFERENCES LISTA_DESIDERI(id_lista),
     FOREIGN KEY(nome_utente) REFERENCES LISTA_DESIDERI(nome_utente), 
     FOREIGN KEY(id_gioco) REFERENCES GIOCHI(id_gioco),
-    UNIQUE KEY (id_lista, id_gioco, nome_utente) -- Garantisce che un gioco possa apparire solo una volta in una lista dei desideri di un utente specifico
+        UNIQUE KEY (id_lista, id_gioco, nome_utente) -- Garantisce che un gioco possa apparire solo una volta in una lista dei desideri di un utente specifico
 ); 
 
 CREATE TABLE STORICO
