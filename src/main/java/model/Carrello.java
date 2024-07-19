@@ -15,7 +15,7 @@ public class Carrello {
 	public void aggiungiGioco(int idGioco){
 		if(listaGiochi.containsKey(idGioco)) {
 			int quant = listaGiochi.get(idGioco);
-			listaGiochi.replace(idGioco, quant++);
+			listaGiochi.replace(idGioco, quant+1);
 		} else
 			listaGiochi.put(idGioco, 1);
 	}
@@ -29,7 +29,7 @@ public class Carrello {
 		if(isCarrelloEmpty())
 			return 0;
 		
-		return listaGiochi.get(index);
+		return (int) listaGiochi.keySet().toArray()[index];
 	}
 	
 	public int getCarrelloLenght() {
@@ -40,24 +40,23 @@ public class Carrello {
 		return listaGiochi.get(c);
 	}
 	
+	public int getQuant(int idGioco) {
+		return listaGiochi.get(idGioco);
+	}
+	
 	// Metodo per rimuovere un gioco per ID
     public boolean removeGiocoByKey(int idGioco) {
        
     	if (isCarrelloEmpty()) {
             return false;
     	}
-        
-       int c=0; 
-        while (c < getCarrelloLenght()) {
-           
-            if (listaGiochi.get(c) == idGioco) {
-            	listaGiochi.remove(c); 
-                return true;
-            }
-            c++;
-        }
-       
-        return false;
+    	
+    	if(listaGiochi.containsKey(idGioco))
+    		listaGiochi.remove(idGioco);
+    	else
+    		return false;
+    	
+    	return true;
     }
     
 	

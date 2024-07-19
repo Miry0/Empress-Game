@@ -115,34 +115,14 @@ public class Carrello_servlet extends HttpServlet {
     private void aggiungiElemento(HttpServletRequest request, HttpServletResponse response, Carrello carrello)
             throws ServletException, IOException {
         int idGioco = Integer.parseInt(request.getParameter("aggiungi_carrello"));
-   
-        // Verifica se l'ID del gioco è già presente nel carrello
-        if (carrello.contieneGioco(idGioco)==true) {
-            // Se l'ID è già presente, gestisci il caso appropriato (puoi mostrare un messaggio di errore, per esempio)
-            // Esempio di messaggio di errore:
-        	String messaggioErrore = "Il gioco è già presente nel carrello.";
-        	
-        	  Game_bean gioco = null;
-              try {
-                  gioco = gameDAO.doRetrieveByKey(idGioco);
-              } catch (SQLException e) {
-                  e.printStackTrace(); // Gestisci l'eccezione in base alle tue esigenze
-              }
-              request.setAttribute("gioco", gioco); // Passa l'oggetto gioco alla JSP
-              
-              
-            request.setAttribute("messaggioErrore", messaggioErrore);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Dettaglio_prodotto.jsp");
-            dispatcher.forward(request, response);            
-            } else {
+        
+             
             	
-            // Se l'ID non è presente nel carrello, aggiungi il gioco
-            carrello.aggiungiGioco(idGioco);
-            HttpSession session = request.getSession();
-            session.setAttribute("carrello", carrello);
-            mostraCarrello(request, response, carrello);
-        }
-
+        // Se l'ID non è presente nel carrello, aggiungi il gioco
+        carrello.aggiungiGioco(idGioco);
+        HttpSession session = request.getSession();
+        session.setAttribute("carrello", carrello);
+        mostraCarrello(request, response, carrello);
        
     }
 

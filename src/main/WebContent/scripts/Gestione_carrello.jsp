@@ -60,6 +60,7 @@
                 <tr>
                     <th>Nome Prodotto</th>
                     <th>Prezzo</th>
+                    <th>Quantità</th>
                     <th>Azioni</th>
                 </tr>
             </thead>
@@ -68,6 +69,7 @@
                     <tr>
                         <td><%= prodotto.get_nome() %></td>
                         <td><%= prodotto.get_prezzo() %> €</td>
+                        <td><%= carrello.getQuant(prodotto.get_id_gioco()) %></td>
                         <td>
                             <form action="${pageContext.request.contextPath}/CarrelloServlet" method="post">
                                 <input type="hidden" name="azione_carrello" value="elimina">
