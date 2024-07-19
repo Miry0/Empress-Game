@@ -92,7 +92,7 @@
       <p class="errore"><%= messaggioErrore %></p>
     <% } %>
     
-    <%-- Visualizza il messaggio di errore se presente --%>
+    <%-- Visualizza il messaggio se presente --%>
     <% if (messaggio != null && !messaggio.isEmpty()) { %>
       <p class="messaggio"><%= messaggio %></p>
     <% } %>
