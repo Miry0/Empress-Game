@@ -27,7 +27,10 @@
 	String contextPath = request.getContextPath();
     Game_bean gioco = (Game_bean) request.getAttribute("gioco");
     String messaggioErrore = (String) request.getAttribute("messaggioErrore");
+    String messaggio = (String) request.getAttribute("messaggio");
+    
     Collection <Recensioni_bean> recensioni= ( Collection <Recensioni_bean>) request.getAttribute("recensioni");
+    System.out.println("recensioni" + recensioni); 
 %>
 
 <header>
@@ -89,6 +92,11 @@
       <p class="errore"><%= messaggioErrore %></p>
     <% } %>
     
+    <%-- Visualizza il messaggio di errore se presente --%>
+    <% if (messaggio != null && !messaggio.isEmpty()) { %>
+      <p class="messaggio"><%= messaggio %></p>
+    <% } %>
+    
     <div class="button-container">
       <form action="${pageContext.request.contextPath}/Carrello_servlet?id_gioco=<%= gioco.get_id_gioco() %>" method="post">
         <input type="hidden" name="aggiungi_carrello" value="<%= gioco.get_id_gioco() %>">
@@ -125,10 +133,12 @@
   <tbody>
     <% if (recensioni != null && !recensioni.isEmpty()) { %>
       <% for (Recensioni_bean recensione : recensioni) { %>
+       	<% if ( (recensione.get_id_gioco()) == (gioco.get_id_gioco())) { %>
         <tr>
           <td><%= recensione.get_nome_utente() %></td>
           <td><%= recensione.get_testo() %></td>
         </tr>
+         <% } %>
       <% } %>
     <% } else { %>
       <tr>
