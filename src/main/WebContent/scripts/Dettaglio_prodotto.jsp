@@ -83,7 +83,8 @@
       <p>Prezzo: <%= gioco.get_prezzo() %>€</p>
       <p>Data di uscita: <%= gioco.get_g_uscita() %>-<%= gioco.get_m_uscita() %>-<%= gioco.get_a_uscita() %></p>
       <% if (gioco.getImmagine() != null) { %>
-        <img src="data:image/jpeg;base64,<%= new String(gioco.getImmagine()) %>" alt="<%= gioco.get_nome() %>">
+        <img src="<%= contextPath %>/images/<%= gioco.getImmagine() %>" alt="<%= gioco.get_nome() %>">
+
       <% } %>
     </div>
     

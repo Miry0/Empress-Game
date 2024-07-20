@@ -128,7 +128,7 @@
                 <p>Prezzo: <%= game.get_prezzo() %></p>
                 <p>Data di uscita: <%= game.get_g_uscita() %>-<%= game.get_m_uscita() %>-<%= game.get_a_uscita() %></p>
                 <% if (game.getImmagine() != null) { %>
-                    <img src="data:image/jpeg;base64,<%= new String(game.getImmagine()) %>" alt="<%= game.get_nome() %>">
+                    <img src="images/<%= game.getImmagine() %>" alt="<%= game.get_nome() %>">
                 <% } %> 
             </div>
     <% } 

@@ -65,7 +65,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
             preparedStatement.setInt(6, game.get_g_uscita());
             preparedStatement.setInt(7, game.get_m_uscita());
             preparedStatement.setInt(8, game.get_a_uscita());
-            preparedStatement.setBytes(9, game.getImmagine());
+            preparedStatement.setString(9, game.getImmagine());
 
             preparedStatement.executeUpdate();
 
@@ -123,7 +123,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
                 game.set_g_uscita(resultSet.getInt("g_uscita"));
                 game.set_m_uscita(resultSet.getInt("m_uscita"));
                 game.set_a_uscita(resultSet.getInt("a_uscita"));
-                game.setImmagine(resultSet.getBytes("immagine"));
+                game.setImmagine(resultSet.getString("immagine"));
 
                 games.add(game);
             }
@@ -160,7 +160,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
                 game.set_g_uscita(resultSet.getInt("g_uscita"));
                 game.set_m_uscita(resultSet.getInt("m_uscita"));
                 game.set_a_uscita(resultSet.getInt("a_uscita"));
-                game.setImmagine(resultSet.getBytes("immagine"));
+                game.setImmagine(resultSet.getString("immagine"));
             }
 
         } finally {
@@ -185,7 +185,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
             preparedStatement.setInt(5, game.get_g_uscita());
             preparedStatement.setInt(6, game.get_m_uscita());
             preparedStatement.setInt(7, game.get_a_uscita());
-            preparedStatement.setBytes(8, game.getImmagine());
+            preparedStatement.setString(8, game.getImmagine());
             preparedStatement.setInt(9, game.get_id_gioco());
 
             preparedStatement.executeUpdate();
@@ -234,7 +234,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
                 game.set_g_uscita(resultSet.getInt("g_uscita"));
                 game.set_m_uscita(resultSet.getInt("m_uscita"));
                 game.set_a_uscita(resultSet.getInt("a_uscita"));
-                game.setImmagine(resultSet.getBytes("immagine"));
+                game.setImmagine(resultSet.getString("immagine"));
 
                 games.add(game); //aggiunge i giochi che rispettano il parametro di ricerca ad una lista da mostrare al client
             }
@@ -270,7 +270,7 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
                  game.set_g_uscita(resultSet.getInt("g_uscita"));
                  game.set_m_uscita(resultSet.getInt("m_uscita"));
                  game.set_a_uscita(resultSet.getInt("a_uscita"));
-                 game.setImmagine(resultSet.getBytes("immagine"));
+                 game.setImmagine(resultSet.getString("immagine"));
 
                  games.add(game);
              }

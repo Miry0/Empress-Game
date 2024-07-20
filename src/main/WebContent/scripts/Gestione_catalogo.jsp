@@ -40,21 +40,19 @@
  <!-- vengono modificati solo i campi non null, grazie ad un metodo che sta nella servlet -->
  
         <div class="form-group">
-            <form id="add_form" action="${pageContext.request.contextPath}/Gestione_giochi_servlet" method="post" enctype="multipart/form-data" onsubmit="return validateForm('add_form', ['nome', 'piattaforma', 'genere'], ['g_uscita', 'm_uscita', 'a_uscita' ],['prezzo']);">
+            <form id="add_form" action="${pageContext.request.contextPath}/AggiungiGioco" method="post" enctype="multipart/form-data" onsubmit="return validateForm('add_form', ['nome', 'piattaforma', 'genere'], ['g_uscita', 'm_uscita', 'a_uscita' ],['prezzo']);">
                 <h3>Aggiungi/Modifica Gioco</h3>
-                <input type="hidden" name="id" value="${game.id}">
-                <input type="text" name="nome" placeholder="Nome del gioco" value="${game.nome}">
-                <input type="text" name="piattaforma" placeholder="Piattaforma" value="${game.piattaforma}">
-                <input type="text" name="genere" placeholder="Genere" value="${game.genere}">
-                <input type="text" name="prezzo" placeholder="Prezzo" value="${game.prezzo}">
-                <input type="text" name="g_uscita" placeholder="Giorno di uscita" value="${game.g_uscita}">
-                <input type="text" name="m_uscita" placeholder="Mese di uscita" value="${game.m_uscita}">
-                <input type="text" name="a_uscita" placeholder="Anno di uscita" value="${game.a_uscita}">
-                <input type="file" name="immagine"> <!-- Campo per caricare l'immagine del gioco -->
+                <input type="text" name="nome" placeholder="Nome del gioco">
+                <input type="text" name="piattaforma" placeholder="Piattaforma">
+                <input type="text" name="genere" placeholder="Genere">
+                <input type="text" name="prezzo" placeholder="Prezzo">
+                <input type="text" name="g_uscita" placeholder="Giorno di uscita">
+                <input type="text" name="m_uscita" placeholder="Mese di uscita">
+                <input type="text" name="a_uscita" placeholder="Anno di uscita">
+                <input type="file" name="immagine" placeholder="immagine" required accept="images/*"> <!-- Campo per caricare l'immagine del gioco -->
 
                 <button id="agg_button" name="submitAction" type="submit"  value="Aggiungi">Aggiungi</button> <!-- Pulsante per aggiungere un nuovo gioco -->
                 <button id="up_butt" name="submitAction" type="submit"  value="Modifica">Modifica</button> <!-- Pulsante per modificare un gioco esistente -->
-           		console.log())
             </form>
         </div>
         

@@ -15,7 +15,7 @@ public class Game_bean implements Serializable {
     private int m_uscita;
     private int a_uscita;
     private int quantita;
-    private byte[] immagine; // Aggiunta variabile per l'immagine del gioco
+    private String immagine; // Aggiunta variabile per l'immagine del gioco
 
     // Costruttore
     public Game_bean() {
@@ -32,11 +32,11 @@ public class Game_bean implements Serializable {
     }
 
     // Getter e setter per l'immagine
-    public byte[] getImmagine() {
+    public String getImmagine() {
         return immagine;
     }
 
-    public void setImmagine(byte[] immagine) {
+    public void setImmagine(String immagine) {
         this.immagine = immagine;
     }
 

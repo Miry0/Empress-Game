@@ -102,6 +102,7 @@ public class Gestione_giochi_servlet extends HttpServlet {
             // Gestisce le diverse azioni in base al parametro 'submitAction'
             if ("Aggiungi".equals(action)) {
                 addGame(request, response); // Aggiunge un nuovo gioco
+                							//è stata sostituita da AggiungGioco.java
             } else if ("Modifica".equals(action)) {
                 updateGame(request, response); // Aggiorna un gioco esistente
             } else if ("Elimina".equals(action)) {
@@ -132,7 +133,7 @@ public class Gestione_giochi_servlet extends HttpServlet {
         int aUscita = Integer.parseInt(request.getParameter("a_uscita"));
 
         // Recupera l'immagine come array di byte
-        byte[] immagine = extractImageBytes(request);
+        String immagine = request.getParameter("immagine");
 
         // Crea un oggetto Game_bean con i dati ricevuti dalla richiesta
         Game_bean game = new Game_bean();
@@ -202,7 +203,7 @@ public class Gestione_giochi_servlet extends HttpServlet {
             }
 
             // Recupera l'immagine come array di byte
-            byte[] immagine = extractImageBytes(request);
+            String immagine = request.getParameter("immagine");
             game.setImmagine(immagine);
 
             // Aggiorna il gioco nel database utilizzando il DAO
@@ -222,7 +223,7 @@ public class Gestione_giochi_servlet extends HttpServlet {
         gameDAO.doDelete(id);
 
         // Utilizza il dispatcher per inoltrare la richiesta alla pagina Gestione_catalogo.jsp
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Gestione_catalogo.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Gestione_catalogo.jsp");
         dispatcher.forward(request, response);
     }
 

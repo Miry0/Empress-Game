@@ -12,7 +12,7 @@ CREATE TABLE GIOCHI
 	m_uscita int NOT NULL, 
 	a_uscita int NOT NULL, 
     quantita int,
-    immagine mediumblob,
+    immagine varchar(50),
     
     PRIMARY KEY(id_gioco)
 ); 
@@ -121,7 +121,7 @@ VALUES
 
 INSERT INTO GIOCHI (nome, piattaforma, genere, prezzo, g_uscita, m_uscita, a_uscita, quantita, immagine) 
 VALUES 
-('Zelda', 'Nintendo', 'Azione', 59.99, 3, 3, 2017, 10, NULL),
+('Zelda', 'Nintendo', 'Azione', 59.99, 3, 3, 2017, 10, "zelda.png"),
 ('FIFA 21', 'PlayStation', 'Sport', 49.99, 6, 10, 2020, 25,NULL),
 ('Minecraft', 'PC', 'Avventura', 26.95, 18, 11, 2011, 100,NULL),
 ('Cyberpunk 2077', 'PC', 'RPG', 59.99, 10, 12, 2020, 50,NULL);
