@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import model.ArticoloBean;
+import model.ArticoloDAO;
 import model.Carrello;
 import model.Game_DAODataSource;
 import model.Game_bean;
@@ -29,6 +31,7 @@ public class Storico_servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Game_DAODataSource gameDAO;
     private Storico_DAODataSource storicoDAO;
+    private ArticoloDAO articoloDAO;
 
 
     public void init(ServletConfig cfg) throws ServletException {
@@ -49,24 +52,31 @@ public class Storico_servlet extends HttpServlet {
         
     }
     
-    private void conferma_ordine(HttpServletRequest request, HttpServletResponse response) {
+    private void conferma_ordine(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
     	 DataSource ds = (DataSource) getServletContext().getAttribute("MyDataSource");
          gameDAO = new Game_DAODataSource(ds);
          storicoDAO = new Storico_DAODataSource(ds);
+         articoloDAO = new ArticoloDAO(ds);
          
          Collection<Storico_bean> listOrder = new ArrayList<>();
                   
-         
+        
+        HttpSession session = request.getSession(); 
+        
         String nome_utente=request.getParameter("nome_utente"); 
-    	Carrello carrello = (Carrello) request.getAttribute("carrello"); //reucpero dei dati del carrello dalla richiesta di conferma dell'ordine
+    	Carrello carrello = (Carrello) session.getAttribute("carrello"); //reucpero dei dati del carrello dalla richiesta di conferma dell'ordine
     	float totale = Float.parseFloat(request.getParameter("totale"));
-    	Date data= new Date(); //prende la data del server; 
+    	Date data_ordine= new Date(); //prende la data del server; 
+    	
+    	System.out.println("Data ordine: " + data_ordine);
     	
     	Storico_bean storico = new Storico_bean();
     	
     	storico.set_nome_utente(nome_utente);
     	storico.set_totale(totale);
-    	storico.set_data(new java.sql.Date(data.getTime()));	//conversione da util.date a sql.date
+    	storico.set_data(new java.sql.Date(data_ordine.getTime()));	//conversione da util.date a sql.date
+    	
+    	System.out.println("SQL Data ordine: " + new java.sql.Date(data_ordine.getTime()));
     	
     	  // Salva i dati nel database
         try {
@@ -86,9 +96,9 @@ public class Storico_servlet extends HttpServlet {
         	ArticoloBean articolo = new ArticoloBean();
         	int idGioco = carrello.getGiocoByIndex(n);
         	
-        	articolo.setNOrdine(n_ordine);
-        	articolo.setIdGioco(idGioco);
-        	articolo.setQuantita(carrello.getQuant(idGioco));
+        	articolo.setnOrdine(n_ordine);
+        	articolo.set_id_gioco(idGioco);
+        	articolo.set_quantita(carrello.getQuant(idGioco));
         	
         	try {
                 articoloDAO.doSave(articolo);

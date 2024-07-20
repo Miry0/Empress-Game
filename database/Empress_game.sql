@@ -73,7 +73,7 @@ CREATE TABLE ARTICOLI
 (
 	n_ordine int NOT NULL,
     id_gioco int NOT NULL,
-    quantità int,
+    quantita int,
     
     PRIMARY KEY (n_ordine),
     FOREIGN KEY (n_ordine) REFERENCES STORICO(n_ordine),

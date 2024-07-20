@@ -9,35 +9,33 @@ import java.util.Collection;
 import java.util.LinkedList;
 import javax.sql.DataSource;
 
-public class Storico_DAODataSource implements IBeanDAO<Storico_bean> {
+public class ArticoloDAO implements IBeanDAO<ArticoloBean> {
 
     private static DataSource ds;
 
     // Costruttore per ottenere il DataSource dal contesto dell'applicazione
-    public Storico_DAODataSource(DataSource ds) {
+    public ArticoloDAO(DataSource ds) {
         this.ds = ds;
         if (ds == null) {
             System.out.println("DataSource nullo");
         }
     }
 
-    private static final String TABLE_NAME = "STORICO";
-
+    private static final String TABLE_NAME = "ARTICOLI";
+    
     @Override
-    public synchronized void doSave(Storico_bean storico) throws SQLException {
+    public synchronized void doSave(ArticoloBean articolo) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        String insertSQL = "INSERT INTO " + TABLE_NAME + " (n_ordine, nome_utente, data_ordine, totale) VALUES (?, ?, ?, ?)";
+        String insertSQL = "INSERT INTO " + TABLE_NAME + " (n_ordine, id_gioco, quantita) VALUES (?, ?, ?)";
 
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
-            preparedStatement.setInt(1, storico.get_n_ordine());
-            preparedStatement.setString(2, storico.get_nome_utente());
-            preparedStatement.setDate(3, storico.get_data());
-            preparedStatement.setFloat(4, storico.get_totale());
-            
+            preparedStatement.setInt(1, articolo.getnOrdine());
+            preparedStatement.setInt(2, articolo.get_id_gioco());
+            preparedStatement.setInt(3, articolo.get_quantita());
 
             preparedStatement.executeUpdate();
 
@@ -49,7 +47,7 @@ public class Storico_DAODataSource implements IBeanDAO<Storico_bean> {
             }
         }
     }
-
+    
     @Override
     public boolean doDelete(int id) throws SQLException {
         Connection connection = null;
@@ -76,13 +74,13 @@ public class Storico_DAODataSource implements IBeanDAO<Storico_bean> {
 
         return (result != 0);
     }
-
+    
     @Override
-    public Storico_bean doRetrieveByKey(int id) throws SQLException {
+    public ArticoloBean doRetrieveByKey(int id) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        Storico_bean bean = new Storico_bean();
+        ArticoloBean bean = new ArticoloBean();
 
         String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE n_ordine = ?";
 
@@ -94,10 +92,9 @@ public class Storico_DAODataSource implements IBeanDAO<Storico_bean> {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                bean.set_n_ordine(rs.getInt("n_ordine"));
-                bean.set_nome_utente(rs.getString("nome_utente"));
-                bean.set_totale(rs.getFloat("totale"));
-                bean.set_data(rs.getDate("data_ordine"));
+                bean.setnOrdine(rs.getInt("n_ordine"));
+                bean.set_id_gioco(rs.getInt("idGioco"));
+                bean.set_quantita(rs.getInt("quantita"));
             }
 
         } finally {
@@ -110,19 +107,17 @@ public class Storico_DAODataSource implements IBeanDAO<Storico_bean> {
 
         return bean;
     }
-
-    @Override
-    public Collection<Storico_bean> doRetrieveAll(String order) throws SQLException {
+    
+    
+    public Collection<ArticoloBean> doRetrieveAll(String order) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
-        Collection<Storico_bean> storici = new LinkedList<Storico_bean>();
+        Collection<ArticoloBean> articoli = new LinkedList<ArticoloBean>();
 
         String selectSQL = "SELECT * FROM " + TABLE_NAME;
-
-        if (order != null && !order.equals("")) {
+        
+        if (order != null && !order.equals(""))
             selectSQL += " ORDER BY " + order;
-        }
 
         try {
             connection = ds.getConnection();
@@ -131,14 +126,11 @@ public class Storico_DAODataSource implements IBeanDAO<Storico_bean> {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                Storico_bean bean = new Storico_bean();
-
-                bean.set_n_ordine(rs.getInt("n_ordine"));
-                bean.set_nome_utente(rs.getString("nome_utente"));
-                bean.set_totale(rs.getFloat("totale"));
-                bean.set_data(rs.getDate("data_ordine"));
-
-                storici.add(bean);
+                ArticoloBean bean = new ArticoloBean();
+                bean.setnOrdine(rs.getInt("n_ordine"));
+                bean.set_id_gioco(rs.getInt("id_gioco"));
+                bean.set_quantita(rs.getInt("quantita"));
+                articoli.add(bean);
             }
 
         } finally {
@@ -149,6 +141,7 @@ public class Storico_DAODataSource implements IBeanDAO<Storico_bean> {
             }
         }
 
-        return storici;
+        return articoli;
     }
+
 }

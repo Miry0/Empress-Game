@@ -12,7 +12,7 @@ public class Storico_bean implements Serializable {
 	
 	private int n_ordine;  //chiave primaria; 
 	private String nome_utente; 
-	private Date data; 
+	private Date data_ordine; 
 	private float totale; 
 	
 	
@@ -23,7 +23,7 @@ public class Storico_bean implements Serializable {
 	    // Costruttore
 	    public Storico_bean() {
 	    	 nome_utente = null;
-	    	 data=null; 
+	    	 data_ordine=null; 
 	    	 totale=-1; 
 	    }
 
@@ -47,11 +47,11 @@ public class Storico_bean implements Serializable {
 	    
 	    // Getter e setter data
 	    public Date get_data() {
-	        return data;
+	        return data_ordine;
 	    }
 
-	    public void set_data(Date data) {
-	        this.data = data;
+	    public void set_data(Date data_ordine) {
+	        this.data_ordine = data_ordine;
 	    }
 	    
 	 // Getter e setter totale
@@ -66,6 +66,6 @@ public class Storico_bean implements Serializable {
 	 // Metodo toString per la stampa dei dettagli del bean
 	    @Override
 	    public String toString() {
-	        return n_ordine + " " + nome_utente+ " " + totale+ " " + data;
+	        return n_ordine + " " + nome_utente+ " " + totale+ " " + data_ordine;
 	    }
 }
