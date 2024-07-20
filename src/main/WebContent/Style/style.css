@@ -1,5 +1,5 @@
 /* Stile per il menu nascosto */
-.hidden-menu {
+.menu {
     position: fixed;
     top: 0;
     left: -220px; /* Sposta il menu completamente al di fuori dello schermo a sinistra */
@@ -11,7 +11,7 @@
 }
 
 /* Stile per il link del menu */
-.hidden-menu a {
+.menu a {
     display: block;
     color: #333;
     text-decoration: none;
@@ -19,17 +19,17 @@
 }
 
 /* Stile per il link del menu al passaggio del mouse */
-.hidden-menu a:hover {
+.menu a:hover {
     background-color: #ddd;
 }
 
 /* Stile per il link del menu attivo */
-.hidden-menu a.active-link {
+.menu a.active {
     font-weight: bold;
 }
 
 /* Stile per il bottone */
-toggle-button {
+.toggle-btn {
     cursor: pointer;
     background-image: url('../images/5498698.png'); /* URL dell'icona corretto */
     width: 40px;
@@ -41,19 +41,17 @@ toggle-button {
 }
 
 /* Stile per l'icona di chiusura */
-close-icon-button {
+.close-icon {
     position: absolute;
     top: 10px;
     right: 10px;
     cursor: pointer;
 }
-
 /* Stile per l'header */
 header {
     text-align: center;
     padding: 10px;
 }
-
 /* Stile per il logo */
 header img {
     max-width: 100%;
@@ -61,7 +59,7 @@ header img {
 }
 
 /* Stile per il form di login */
-login-form {
+.login-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -71,7 +69,7 @@ login-form {
     margin-top: 0; /* Aggiunge margine sopra il form per separarlo dall'header */
 }
 
-login-container {
+.login-container {
     background-color: #f4f4f4;
     padding: 20px;
     border-radius: 10px;
@@ -79,7 +77,7 @@ login-container {
     width: 300px; /* Larghezza del contenitore del form */
 }
 
-login-form input {
+.login-form input {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -88,7 +86,7 @@ login-form input {
     box-sizing: border-box;
 }
 
-login-button {
+button {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -99,30 +97,30 @@ login-button {
     cursor: pointer;
 }
 
-login-button:hover {
+button:hover {
     background-color: #555;
 }
 
 /* Stile per il link di registrazione */
-login-form link {
+.login-form link {
     color: black;
 }
 
 /* Media query per dispositivi con larghezza massima di 768px */
 @media screen and (max-width: 768px) {
-    .hidden-menu {
+    .menu {
         width: 150px;
     }
 
-    toggle-button {
+    .toggle-btn {
         left: 5px;
     }
 
-    close-icon-button {
+    .close-icon {
         right: 5px;
     }
 
-    login-container {
+    .login-container {
         width: 90%; /* Riduce la larghezza del contenitore del form sui dispositivi mobili */
     }
 
@@ -133,23 +131,20 @@ login-form link {
 }
 
 /* Stile per la visualizzazione dei giochi */
-.game-list-container {
+.game-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-
 .order-form-container {
     display: flex;
     justify-content: center;
     margin-bottom: 20px; /* Aggiungi margine inferiore per separare dal contenuto successivo */
 }
-
 /* Stile per il form di ordinamento */
 .order-form {
     text-align: center;
 }
-
 .game-item {
     width: 45%; /* Larghezza di ogni gioco (puoi regolare questo valore) */
     margin: 10px; /* Spazio tra i giochi */
@@ -159,25 +154,21 @@ login-form link {
 }
 
 /* Stile per il contenitore dei dettagli del gioco e i pulsanti */
-.game-detail-container {
-    display: grid;
-    grid-template-columns: 1fr 2fr; /* Definisce due colonne */
-    gap: 20px; /* Spazio tra le colonne */
+.game-container {
     background-color: #f0f0f0; /* Grigio chiaro */
     border-radius: 15px; /* Contorni smussati */
     padding: 20px;
     text-align: center;
     max-width: 600px;
     margin: 20px auto; /* Centra il contenitore nella pagina */
-    align-items: start; /* Allinea gli elementi all'inizio */
 }
 
-.game-detail-container img {
+.game-container img {
     max-width: 100%; /* Limita la larghezza dell'immagine */
     border-radius: 10px;
 }
 
-.game-detail-text {
+.game-details p {
     margin-bottom: 20px; /* Spazio tra i paragrafi */
 }
 
@@ -187,7 +178,6 @@ login-form link {
     flex-direction: column; /* Disporre i pulsanti uno sotto l'altro */
     align-items: center;
 }
-
 .button-container button {
     margin: 10px 0; /* Margine sopra e sotto per ogni pulsante */
     padding: 10px 20px;
@@ -198,7 +188,6 @@ login-form link {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-
 .button-container button:hover {
     background-color: #CC0000; /* Rosso più scuro per l'hover */
 }
