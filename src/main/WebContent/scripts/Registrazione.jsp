@@ -3,9 +3,17 @@
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
 
 <%
-    // Controlla se l'utente è già registrato e loggato
+  
+	String tipoUtente = (String) session.getAttribute("tipoUtente"); //recupera il tipo del utente
+	
+	// Controlla se l'utente è già registrato e loggato
     if (utente != null && utente.get_nome_utente() != null && !utente.get_nome_utente().isEmpty()) {
-        	response.sendRedirect("Successo_registrazione.jsp");
+    	if ("admin".equals(tipoUtente)) {
+    	response.sendRedirect("Profilo_admin.jsp");
+    	}
+    	else{
+    	response.sendRedirect("Profilo_utente.jsp");
+    	}
     }
 %>
 <!DOCTYPE html>
