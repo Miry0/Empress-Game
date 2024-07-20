@@ -48,7 +48,7 @@
         <input type="hidden" name="nome_utente_lista" value="<%= utente.get_nome_utente() %>">     
         <button name="lista_desideri" type="submit" value="view">Lista Desideri</button>
       </form>
-    <button onclick="location.href='<%= contextPath %>/scripts/Storico_client.jsp'">I Miei Ordini</button>
+    <button onclick="location.href='<%= contextPath %>/scripts/Storico.jsp'">I Miei Ordini</button>
 </div>
 	
 <div class="login-form">

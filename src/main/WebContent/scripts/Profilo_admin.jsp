@@ -58,7 +58,6 @@
         <input type="hidden" name="nome_utente_lista" value="<%= utente.get_nome_utente() %>">     
         <button name="lista_desideri" type="submit" value="view">Lista Desideri</button>
       </form>
-    <button onclick="location.href='<%= contextPath %>/scripts/Storico_admin.jsp'">I Miei Ordini</button>
 </div>
     
 <div class="login-form">
@@ -91,7 +90,7 @@
         </form>
            
         <!-- Pulsanti per lo storico e la gestione del catalogo -->
-        <form action="<%= contextPath %>/scripts/Storico_admin.jsp" method="post">
+        <form action="<%= contextPath %>/scripts/Storico.jsp" method="post">
             <button type="submit">Storico</button> <!-- Reindirizza alla servlet per lo storico -->
         </form>
         
