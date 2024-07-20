@@ -3,7 +3,6 @@
 <%@ page import="model.Game_bean" %>
 <%@ page import="java.util.Collection" %>
 
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -13,30 +12,15 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_barra_ricerca.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_carrello_profilo.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_index.css">
   
-  <style>
-    .game-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .game-item {
-        width: 45%; /* Larghezza di ogni gioco (puoi regolare questo valore) */
-        margin: 10px; /* Spazio tra i giochi */
-        padding: 10px;
-        border: 1px solid #ccc;
-        text-align: center;
-    }
-  </style>
+  
 </head>
 <body>
 
 <%	
 	String tipoUtente = (String) session.getAttribute("tipoUtente"); //recupera il tipo del utente
     Collection<Game_bean> games = (Collection<Game_bean>) request.getAttribute("listaGiochi");
-    //Collection<Game_bean> games3 = (Collection<Game_bean>) request.getAttribute("listaGiochi3");
-    
 %>
 
 <!-- Verifica del contesto dell'applicazione -->
@@ -47,7 +31,6 @@
 <!-- Header con logo -->
 <header>
   <img src="<%= contextPath %>/images/logo.jpg" alt="Logo">
-  
 </header>
 
 <!-- tasto per carrello e profilo -->
@@ -99,7 +82,7 @@
 </div>
 
 <center>
-<h3>Catalogo Giochi</h3>
+<h3 class="centered-title">Catalogo Giochi</h3>
 
 <!-- Form per selezionare l'ordinamento -->
 <div class="order-form-container">
@@ -118,18 +101,20 @@
 </center>
 <br>
 
-<div class="game-container">
+<div class="games-grid">
     <% if (games != null && !games.isEmpty()) {
         for (Game_bean game : games) { %>
             <div class="game-item">
-                <h2><a href="Dettagli_gioco_servlet?id_gioco=<%= game.get_id_gioco() %>"><%= game.get_nome() %></a></h2>
-                <p>Piattaforma: <%= game.get_piattaforma() %></p>
-                <p>Genere: <%= game.get_genere() %></p>
-                <p>Prezzo: <%= game.get_prezzo() %></p>
-                <p>Data di uscita: <%= game.get_g_uscita() %>-<%= game.get_m_uscita() %>-<%= game.get_a_uscita() %></p>
                 <% if (game.getImmagine() != null) { %>
                     <img src="images/<%= game.getImmagine() %>" alt="<%= game.get_nome() %>">
                 <% } %> 
+                <div>
+                    <h2><a href="Dettagli_gioco_servlet?id_gioco=<%= game.get_id_gioco() %>"><%= game.get_nome() %></a></h2>
+                    <p>Piattaforma: <%= game.get_piattaforma() %></p>
+                    <p>Genere: <%= game.get_genere() %></p>
+                    <p>Prezzo: <%= game.get_prezzo() %></p>
+                    <p>Data di uscita: <%= game.get_g_uscita() %>-<%= game.get_m_uscita() %>-<%= game.get_a_uscita() %></p>
+                </div>
             </div>
     <% } 
        } else { %>
