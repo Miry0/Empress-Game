@@ -1,0 +1,38 @@
+
+    .game-container {
+      background-color: #f0f0f0;
+      border-radius: 15px;
+      padding: 20px;
+      max-width: 600px;
+      margin: 20px auto;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .game-container img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    .game-details p {
+      margin-bottom: 20px;
+    }
+    .button-container {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .button-container button {
+      margin: 10px 0;
+      padding: 10px 20px;
+      border: none;
+      background-color: #FF0000;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .button-container button:hover {
+      background-color: #CC0000;
+    }

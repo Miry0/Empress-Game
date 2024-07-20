@@ -1,5 +1,5 @@
 /* Stile per il menu nascosto */
-.menu {
+.hidden-menu {
     position: fixed;
     top: 0;
     left: -220px; /* Sposta il menu completamente al di fuori dello schermo a sinistra */
@@ -11,7 +11,7 @@
 }
 
 /* Stile per il link del menu */
-.menu a {
+.hidden-menu a {
     display: block;
     color: #333;
     text-decoration: none;
@@ -19,17 +19,17 @@
 }
 
 /* Stile per il link del menu al passaggio del mouse */
-.menu a:hover {
+.hidden-menu a:hover {
     background-color: #ddd;
 }
 
 /* Stile per il link del menu attivo */
-.menu a.active {
+.hidden-menu a.active-link {
     font-weight: bold;
 }
 
 /* Stile per il bottone */
-.toggle-btn {
+toggle-button {
     cursor: pointer;
     background-image: url('../images/5498698.png'); /* URL dell'icona corretto */
     width: 40px;
@@ -41,7 +41,7 @@
 }
 
 /* Stile per l'icona di chiusura */
-.close-icon {
+close-icon-button {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -61,7 +61,7 @@ header img {
 }
 
 /* Stile per il form di login */
-.login-form {
+login-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -71,7 +71,7 @@ header img {
     margin-top: 0; /* Aggiunge margine sopra il form per separarlo dall'header */
 }
 
-.login-container {
+login-container {
     background-color: #f4f4f4;
     padding: 20px;
     border-radius: 10px;
@@ -79,7 +79,7 @@ header img {
     width: 300px; /* Larghezza del contenitore del form */
 }
 
-.login-form input {
+login-form input {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -88,7 +88,7 @@ header img {
     box-sizing: border-box;
 }
 
-button {
+login-button {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -99,30 +99,30 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+login-button:hover {
     background-color: #555;
 }
 
 /* Stile per il link di registrazione */
-.login-form link {
+login-form link {
     color: black;
 }
 
 /* Media query per dispositivi con larghezza massima di 768px */
 @media screen and (max-width: 768px) {
-    .menu {
+    .hidden-menu {
         width: 150px;
     }
 
-    .toggle-btn {
+    toggle-button {
         left: 5px;
     }
 
-    .close-icon {
+    close-icon-button {
         right: 5px;
     }
 
-    .login-container {
+    login-container {
         width: 90%; /* Riduce la larghezza del contenitore del form sui dispositivi mobili */
     }
 
@@ -133,7 +133,7 @@ button:hover {
 }
 
 /* Stile per la visualizzazione dei giochi */
-.game-container {
+.game-list-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -159,21 +159,25 @@ button:hover {
 }
 
 /* Stile per il contenitore dei dettagli del gioco e i pulsanti */
-.game-container {
+.game-detail-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Definisce due colonne */
+    gap: 20px; /* Spazio tra le colonne */
     background-color: #f0f0f0; /* Grigio chiaro */
     border-radius: 15px; /* Contorni smussati */
     padding: 20px;
     text-align: center;
     max-width: 600px;
     margin: 20px auto; /* Centra il contenitore nella pagina */
+    align-items: start; /* Allinea gli elementi all'inizio */
 }
 
-.game-container img {
+.game-detail-container img {
     max-width: 100%; /* Limita la larghezza dell'immagine */
     border-radius: 10px;
 }
 
-.game-details p {
+.game-detail-text {
     margin-bottom: 20px; /* Spazio tra i paragrafi */
 }
 
