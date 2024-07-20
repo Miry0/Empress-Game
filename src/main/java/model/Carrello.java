@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
@@ -69,13 +68,5 @@ public class Carrello {
 				 return true;
 		 
 		 return false;
-		 	/*
-	        for (int gioco : listaGiochi) {
-	            if (gioco == idGioco) {
-	                return true;
-	            }
-	        }
-	        return false;
-	       	*/
 	    }
 }

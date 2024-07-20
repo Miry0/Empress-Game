@@ -100,6 +100,7 @@
 </div>
 
 
+<% if (catalogo != null && !catalogo.isEmpty()) { %>	
 <form action="Storico_servlet" method="post">
  <input type="hidden" name="carrello" value="<%=carrello %>"> <!-- contiene id_gioco e quantità dei giochi comprati --> 
  <input type="hidden" name="nome_utente" value="<%=utente.get_nome_utente() %>">
@@ -107,6 +108,7 @@
    
   <button name="confema_ordine" type="submit" value="conferma"> Conferma l'ordine</button> 
 </form>
+<%}%>
 
 <!-- Inclusione del file JavaScript -->
 <script src="<%= contextPath %>/scripts/script_index.js"></script>

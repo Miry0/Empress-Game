@@ -227,26 +227,6 @@ public class Gestione_giochi_servlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    // Metodo per estrarre l'immagine dalla richiesta HTTP come array di byte
-    private byte[] extractImageBytes(HttpServletRequest request) throws IOException, ServletException {
-        Part filePart = request.getPart("immagine"); // Recupera il Part relativo all'immagine dal form
-        InputStream inputStream = filePart.getInputStream(); // Ottiene lo stream di input dall'immagine
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[4096]; // Buffer per la lettura dell'immagine
-        int bytesRead = -1;
-
-        // Legge l'immagine dallo stream e la scrive nell'outputStream
-        while ((bytesRead = inputStream.read(buffer)) != -1) {
-            outputStream.write(buffer, 0, bytesRead);
-        }
-
-        byte[] immagine = outputStream.toByteArray(); // Converte l'outputStream in un array di byte
-        outputStream.close();
-        inputStream.close();
-
-        return immagine;
-    }
-
     public void destroy() {
         super.destroy();
     }

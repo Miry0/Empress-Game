@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
@@ -45,6 +46,7 @@ public class Storico_servlet extends HttpServlet {
         if("conferma".equals(action)) {
         	conferma_ordine(request, response);
         }
+        
     }
     
     private void conferma_ordine(HttpServletRequest request, HttpServletResponse response) {
@@ -52,6 +54,8 @@ public class Storico_servlet extends HttpServlet {
          gameDAO = new Game_DAODataSource(ds);
          storicoDAO = new Storico_DAODataSource(ds);
          
+         Collection<Storico_bean> listOrder = new ArrayList<>();
+                  
          
         String nome_utente=request.getParameter("nome_utente"); 
     	Carrello carrello = (Carrello) request.getAttribute("carrello"); //reucpero dei dati del carrello dalla richiesta di conferma dell'ordine
@@ -60,18 +64,48 @@ public class Storico_servlet extends HttpServlet {
     	
     	Storico_bean storico = new Storico_bean();
     	
+    	storico.set_nome_utente(nome_utente);
+    	storico.set_totale(totale);
+    	storico.set_data(new java.sql.Date(data.getTime()));	//conversione da util.date a sql.date
+    	
     	  // Salva i dati nel database
         try {
             storicoDAO.doSave(storico);
+            listOrder = storicoDAO.doRetrieveAll("n_ordine DESC");
         } catch (SQLException e) {
             e.printStackTrace();
             // Gestisci l'errore, ad esempio reindirizzando l'utente a una pagina di errore
            // response.sendRedirect("errore.jsp");
             return;
         }
-
+        
+        Storico_bean lastOrder = (Storico_bean) listOrder.toArray()[0];
+        int n_ordine = lastOrder.get_n_ordine();
+        
+        for(int n = 0; n < carrello.getCarrelloLenght(); n++) {
+        	ArticoloBean articolo = new ArticoloBean();
+        	int idGioco = carrello.getGiocoByIndex(n);
+        	
+        	articolo.setNOrdine(n_ordine);
+        	articolo.setIdGioco(idGioco);
+        	articolo.setQuantita(carrello.getQuant(idGioco));
+        	
+        	try {
+                articoloDAO.doSave(articolo);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                // Gestisci l'errore, ad esempio reindirizzando l'utente a una pagina di errore
+               // response.sendRedirect("errore.jsp");
+                return;
+            }   
+        }
+        
         // Dopo aver salvato con successo, puoi reindirizzare l'utente a una pagina di conferma
-       // response.sendRedirect("ordine_confermato.jsp");
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Storico.jsp");
+        dispatcher.forward(request, response);
+        
+        
     	
     }
 }
