@@ -61,9 +61,6 @@
         <label for="cognome">Cognome:</label>
         <input type="text" id="cognome" name="cognome" value="<%= utente.get_cognome() %>"><br>
 		
-		<label for="password">Password:</label>
-        <input type="text" id="password" name="password" value="<%= utente.get_password() %>"><br>
-        
 		<label for="email">Email:</label>
         <input type="text" id="email" name="email" value="<%= utente.get_email() %>"><br>
         
