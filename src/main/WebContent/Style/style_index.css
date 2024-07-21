@@ -1,0 +1,40 @@
+.centered-title {
+    text-align: center;
+    font-size: 24px;
+    color: red;
+    font-family: Verdana, sans-serif;
+    margin-top: 20px;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; /* Aumentato il gap per più spazio tra i giochi */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.game-item {
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    width: calc(100% - 40px); /* Larghezza aumentata per raddoppiare la dimensione */
+    box-sizing: border-box;
+}
+
+.game-item img {
+    max-width: 150px; /* Dimensione leggermente aumentata dell'immagine */
+    margin-right: 20px;
+    border-radius: 10px;
+}
+
+.game-item h2, .game-item p {
+    margin: 0 0 10px 0;
+}
+
+.search-button {
+    padding: 10px 20px; /* Dimensioni standard per il pulsante Cerca */
+    font-size: 16px;
+}
