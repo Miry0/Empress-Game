@@ -65,7 +65,6 @@
 <!-- Header con logo -->
 <header>
   <img src="<%= contextPath %>/images/logo.jpg" alt="Logo">
-  
 </header>
 <body>
 <h2>Lista Desideri</h2>
