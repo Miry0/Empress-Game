@@ -63,6 +63,13 @@ public class Storico_bean implements Serializable {
 	        this.totale = totale;
 	    }
 	    
+	    public boolean isEmpty() {
+	    	if(nome_utente == null && data_ordine == null)
+	    		return true;
+	    	
+	    	return false;
+	    }
+	    
 	 // Metodo toString per la stampa dei dettagli del bean
 	    @Override
 	    public String toString() {

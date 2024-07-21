@@ -139,3 +139,11 @@ VALUES
 ('Suga@123$'),
 ('Hobi@789@'),
 ('Jin@!567@');
+
+INSERT INTO STORICO (n_ordine, nome_utente, data_ordine, totale)
+VALUES
+('1', 'RM@345!abc', '2024-07-21', '49.99');
+
+INSERT INTO ARTICOLI (id, n_ordine, id_gioco, quantita)
+VALUES
+('1', '1', '2', '1');
