@@ -20,6 +20,6 @@
      <a href="<%=contextPath %>/">Torna sulla home page</a>
     <a href="<%=contextPath %>/scripts/Pagina_login.jsp">Accedi alla tua area riservata</a>
 </div>
-
+<jsp:include page="footer.jsp" />
 </body>
 </html>

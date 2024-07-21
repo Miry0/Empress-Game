@@ -149,7 +149,7 @@
     return true;
   }
 </script>
-
+<jsp:include page="footer.jsp" />
 <script src="<%= contextPath %>/scripts/script_index.js"></script>
 </body>
 </html>

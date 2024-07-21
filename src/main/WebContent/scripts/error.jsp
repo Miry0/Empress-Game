@@ -8,6 +8,6 @@
 </head>
 	<body>
 	<h1>ERRORE!</h1>
-
+<jsp:include page="footer.jsp" />
 	</body>
 </html>

@@ -109,6 +109,6 @@
 
 <!-- Inclusione del file JavaScript -->
 <script src="<%= contextPath %>/scripts/script_index.js"></script>
-
+<jsp:include page="footer.jsp" />
 </body>
 </html>

@@ -18,6 +18,6 @@
     <h1>RAggiornamento profilo avvenuto con successo</h1>
      <a href="<%=contextPath %>/">Torna sulla home page</a>
 </div>
-
+<jsp:include page="footer.jsp" />
 </body>
 </html>

@@ -127,5 +127,11 @@
 <!-- Inclusione del file JavaScript -->
 <script src="<%= contextPath %>/scripts/script_index.js"></script>
 
+</head>
+<body>
+    <footer class="footer">
+        <p>Telefono: 123-456-7890</p>
+        <p>Email: info@empressgame.com</p>
+    </footer>
 </body>
 </html>
