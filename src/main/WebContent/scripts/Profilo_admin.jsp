@@ -53,13 +53,7 @@
     </div>
     
   <!-- Box laterale con i bottoni -->
-<div class="sidebar">
 
-      <form action="${pageContext.request.contextPath}/lista_desideri_servlet" method="post">
-        <input type="hidden" name="nome_utente_lista" value="<%= utente.get_nome_utente() %>">     
-        <button name="lista_desideri" type="submit" value="view">Lista Desideri</button>
-      </form>
-</div>
     
 <div class="login-form">
     <div class="login-container">
@@ -99,6 +93,10 @@
         <form action="<%= contextPath %>/scripts/Gestione_catalogo.jsp" method="post">
             <button type="submit">Gestione Catalogo</button> <!-- Reindirizza alla servlet per la gestione del catalogo -->
         </form>
+        <form action="${pageContext.request.contextPath}/lista_desideri_servlet" method="post">
+        <input type="hidden" name="nome_utente_lista" value="<%= utente.get_nome_utente() %>">     
+        <button name="lista_desideri" type="submit" value="view">Lista Desideri</button>
+      </form>
     </div>
 </div>
 

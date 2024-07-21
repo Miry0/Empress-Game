@@ -1,0 +1,58 @@
+
+    .review-container {
+      background-color: #f0f0f0; /* Colore di sfondo grigio chiaro */
+      border-radius: 10px; /* Angoli smussati */
+      padding: 20px; /* Spaziatura interna */
+      margin: 20px 0; /* Margine superiore e inferiore */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+    }
+
+    /* Stile per il modulo di recensione */
+    .review-container form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .review-container label {
+      font-weight: bold;
+    }
+
+    .review-container textarea {
+      resize: vertical; /* Permette di ridimensionare solo verticalmente */
+      padding: 10px; /* Spaziatura interna */
+      margin-bottom: 10px; /* Margine inferiore */
+      border-radius: 5px; /* Angoli smussati */
+      border: 1px solid #ccc; /* Bordo grigio chiaro */
+    }
+
+    .review-container button {
+      background-color: red; /* Colore di sfondo del pulsante */
+      color: white; /* Colore del testo */
+      border: none; /* Rimuove il bordo */
+      padding: 10px 20px; /* Spaziatura interna */
+      border-radius: 5px; /* Angoli smussati */
+      cursor: pointer; /* Puntatore a mano */
+    }
+
+    .review-container button:hover {
+      background-color: #b81414; /* Colore di sfondo al passaggio del mouse */
+    }
+
+    /* Stile per la tabella delle recensioni */
+    .review-table {
+      width: 100%; /* Occupa tutta la larghezza disponibile */
+      border-collapse: separate;
+      border-spacing: 10px; /* Spazio tra le righe */
+    }
+
+    .review-table th, .review-table td {
+      background-color: #f9f9f9; /* Colore di sfondo delle celle */
+      border-radius: 10px; /* Angoli smussati */
+      padding: 10px; /* Spaziatura interna */
+      border: 1px solid #ddd; /* Bordo grigio chiaro */
+    }
+
+    .review-table th {
+      background-color: #eee; /* Colore di sfondo per le intestazioni */
+      font-weight: bold;
+    }
