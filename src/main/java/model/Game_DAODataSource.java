@@ -323,6 +323,17 @@ public class Game_DAODataSource implements IBeanDAO<Game_bean> {
     	    return gioco;
     	
     }
+    
+    public void updateQuantity(int gameId, int quantity) throws SQLException {
+        String query = "UPDATE giochi SET quantita = quantita - ? WHERE id_gioco = ?";
+        try (Connection connection = ds.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, quantity);
+            ps.setInt(2, gameId);
+            ps.executeUpdate();
+        }
+    }
+
 }
 
 

@@ -105,6 +105,9 @@ public class Storico_servlet extends HttpServlet {
         	
         	try {
                 articoloDAO.doSave(articolo);
+                
+                // Aggiorna la quantità disponibile del gioco nel database
+                gameDAO.updateQuantity(idGioco, carrello.getQuant(idGioco));
             } catch (SQLException e) {
                 e.printStackTrace();
                 // Gestisci l'errore, ad esempio reindirizzando l'utente a una pagina di errore
