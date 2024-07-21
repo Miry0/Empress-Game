@@ -1,47 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Carrello" %>
-<%@ page import="model.Game_bean" %>
-<%@ page import="java.util.Collection" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="model.Utenti_bean" %>
 <jsp:useBean id="utente" class="model.Utenti_bean" scope="session"/>
-<jsp:useBean id="carrello" class="model.Carrello" scope="session"/>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="model.Game_bean" %>
+<%@ page import="java.util.List" %>
+
 
 <!DOCTYPE html>
-<html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empress Game - Carrello</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css">
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empress Games - Catalogo Giochi</title>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style.css"> 
 </head>
 <body>
 
+<!-- Verifica del contesto dell'applicazione -->
 <%
     String contextPath = request.getContextPath();
-
-    // Controlla se l'utente è già loggato
-    if (utente == null || utente.get_nome_utente() == null || utente.get_nome_utente().isEmpty()) {
-        response.sendRedirect("Pagina_login.jsp");
-        return;
-    }
-
-    Collection<Game_bean> games = (Collection<Game_bean>) request.getAttribute("listaGiochi");
-   
-	//recuperiamo il carrello dalla sessione
-	carrello= (Carrello) session.getAttribute("carrello"); //recuperiamoci gli id che stanno nel carrello
-    
-    // Recupera il catalogo dalla sessione
-    Collection<Game_bean> catalogo = (Collection<Game_bean>) session.getAttribute("catalogo");
-    
-    float totale=0; 
-    // Calcolo del totale
-    if (catalogo != null) {
-        for (Game_bean prodotto : catalogo) {
-            int quantita = carrello.getQuant(prodotto.get_id_gioco());
-            totale += prodotto.get_prezzo() * quantita;
-        }
-    }
 %>
 
 <!-- Header con logo -->
@@ -61,54 +36,62 @@
   <!-- Aggiungi altre voci del menu qui se necessario -->
 </div>
 
-<div class="cart-container">
-    <% if (catalogo != null && !catalogo.isEmpty()) { %>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome Prodotto</th>
-                    <th>Prezzo</th>
-                    <th>Quantità</th>
-                    <th>Azioni</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for (Game_bean prodotto : catalogo) { %>
-                    <tr>
-                        <td><%= prodotto.get_nome() %></td>
-                        <td><%= prodotto.get_prezzo() %> €</td>
-                        <td><%= carrello.getQuant(prodotto.get_id_gioco()) %></td>
-                        <td>
-                            <form action="${pageContext.request.contextPath}/CarrelloServlet" method="post">
-                                <input type="hidden" name="azione_carrello" value="elimina">
-                                <input type="hidden" name="elimina_carrello" value="<%= prodotto.get_id_gioco() %>">
-                                <button name="azione_carrello" value="elimina" type="submit">Elimina</button>
-                            </form>
-                        </td>
-                    </tr>
-                <% } %>
-                 <tr>
-                    <td colspan="4" class="cart-total">Totale: <%= totale %> €</td>
-                </tr>
-            </tbody>
-        </table>
-    <% } else { %>
-        <p class="empty-cart-message">Il carrello è vuoto.</p>
-    <% } %>
-</div>
+        <!-- Form per Aggiungere o Modificare Gioco -->
+ <!-- vengono modificati solo i campi non null, grazie ad un metodo che sta nella servlet -->
+ 
+        <div class="form-group">
+            <form id="add_form" action="${pageContext.request.contextPath}/AggiungiGioco" method="post" enctype="multipart/form-data" onsubmit="return validateForm('add_form', ['nome', 'piattaforma', 'genere'], ['g_uscita', 'm_uscita', 'a_uscita' ],['prezzo']);">
+                <h3>Aggiungi/Modifica Gioco</h3>
+                <input type="text" name="nome" placeholder="Nome del gioco">
+                <input type="text" name="piattaforma" placeholder="Piattaforma">
+                <input type="text" name="genere" placeholder="Genere">
+                <input type="text" name="prezzo" placeholder="Prezzo">
+                <input type="text" name="g_uscita" placeholder="Giorno di uscita">
+                <input type="text" name="m_uscita" placeholder="Mese di uscita">
+                <input type="text" name="a_uscita" placeholder="Anno di uscita">
+                <input type="file" name="immagine" placeholder="immagine" required accept="images/*"> <!-- Campo per caricare l'immagine del gioco -->
 
-<% if (catalogo != null && !catalogo.isEmpty()) { %>	
-<form action="Storico_servlet" method="post">
- <input type="hidden" name="carrello" value="<%=carrello %>"> <!-- contiene id_gioco e quantità dei giochi comprati --> 
- <input type="hidden" name="nome_utente" value="<%=utente.get_nome_utente() %>">
- <input type="hidden" name="totale" value="<%=totale%>">
+                <button id="agg_button" name="submitAction" type="submit"  value="Aggiungi">Aggiungi</button> <!-- Pulsante per aggiungere un nuovo gioco -->
+                <button id="up_butt" name="submitAction" type="submit"  value="Modifica">Modifica</button> <!-- Pulsante per modificare un gioco esistente -->
+            </form>
+        </div>
+        
+
+        <!-- Form per Eliminare Gioco -->
+        <div class="game-list">
+            <h3>Elimina Gioco</h3>
+            <!--  form invia una richiesta alla servlet con un parametro gameSearch per cercare giochi per nome. -->
+            <!-- Una volta trovati i giochi corrispondenti, viene mostrato un elenco con ciascun gioco e un pulsante "Elimina" accanto ad ogni voce -->
+            <form id="delete_form" action="${pageContext.request.contextPath}/Gestione_giochi_servlet" method="post" onsubmit="return validateForm('delete_form', ['gameSearch']);">
+                <input type="text" name="gameSearch" placeholder="Cerca gioco per nome">
+                <button name="submitAction" type="submit" value="Cerca">cerca</button>
+            </form>
+            <ul>
+                <!-- Mostra l'elenco dei giochi trovati per la ricerca -->
+                <%
+                	List<Game_bean> games = (List<Game_bean>) request.getAttribute("games");
+                    if (games != null && !games.isEmpty()) {
+                        for (Game_bean game : games) {
+                %>
+                            <li>
+                                <p>Nome: <%= game.get_nome() %></p>
+                                <form action="${pageContext.request.contextPath}/Gestione_giochi_servlet" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="<%= game.get_id_gioco() %>">
+                                    <!-- Quando si preme il pulsante "Elimina" accanto a un gioco nell'elenco, 
+                                    il valore di submitAction sarà impostato automaticamente a delete, 
+                                    il che indica alla servlet di procedere con l'eliminazione del gioco corrispondente -->
+                                    <input type="hidden" value="Elimina"> 
+                                    <button name="submitAction" type="submit" value="Elimina">Elimina</button>
+                                </form>
+                            </li>
+                <%
+                        }
+                    }
+                %>
+            </ul>
+        </div>
    
-  <button name="confema_ordine" type="submit" value="conferma"> Conferma l'ordine</button> 
-</form>
-<%}%>
-
-<!-- Inclusione del file JavaScript -->
-<script src="<%= contextPath %>/scripts/script_index.js"></script>
-<jsp:include page="footer.jsp" />
+    
+    <script src="<%= contextPath %>/scripts/script_index.js"></script>
 </body>
 </html>
