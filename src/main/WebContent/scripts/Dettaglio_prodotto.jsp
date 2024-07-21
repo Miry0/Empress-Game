@@ -16,7 +16,9 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_barra_ricerca.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_carrello_profilo.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_immagine_gioco.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/style_recensioni.css">
 
+  
 </head>
 <body>
 
@@ -103,18 +105,20 @@
   </div>
 </div>
 
-<h4>Lascia una Recensione</h4>
-<form action="${pageContext.request.contextPath}/recensioni_servlet" method="post" onsubmit="return validateForm();">
-  <label for="review">Recensione:</label>
-  <textarea id="review" name="review" maxlength="250" placeholder="Massimo 250 caratteri"></textarea>
-  <br><br>
-  <input type="hidden" name="gioco_aggiungi_recensione" value="<%= gioco.get_id_gioco() %>">
-  <input type="hidden" name="nome_utente_recensione" value="<%= utente.get_nome_utente() %>">
-  <button name="recensione" value="add_recensione" type="submit">Invia Recensione</button>
-</form>
+<div class="review-container">
+  <h4>Lascia una Recensione</h4>
+  <form action="${pageContext.request.contextPath}/recensioni_servlet" method="post" onsubmit="return validateForm();">
+    <label for="review">Recensione:</label>
+    <textarea id="review" name="review" maxlength="250" placeholder="Massimo 250 caratteri"></textarea>
+    <br><br>
+    <input type="hidden" name="gioco_aggiungi_recensione" value="<%= gioco.get_id_gioco() %>">
+    <input type="hidden" name="nome_utente_recensione" value="<%= utente.get_nome_utente() %>">
+    <button name="recensione" value="add_recensione" type="submit">Invia Recensione</button>
+  </form>
+</div>
 
 <h4>Recensioni</h4>
-<table border="1">
+<table class="review-table">
   <thead>
     <tr>
       <th>Nome Utente</th>
@@ -149,7 +153,7 @@
     return true;
   }
 </script>
-<jsp:include page="footer.jsp" />
+
 <script src="<%= contextPath %>/scripts/script_index.js"></script>
 </body>
 </html>
