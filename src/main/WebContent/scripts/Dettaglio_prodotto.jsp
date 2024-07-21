@@ -28,7 +28,9 @@
   Game_bean gioco = (Game_bean) request.getAttribute("gioco");
   String messaggioErrore = (String) request.getAttribute("messaggioErrore");
   String messaggio = (String) request.getAttribute("messaggio");
+
   Collection<Recensioni_bean> recensioni = (Collection<Recensioni_bean>) request.getAttribute("recensioni");
+  System.out.println("recensioni 2 " + recensioni); 
 %>
 
 <header>

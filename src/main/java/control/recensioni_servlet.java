@@ -48,23 +48,30 @@ public class recensioni_servlet extends HttpServlet {
         
         if ("add_recensione".equals(action)) {
             aggiungiRecensione(request, response);
-        } else {
+        } 
+        else {
             mostraRecensioni(request, response);
+            System.out.println("chiamata a mostra effettuata!"); 
         }
+        
     }
 
     private void mostraRecensioni(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
       //  int idGioco = Integer.parseInt(request.getParameter("gioco_aggiungi_recensione"));
         System.out.println("mostra recensioni letto"); 
+        
         try {
             Collection<Recensioni_bean> recensioni = recensioniDAO.doRetrieveAll();
+            System.out.println("recensioni " + recensioni); 
+            
             request.setAttribute("recensioni", recensioni);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Dettaglio_prodotto.jsp");
-            dispatcher.forward(request, response);
+            request.getRequestDispatcher("/scripts/Dettaglio_prodotto.jsp").forward(request, response);
+         
             System.out.println("mostra recensioni eseguito"); 
         } catch (SQLException e) {
             e.printStackTrace();
             // Gestire l'errore e inoltrare a una pagina di errore se necessario
+            System.out.println("recensioni non recuperate"); 
         }
     }
 
@@ -101,8 +108,9 @@ public class recensioni_servlet extends HttpServlet {
             // Gestire l'errore e inoltrare a una pagina di errore se necessario
         }
         
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Dettaglio_prodotto.jsp");
-        dispatcher.forward(request, response);
+        mostraRecensioni(request, response); 
+        //RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Dettaglio_prodotto.jsp");
+        //dispatcher.forward(request, response);
     }
 
     public void destroy() {
