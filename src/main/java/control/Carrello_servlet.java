@@ -39,6 +39,7 @@ public class Carrello_servlet extends HttpServlet {
         DataSource ds = (DataSource) getServletContext().getAttribute("MyDataSource");
         gameDAO = new Game_DAODataSource(ds);
         HttpSession session = request.getSession();
+        
         Carrello carrello=(Carrello) session.getAttribute("carrello"); //recuperiamo il carrello che in cui proviamo ad aggiungere nei metodi "Add" e "remove" sotto 
         boolean iscartCreated=(boolean) session.getAttribute("isCartCreated"); //reucperiamo lo stato del carrello dalla servlet del login
         System.out.print(" iscartCreated " + iscartCreated);
@@ -114,6 +115,7 @@ public class Carrello_servlet extends HttpServlet {
 
     private void aggiungiElemento(HttpServletRequest request, HttpServletResponse response, Carrello carrello)
             throws ServletException, IOException {
+    	
         int idGioco = Integer.parseInt(request.getParameter("aggiungi_carrello"));
         
              

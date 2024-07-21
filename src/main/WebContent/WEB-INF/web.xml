@@ -86,16 +86,6 @@
         <url-pattern>/lista_desideri_servlet</url-pattern>
     </servlet-mapping>
     
-    <!-- Carrello_servlet-->
-    <servlet>
-        <servlet-name>Carrello_servlet</servlet-name>
-        <servlet-class>control.Carrello_servlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Carrello_servlet</servlet-name>
-        <url-pattern>/Carrello_servlet</url-pattern>
-    </servlet-mapping>
-    
     <!-- profili_servlet-->
     <servlet>
         <servlet-name>profili_servlet</servlet-name>

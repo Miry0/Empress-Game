@@ -5,7 +5,8 @@ import java.io.Serializable;
 public class ArticoloBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+   
+    private int id; //chiave primaria
     private int nOrdine;
     private int idGioco;
     private int quantita;
@@ -13,7 +14,16 @@ public class ArticoloBean implements Serializable {
     public ArticoloBean() {
     	idGioco = -1;
     	nOrdine = -1;
-    	quantita = -1;
+    	quantita = -1;;
+    }
+    
+    // Getters e setters dell'id della riga della table
+    public int get_id() {
+        return id;
+    }
+
+    public void set_id(int id) {
+        this.id = id;
     }
     
     public int get_quantita() {

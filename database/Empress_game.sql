@@ -71,14 +71,16 @@ CREATE TABLE STORICO
 
 CREATE TABLE ARTICOLI 
 (
-	n_ordine int NOT NULL,
+	id int AUTO_INCREMENT,
+    n_ordine int NOT NULL,
     id_gioco int NOT NULL,
     quantita int,
     
-    PRIMARY KEY (n_ordine),
+    
+    PRIMARY KEY (id),
     FOREIGN KEY (n_ordine) REFERENCES STORICO(n_ordine),
     FOREIGN KEY (id_gioco) REFERENCES GIOCHI(id_gioco),
-    UNIQUE KEY(n_ordine, id_gioco)
+    UNIQUE KEY(id, n_ordine, id_gioco)
 );
 
 CREATE TABLE RECENSIONI 

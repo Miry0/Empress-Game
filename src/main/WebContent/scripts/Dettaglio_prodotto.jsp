@@ -89,7 +89,7 @@
     <% } %>
 
     <div class="button-container">
-      <form action="${pageContext.request.contextPath}/Carrello_servlet?id_gioco=<%= gioco.get_id_gioco() %>" method="post">
+      <form action="${pageContext.request.contextPath}/CarrelloServlet?id_gioco=<%= gioco.get_id_gioco() %>" method="post">
         <input type="hidden" name="aggiungi_carrello" value="<%= gioco.get_id_gioco() %>">
         <button name="azione_carrello" value="aggiungi" type="submit">Aggiungi al carrello</button>
       </form>
