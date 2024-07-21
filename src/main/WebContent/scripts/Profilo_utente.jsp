@@ -44,18 +44,7 @@
 </div>
 
 <!-- Box laterale con i bottoni -->
-<div class="sidebar">
-     <form action="${pageContext.request.contextPath}/lista_desideri_servlet" method="post">
-        <input type="hidden" name="nome_utente_lista" value="<%= utente.get_nome_utente() %>">     
-        <button name="lista_desideri" type="submit" value="view">Lista Desideri</button>
-      </form>
-      
-    <!-- Pulsanti per lo storico e la gestione del catalogo -->
-        <form action="${pageContext.request.contextPath}/Storico_servlet" method="post">
-         <input type="hidden" name="nome_utente_ordine" value="<%= utente.get_nome_utente() %>">  
-            <button name=confema_ordine type="submit" value="view" >I Miei Ordini</button> <!-- Reindirizza alla servlet per lo storico -->
-        </form>
-</div>
+
 	
 <div class="login-form">
   	<div class="login-container">
@@ -80,11 +69,20 @@
         <input type="text" id="a_nascita" name="a_nascita" value="<%= utente.get_a_nascita() %>"><br>
     </form>
     
-     < <!-- Link per il logout -->
+      <!-- Link per il logout -->
         <form action="${pageContext.request.contextPath}/Logout_servlet" method="post">
             <button type="submit">Logout</button> <!-- gestito dalla Logout_servlet -->
         </form>
-   
+   <form action="${pageContext.request.contextPath}/lista_desideri_servlet" method="post">
+        <input type="hidden" name="nome_utente_lista" value="<%= utente.get_nome_utente() %>">     
+        <button name="lista_desideri" type="submit" value="view">Lista Desideri</button>
+      </form>
+      
+    <!-- Pulsanti per lo storico e la gestione del catalogo -->
+        <form action="${pageContext.request.contextPath}/Storico_servlet" method="post">
+         <input type="hidden" name="nome_utente_ordine" value="<%= utente.get_nome_utente() %>">  
+            <button name=confema_ordine type="submit" value="view" >I Miei Ordini</button> <!-- Reindirizza alla servlet per lo storico -->
+        </form>
 </div>
 <!-- Inclusione del file JavaScript -->
 <script src="<%= contextPath %>/scripts/script_index.js"></script>
