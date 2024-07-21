@@ -76,6 +76,7 @@ CREATE TABLE ARTICOLI
     id_gioco int NOT NULL,
     quantita int,
     
+    
     PRIMARY KEY (id),
     FOREIGN KEY (n_ordine) REFERENCES STORICO(n_ordine),
     FOREIGN KEY (id_gioco) REFERENCES GIOCHI(id_gioco),

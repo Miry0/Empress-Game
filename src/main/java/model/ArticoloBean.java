@@ -14,7 +14,7 @@ public class ArticoloBean implements Serializable {
     public ArticoloBean() {
     	idGioco = -1;
     	nOrdine = -1;
-    	quantita = -1;
+    	quantita = -1;;
     }
     
     // Getters e setters dell'id della riga della table

@@ -18,6 +18,7 @@
 	Collection<ArticoloBean> articoli= (Collection<ArticoloBean>) request.getAttribute("articoli");
 	Collection<Game_bean> games= (Collection<Game_bean>) request.getAttribute("listaGiochi");
 	
+	
 
     
 %>

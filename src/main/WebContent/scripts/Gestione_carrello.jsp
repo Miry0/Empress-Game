@@ -19,6 +19,7 @@
 <%
     String contextPath = request.getContextPath();
 
+
     // Controlla se l'utente è già loggato
     if (utente == null || utente.get_nome_utente() == null || utente.get_nome_utente().isEmpty()) {
         response.sendRedirect("Pagina_login.jsp");

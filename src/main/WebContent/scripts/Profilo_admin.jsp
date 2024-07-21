@@ -25,6 +25,7 @@
 
 <%
     String contextPath = request.getContextPath();
+
 %>
 
 <!-- Header con logo -->

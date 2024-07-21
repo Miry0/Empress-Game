@@ -15,6 +15,7 @@ public class ArticoloDAO implements IBeanDAO<ArticoloBean> {
 
     // Costruttore per ottenere il DataSource dal contesto dell'applicazione
     public ArticoloDAO(DataSource ds) {
+    	
         this.ds = ds;
         if (ds == null) {
             System.out.println("DataSource nullo");
