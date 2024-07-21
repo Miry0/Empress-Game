@@ -42,6 +42,7 @@
                         if (art.getnOrdine() == st.get_n_ordine()) {
                             for (Game_bean game : games) {
                                 if (art.get_id_gioco() == game.get_id_gioco()) { %>
+                                	<p>Nome utente: <%= st.get_nome_utente() %></p>
                                     <p>Nome gioco: <%= game.get_nome() %></p>
                                     <p>Genere: <%= game.get_genere() %></p>
                                     <p>Prezzo: <%= game.get_prezzo() %></p>
@@ -54,7 +55,7 @@
             <% } %>
         <% } %>
     <% } else {
-        boolean hasOrders = false;
+        boolean hasOrders = false;		
         for (Storico_bean st : storico) {
             if (st.get_nome_utente().equals(nome_utente)) {
                 hasOrders = true; %>
@@ -64,6 +65,7 @@
                         if (art.getnOrdine() == st.get_n_ordine()) {
                             for (Game_bean game : games) {
                                 if (art.get_id_gioco() == game.get_id_gioco()) { %>
+                                	<p>Nome utente: <%= st.get_nome_utente() %></p>
                                     <p>Nome gioco: <%= game.get_nome() %></p>
                                     <p>Genere: <%= game.get_genere() %></p>
                                     <p>Prezzo: <%= game.get_prezzo() %></p>

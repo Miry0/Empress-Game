@@ -113,10 +113,23 @@ public class Storico_servlet extends HttpServlet {
             }   
         }
         
+        Collection<Game_bean> listaGiochi;
+        Collection<ArticoloBean> articoli;
+        Collection<Storico_bean> cStorico;
+		try {
+			listaGiochi = gameDAO.Mostra_tutto();
+			articoli = articoloDAO.doRetrieveAll(null);
+			cStorico = storicoDAO.doRetrieveAll(null);
+			request.setAttribute("listaGiochi", listaGiochi);
+		    request.setAttribute("storico", cStorico);
+		    request.setAttribute("articoli", articoli);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		
         // Dopo aver salvato con successo, puoi reindirizzare l'utente a una pagina di conferma
-        //request.setAttribute("listaGiochi", listaGiochi);
-        //request.setAttribute("storico", storico);
-       // request.setAttribute("articoli", articoli);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Storico.jsp");
         dispatcher.forward(request, response);
         
