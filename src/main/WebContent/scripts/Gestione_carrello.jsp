@@ -102,7 +102,7 @@
 
 
 <% if (catalogo != null && !catalogo.isEmpty()) { %>	
-<form action="Storico_servlet" method="post">
+<form action="${pageContext.request.contextPath}/Storico_servlet" method="post">
  <input type="hidden" name="carrello" value="<%=carrello %>"> <!-- contiene id_gioco e quantità dei giochi comprati --> 
  <input type="hidden" name="nome_utente" value="<%=utente.get_nome_utente() %>">
  <input type="hidden" name="totale" value="<%=totale%>">
