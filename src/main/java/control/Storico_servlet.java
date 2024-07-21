@@ -49,6 +49,9 @@ public class Storico_servlet extends HttpServlet {
         if("conferma".equals(action)) {
         	conferma_ordine(request, response);
         }
+        else {
+        	mostra_ordine(request, response);
+        }
         
     }
     
@@ -111,11 +114,54 @@ public class Storico_servlet extends HttpServlet {
         }
         
         // Dopo aver salvato con successo, puoi reindirizzare l'utente a una pagina di conferma
-        
+        //request.setAttribute("listaGiochi", listaGiochi);
+        //request.setAttribute("storico", storico);
+       // request.setAttribute("articoli", articoli);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Storico.jsp");
         dispatcher.forward(request, response);
         
         
     	
+    }
+    
+    private void mostra_ordine(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    	DataSource ds = (DataSource) getServletContext().getAttribute("MyDataSource");
+    	 storicoDAO = new Storico_DAODataSource(ds);
+         articoloDAO = new ArticoloDAO(ds);
+         gameDAO = new Game_DAODataSource(ds);
+         
+         Collection<Storico_bean> storico = new ArrayList<>();
+         Collection<ArticoloBean> articoli=null; 
+         Collection<Game_bean> listaGiochi=null; 
+         //String nome_utente= request.getParameter("nome_utente_ordine"); 
+         
+         try {
+			listaGiochi= gameDAO.Mostra_tutto();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         
+         try {
+			storico= storicoDAO.doRetrieveAll("data_ordine DESC"); //reucperiamo gli ordini in ordine di data decrescente: dal più recente al più vecchio
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+         
+        
+         try {
+			 articoli = (Collection<ArticoloBean>) articoloDAO.doRetrieveAll(null) ; //reucperiamo gli articoli nel db; 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         
+         request.setAttribute("listaGiochi", listaGiochi);
+         request.setAttribute("storico", storico);
+         request.setAttribute("articoli", articoli);
+         RequestDispatcher dispatcher = request.getRequestDispatcher("/scripts/Storico.jsp");
+         dispatcher.forward(request, response);
+          	
     }
 }

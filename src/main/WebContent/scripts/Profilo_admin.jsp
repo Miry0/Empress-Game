@@ -90,8 +90,9 @@
         </form>
            
         <!-- Pulsanti per lo storico e la gestione del catalogo -->
-        <form action="<%= contextPath %>/scripts/Storico.jsp" method="post">
-            <button type="submit">Storico</button> <!-- Reindirizza alla servlet per lo storico -->
+        <form action="${pageContext.request.contextPath}/Storico_servlet" method="post">
+         <input type="hidden" name="nome_utente_ordine" value="<%= utente.get_nome_utente() %>">  
+            <button name=confema_ordine type="submit" value="view" >Storico</button> <!-- Reindirizza alla servlet per lo storico -->
         </form>
         
         <form action="<%= contextPath %>/scripts/Gestione_catalogo.jsp" method="post">
